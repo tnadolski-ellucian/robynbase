@@ -19,3 +19,6 @@ config/database.yml
 
 # rvm files
 .ruby-version
+
+# Ignore the rdoc README
+README.rdoc
