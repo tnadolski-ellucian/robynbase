@@ -1,0 +1,29 @@
+<h1>Robyn#index</h1>
+<p>Find me in app/views/robyn/index.html.erb</p>
+
+
+<%= form_tag('index', :method => 'GET') do %>
+
+<p>
+  <%= text_field_tag :search_value, params['search_value'] %>
+
+  <%= radio_button_tag 'search_type', 'title',  params['search_type'] == 'title' %> Title
+  <%= radio_button_tag 'search_type', 'lyrics',  params['search_type'] == 'lyrics' %> Lyrics
+  <%= radio_button_tag 'search_type', 'author',  params['search_type'] == 'author' %> Author
+
+  <%= submit_tag "Search", :name => nil %>
+
+</p>
+
+<% end %>
+
+<% if @songs %>
+
+<h2>Songs</h2>
+<ul>
+  <% for song in @songs %>
+    <li> <%= link_to song.Song, song_path(song) %> </li>
+  <% end %>
+</ul>
+
+<% end %>

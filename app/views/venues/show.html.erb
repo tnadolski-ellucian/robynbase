@@ -1,0 +1,22 @@
+<h1>Venues#show</h1>
+<p>Find me in app/views/venues/show.html.erb</p>
+
+<%= link_to "Back", controller: 'robyn' %>
+
+<h1><%= @venue.Name %></h1>
+
+<ul>
+  <li> City: <%= @venue.City %> </li>
+  <li> State: <%= @venue.State %> </li>
+  <li> Country: <%= @venue.Country %> </li>
+</ul>
+
+<h2> Gigs </h2>
+
+<ol>
+
+<% for gig in @venue.gigs %>
+  <li> <%= link_to gig.GigDate.to_date.to_formatted_s(:long) , gig_path(gig) %> </li>
+<% end %>
+
+</ol>

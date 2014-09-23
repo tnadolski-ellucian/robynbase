@@ -1,0 +1,24 @@
+<h1>Songs#index</h1>
+<p>Find me in app/views/songs/show.html.erb</p>
+
+<%= link_to "Back", controller: 'robyn' %>
+
+<h1><%= @song.Song %></h1>
+
+<p>Author: <%= @song.Author %></p>
+
+<p>Album: <%= @song.album.AlbumTitles %> </p>
+
+<h2>Gigs</h2>
+
+<% for gig in @song.gigs %>
+
+  <%= link_to gig.Venue, gig_path(gig) %> <%= gig.GigDate.to_date.to_formatted_s(:long) %> <br/> 
+
+<% end %>
+
+
+<h2>Lyrics</h2>
+
+<pre><%= @song.Lyrics =%> </pre>
+

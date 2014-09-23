@@ -1,0 +1,32 @@
+<h1>Gigs#show</h1>
+<p>Find me in app/views/gigs/show.html.erb</p>
+
+<%= link_to "Back", controller: 'robyn' %>
+
+<h1><%= @gig.Venue %></h1>
+
+<h2> Set </h2>
+
+<ol>
+
+<% for song in @gig.songs %>
+  <li> <%= link_to song.Song, song_path(song) %></li>
+<% end %>
+
+</ol>
+
+<h2> Details </h2>
+
+<ul>
+  <li> Date: <%= @gig.GigDate.to_date.to_formatted_s(:long) %> </li>
+  <li> Type: <%= @gig.Type %> </li>
+  <li> Venue: <%= @gig.Venue %> </li>
+  <li> Billed As: <%= @gig.BilledAs %> </li>
+
+  <% if @gig.Guests %> %>
+    <li> Guests: <%= @gig.Guets %> </li>
+  <% end %>
+
+  <li> Tape Exists: <%= @gig.TapeExists ? "Yes" : "No" %> </li>
+  <li> Length: <%= @gig.Length == 0 ? "Unknown" : @gig.length %> </li>
+</ul> 
