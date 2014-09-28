@@ -1,0 +1,32 @@
+<h1>Compilations#show</h1>
+<p>Find me in app/views/compositions/show.html.erb</p>
+
+<%= link_to "Back", controller: 'robyn' %>
+
+<h1><%= @comp.Title %></h1>
+
+
+<h2> Details </h2>
+
+<% if @comp.Comments %>
+  <i> <%= @comp.Comments %> </i>
+<% end %>
+
+<ul>
+  <li> Artist: <%= @comp.Artist %>
+  <li> Year: <%= @comp.Year %> </li>
+  <li> Medium: <%= @comp.Medium %> </li>
+  <li> Label: <%= @comp.Label %> </li>
+  <li> Catalog Number: <%= @comp.CatNo %> </li>
+  <li> Type: <%= @comp.Type %> </li>
+</ul> 
+
+<h2> Tracks </h2>
+
+<ol>
+
+  <% for track in @comp.tracks %>
+    <li> <%= link_to track.song.Song, song_path(track.song) %></li>
+  <% end %>
+
+</ol>

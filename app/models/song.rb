@@ -7,11 +7,12 @@ class Song < ActiveRecord::Base
   has_many :gigsets, foreign_key: "SONGID"
   has_many :gigs, through: :gigsets, foreign_key: "SONGID"
 
-  has_one :track, foreign_key: "SONGID"
+  has_many :tracks, foreign_key: "SONGID"
+  has_many :compositions, through: :tracks, foreign_key: "SONGID"
  
   belongs_to :album, foreign_key: "MAJRID"
 
-  debugger
+  # debugger
 
   def self.search_by(kind, search)
 

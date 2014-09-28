@@ -1,13 +1,22 @@
-<h1>Songs#index</h1>
+<h1>Songs#show</h1>
 <p>Find me in app/views/songs/show.html.erb</p>
+<p>SONGID: <%= @song.SONGID %></p>
 
 <%= link_to "Back", controller: 'robyn' %>
 
 <h1><%= @song.Song %></h1>
 
-<p>Author: <%= @song.Author %></p>
+<% if @song.Author %>
+  <p>Author: <%= @song.Author %></p>
+<% end %>
 
-<p>Album: <%= @song.album.AlbumTitles %> </p>
+<% if @song.compositions %>
+  <ul>
+    <% for comp in @song.compositions %>
+      <li> <%= link_to comp.Title, composition_path(comp) %> </li>
+    <% end %>
+  </ul>
+<% end %>
 
 <h2>Gigs</h2>
 

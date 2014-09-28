@@ -6,6 +6,7 @@ Robyn2::Application.routes.draw do
   resources :songs
   resources :gigs
   resources :venues
+  resources :compositions
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -24,9 +24,9 @@
   <li> Billed As: <%= @gig.BilledAs %> </li>
 
   <% if @gig.Guests %> %>
-    <li> Guests: <%= @gig.Guets %> </li>
+    <li> Guests: <%= @gig.Guests %> </li>
   <% end %>
 
   <li> Tape Exists: <%= @gig.TapeExists ? "Yes" : "No" %> </li>
-  <li> Length: <%= @gig.Length == 0 ? "Unknown" : @gig.length %> </li>
+  <li> Length: <%= @gig.Length == 0 ? "Unknown" : @gig.Length %> </li>
 </ul> 
