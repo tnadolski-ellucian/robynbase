@@ -16,22 +16,28 @@ class Song < ActiveRecord::Base
 
   def self.search_by(kind, search)
 
-    case kind
-      when :title
-        column = "Song"
-      when :lyrics
-        column = "Lyrics"
-      when :author
-        column = "Author"
-      else
-        column = "Song"
-    end 
+    conditions = Array(kind).map do |term|
+
+      case term
+        when :title
+          column = "Song"
+        when :lyrics
+          column = "Lyrics"
+        when :author
+          column = "Author"
+        else
+          column = "Song"
+      end
+
+      "#{column} LIKE ?"
+
+    end
 
     if search
-      find(:all, :conditions => ["#{column} LIKE ?", "%#{search}%"])
+      find(:all, :conditions => [conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%")])
     else
-      find(:all)
+      all
     end
   end
 
-end
+end   
