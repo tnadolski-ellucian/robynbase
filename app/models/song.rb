@@ -16,6 +16,8 @@ class Song < ActiveRecord::Base
 
   def self.search_by(kind, search)
 
+    kind = [:title, :lyrics, :author, :song] if kind.nil? or kind.length == 0
+
     conditions = Array(kind).map do |term|
 
       case term

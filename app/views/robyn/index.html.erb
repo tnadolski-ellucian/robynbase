@@ -7,18 +7,13 @@
 <p>
   <%= text_field_tag :search_value, params['search_value'] %>
 
-
-  <%= check_box_tag 'search_type[]', 'title', Array(params['search_type']).include?('title') %> Title
-  <%= check_box_tag 'search_type[]', 'lyrics', Array(params['search_type']).include?('lyrics')  %> Lyrics
-  <%= check_box_tag 'search_type[]', 'author', Array(params['search_type']).include?('author')  %> Author
-
   <%= submit_tag "Search", :name => nil %>
 
 </p>
 
 <% end %>
 
-<% if @songs %>
+<% if @songs.present? %>
 
 <h2>Songs</h2>
 <ul>
@@ -26,5 +21,30 @@
     <li> <%= link_to song.Song, song_path(song) %> </li>
   <% end %>
 </ul>
+
+
+<% end %>
+
+
+<% if @gigs.present? %>
+
+<h2>Gigs</h2>
+<ul>
+  <% for gig in @gigs %>
+    <li> <%= link_to "#{gig.Venue} (#{gig.GigDate.to_date.to_formatted_s(:long)})", gig_path(gig) %> </li>
+  <% end %>
+</ul>
+
+<% end %>
+
+<% if @compositions.present? %>
+
+<h2>Compositions</h2>
+<ul>
+  <% for comp in @compositions %>
+    <li> <%= link_to comp.Title, composition_path(comp) %> </li>
+  <% end %>
+</ul>
+
 
 <% end %>

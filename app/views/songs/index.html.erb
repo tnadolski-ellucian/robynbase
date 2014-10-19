@@ -1,0 +1,30 @@
+<h1>Robyn#index</h1>
+<p>Find me in app/views/songs/index.html.erb</p>
+
+
+<%= form_tag('/songs/index', :method => 'GET') do %>
+
+<p>
+  <%= text_field_tag :search_value, params['search_value'] %>
+
+
+  <%= check_box_tag 'search_type[]', 'title', Array(params['search_type']).include?('title') %> Title
+  <%= check_box_tag 'search_type[]', 'lyrics', Array(params['search_type']).include?('lyrics')  %> Lyrics
+  <%= check_box_tag 'search_type[]', 'author', Array(params['search_type']).include?('author')  %> Author
+
+  <%= submit_tag "Search", :name => nil %>
+
+</p>
+
+<% end %>
+
+<% if @songs %>
+
+<h2>Songs</h2>
+<ul>
+  <% for song in @songs %>
+    <li> <%= link_to song.Song, song_path(song) %> </li>
+  <% end %>
+</ul>
+
+<% end %>
