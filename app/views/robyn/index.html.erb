@@ -5,8 +5,11 @@
 <%= form_tag('/robyn/index', :method => 'GET') do %>
 
 <p>
-  <%= text_field_tag :search_value, params['search_value'] %>
 
+  <div>
+  <%= text_field_tag :search_value, params['search_value'], :class => 'typeahead', :placeholder => 'Type a search' %>
+  </div>
+  
   <%= submit_tag "Search", :name => nil %>
 
 </p>
