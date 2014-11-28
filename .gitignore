@@ -19,6 +19,10 @@ config/database.yml
 
 # rvm files
 .ruby-version
+.ruby-gemset
+
+# IntelliJ files
+.idea
 
 # Ignore the rdoc README
 README.rdoc
