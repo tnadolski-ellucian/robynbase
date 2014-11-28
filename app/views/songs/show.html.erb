@@ -1,33 +1,53 @@
-<h1>Songs#show</h1>
-<p>Find me in app/views/songs/show.html.erb</p>
-<p>SONGID: <%= @song.SONGID %></p>
+<!-- Songs#show -->
+<!-- Find me in app/views/songs/show.html.erb -->
+<!-- SONGID: <%= @song.SONGID %> -->
 
-<%= link_to "Back", controller: 'robyn' %>
+<!-- <%= link_to "Back", controller: 'robyn' %> -->
 
-<h1><%= @song.Song %></h1>
+<h2 class="main-header"><%= @song.Song %> <small> <%= @song.Author.nil? ? "Robyn Hitchcock" : @song.Author %></small></h2>
 
-<% if @song.Author %>
-  <p>Author: <%= @song.Author %></p>
-<% end %>
+<h3 class="main-header">Compositions</h3>
 
 <% if @song.compositions %>
-  <ul>
+
+  <table class="table table-hover main-search-list">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Year</th>
+    </tr>
+    </thead>
     <% for comp in @song.compositions %>
-      <li> <%= link_to comp.Title, composition_path(comp) %> </li>
+      <tr data-path="<%= composition_path(comp) %>">
+        <td class="main-column"> <%= comp.Title %> </td>
+        <td> <%= comp.Year.to_i %> </td>
+      </tr>
     <% end %>
-  </ul>
-<% end %>
-
-<h2>Gigs</h2>
-
-<% for gig in @song.gigs %>
-
-  <%= link_to gig.Venue, gig_path(gig) %> <%= gig.GigDate.to_date.to_formatted_s(:long) %> <br/> 
+  </table>
 
 <% end %>
 
+<h3 class="main-header">Gigs</h3>
 
-<h2>Lyrics</h2>
+  <table class="table table-hover main-search-list">
+
+    <thead>
+    <tr>
+      <th>Venue</th>
+      <th>Date</th>
+    </tr>
+    </thead>
+
+    <% for gig in @song.gigs %>
+      <tr data-path="<%= gig_path(gig) %>">
+        <td class="main-column"> <%= gig.Venue %> </td>
+        <td> <%= gig.GigDate.to_date.to_formatted_s(:long) %> </td>
+      </tr>
+    <% end %>
+
+  </table>
+
+<h3 class="main-header">Lyrics</h3>
 
 <pre><%= @song.Lyrics =%> </pre>
 

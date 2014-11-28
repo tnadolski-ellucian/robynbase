@@ -1,18 +1,48 @@
-<h1>Compilations#show</h1>
-<p>Find me in app/views/compositions/show.html.erb</p>
+<!-- Compositionss#show -->
+<!-- Find me in app/views/compositions/show.html.erb -->
 
-<%= link_to "Back", controller: 'robyn' %>
+<!-- <%= link_to "Back", controller: 'robyn' %> -->
 
-<h1><%= @comp.Title %></h1>
+<h2><%= @comp.Title %></h1>
 
-
-<h2> Details </h2>
+<h3 class="main-header"> Details </h3>
 
 <% if @comp.Comments %>
   <i> <%= @comp.Comments %> </i>
 <% end %>
 
-<ul>
+<dl class="dl-horizontal">
+  <dt>Artist</dt>
+  <dd><%= @comp.Artist %></dd>
+</dl>
+
+<dl class="dl-horizontal">
+  <dt>Year</dt>
+  <dd><%= @comp.Year.to_i %></dd>
+</dl>
+
+<dl class="dl-horizontal">
+  <dt>Medium</dt>
+  <dd><%= @comp.Medium %></dd>
+</dl>
+
+<dl class="dl-horizontal">
+  <dt>Label</dt>
+  <dd><%= @comp.Label %> </dd>
+</dl>
+
+<dl class="dl-horizontal">
+  <dt>Catalog Number</dt>
+  <dd><%= @comp.CatNo %></dd>
+</dl>
+
+<dl class="dl-horizontal">
+  <dt>Type</dt>
+  <dd><%= @comp.Type %></dd>
+</dl>
+
+
+<!-- <ul>
   <li> Artist: <%= @comp.Artist %>
   <li> Year: <%= @comp.Year %> </li>
   <li> Medium: <%= @comp.Medium %> </li>
@@ -20,8 +50,8 @@
   <li> Catalog Number: <%= @comp.CatNo %> </li>
   <li> Type: <%= @comp.Type %> </li>
 </ul> 
-
-<h2> Tracks </h2>
+ -->
+<h3 class="main-header"> Tracks </h3>
 
 <ol>
 

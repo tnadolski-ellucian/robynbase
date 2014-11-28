@@ -32,37 +32,42 @@ table.main-search-list {
 
 }
 
-.main-page {
 
-  h3.main-header {
-    background-color: rgb(225, 135, 40);
-    color: white !important;
-    position: relative;
-    // border: solid gray;
-    // border-width: 0 0 2px 0;
-    padding: 5px;
-  
+.main-header {
+  margin-top: 30px;
 
-    &:after, &:before {
-      content: "";
-      position: absolute;
-      background: rgb(225, 135, 40);  /* Match the background */
-      top: 0;
-      bottom: 0;
-      width: 9999px;   /* some huge width */
-    } 
+  small {
+    margin-left: 20px;
+  }
+}
 
-    &:before {
-      right: 100%; 
-    }
+h3.main-header {
+  background-color: rgb(225, 135, 40);
+  color: white !important;
+  position: relative;
+  // border: solid gray;
+  // border-width: 0 0 2px 0;
+  padding: 5px 0;
 
-    &:after {
-      left: 100%;
-    }
 
+  &:after, &:before {
+    content: "";
+    position: absolute;
+    background: rgb(225, 135, 40);  /* Match the background */
+    top: 0;
+    bottom: 0;
+    width: 9999px;   /* some huge width */
   } 
 
-}
+  &:before {
+    right: 100%; 
+  }
+
+  &:after {
+    left: 100%;
+  }
+
+} 
 
 
 
@@ -77,5 +82,18 @@ table.main-search-list {
     padding: 5px;    
   }
 
+}
+
+
+/* override bootstrap description styles */
+dl.dl-horizontal {
+  margin-bottom: 0px;
+  dt {
+    text-align: left;
+    width: 140px
+  }
+  dd {
+    margin-left: 20px;
+  }
 }
 

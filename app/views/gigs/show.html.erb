@@ -1,13 +1,56 @@
-<h1>Gigs#show</h1>
-<p>Find me in app/views/gigs/show.html.erb</p>
+<!-- Gigs#show< -->
+<!-- Find me in app/views/gigs/show.html.erb -->
 
-<%= link_to "Back", controller: 'robyn' %>
+<!-- <%= link_to "Back", controller: 'robyn' %> -->
 
-<h1><%= @gig.Venue %></h1>
+<h2><%= @gig.Venue %></h3>
 
-<h2> Set </h2>
+<h3 class="main-header"> Details </h3>
 
-<ol>
+
+<dl class="dl-horizontal">
+  <dt>Date</dt>
+  <dd><%= @gig.GigDate.to_date.to_formatted_s(:long) %></dd>
+</dl>
+
+<dl class="dl-horizontal">
+  <dt>Type</dt>
+  <dd><%= @gig.Type %></dd>
+</dl>
+
+<dl class="dl-horizontal">
+  <dt>Venue</dt>
+  <dd><%= @gig.Venue %> <% @gig.venue.nil? ? "" : " (#{@gig.venue.City})" %></dd>
+</dl>
+
+<dl class="dl-horizontal">
+  <dt>Billed As</dt>
+  <dd><%= @gig.BilledAs %></dd>
+</dl>
+
+<% if @gig.Guests %>
+
+  <dl class="dl-horizontal">
+    <dt>Guests</dt>
+    <dd><%= @gig.Guests %></dd>
+  </dl>
+
+<% end %>
+
+<dl class="dl-horizontal">
+  <dt>Tape Exists</dt>
+  <dd><%= @gig.TapeExists ? "Yes" : "No" %></dd>
+</dl>
+
+<dl class="dl-horizontal">
+  <dt>Length</dt>
+  <dd><%= @gig.Length == 0 ? "Unknown" : @gig.Length %> </dd>
+</dl>
+
+
+<h3 class="main-header"> Set </h3>
+
+<ol class="list-unstyled">
 
 <% for song in @gig.songs %>
   <li> <%= link_to song.Song, song_path(song) %></li>
@@ -15,23 +58,3 @@
 
 </ol>
 
-<h2> Details </h2>
-
-<ul>
-  <li> Date: <%= @gig.GigDate.to_date.to_formatted_s(:long) %> </li>
-  <li> Type: <%= @gig.Type %> </li>
-  <li> Venue: <%= @gig.Venue %> </li>
-
-  <% if @gig.venue %>
-    <li> City: <%= @gig.venue.City %> </li>
-  <% end %>
-
-  <li> Billed As: <%= @gig.BilledAs %> </li>
-
-  <% if @gig.Guests %>
-    <li> Guests: <%= @gig.Guests %> </li>
-  <% end %>
-
-  <li> Tape Exists: <%= @gig.TapeExists ? "Yes" : "No" %> </li>
-  <li> Length: <%= @gig.Length == 0 ? "Unknown" : @gig.Length %> </li>
-</ul> 
