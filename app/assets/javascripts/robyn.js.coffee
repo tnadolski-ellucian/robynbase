@@ -85,7 +85,24 @@ $(window).on("load", ->
     
   });
 
+  gig_engine = new Bloodhound({
+    # name: 'all'
+    # local: [{ val: 'dog' }, { val: 'pig' }, { val: 'moose' }],
+    remote:
+      url: '/robyn/search_gigs?utf8=%E2%9C%93&search_value=%QUERY'
+      filter: (results) ->
+        $.map(results, (result, index) ->
+          return {search_value: result.Venue, id: result.GIGID}
+        )
+    datumTokenizer: (d) -> 
+      console.log(d)
+      return Bloodhound.tokenizers.whitespace(d.search_value)
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+    
+  });
+
   initComplete = engine.initialize()
+  initComplete = gig_engine.initialize()
 
   init = () -> 
     $(".typeahead").typeahead({
@@ -95,20 +112,35 @@ $(window).on("load", ->
     },
 
     {
-      # name: 'all',
+      name: 'songs',
       displayKey: 'search_value',
-      source: engine.ttAdapter()
+      source: engine.ttAdapter(),
+      templates: {
+        header: '<h3 class="">Songs</h3>'
+      }
       # source: statesEngine.ttAdapter()
       # source: substringMatcher(states)
+    },
+
+    {
+      name: 'gigs',
+      displayKey: 'search_value',
+      source: gig_engine.ttAdapter(),
+      templates: {
+        header: '<h3 class="">Gigs</h3>'
+      }
     })
 
+
     $(".typeahead").bind("typeahead:selected", (event, suggestion, dataset) ->
-      console.log("selected: " + suggestion.search_value, " - " + suggestion.id)
-      window.location = "/songs/" + suggestion.id
+      console.log("dataset: " + dataset + "; selected: " + suggestion.search_value, " - " + suggestion.id)
+
+      switch dataset
+        when "songs" then window.location = "/songs/" + suggestion.id
+        when "gigs" then window.location = "/gigs/" + suggestion.id
+
     )
 
   initComplete.then(init)
-
-
 
 )

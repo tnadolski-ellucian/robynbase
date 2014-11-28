@@ -2,6 +2,7 @@ Robyn2::Application.routes.draw do
   get "robyn/index"
   get "songs/index"
   get "robyn/search"
+  get "robyn/search_gigs"
 
 
   resources :songs
