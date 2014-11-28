@@ -36,7 +36,7 @@ class Song < ActiveRecord::Base
     end
 
     if search
-      find(:all, :conditions => [conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%")])
+      where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
     else
       all
     end

@@ -35,7 +35,7 @@ class Gig < ActiveRecord::Base
     end
 
     if search
-      gigs = find(:all, :conditions => [conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%")])
+      gigs = where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
 
 
       if kind.include? :venue_city
