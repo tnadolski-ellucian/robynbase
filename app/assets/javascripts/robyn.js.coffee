@@ -88,7 +88,7 @@ $(window).on("load", ->
 
     $(".typeahead").bind("typeahead:selected", (event, suggestion, dataset) ->
       console.log("selected: " + suggestion.search_value, " - " + suggestion.id)
-      window.location = "songs/" + suggestion.id
+      window.location = "/songs/" + suggestion.id
     )
 
   initComplete.then(init)
