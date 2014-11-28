@@ -41,6 +41,22 @@ states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
 
 $(window).on("load", -> 
 
+  currentPage = window.location.pathname.substring(1);
+
+  activeTab = switch
+    when currentPage == "" then "robyn-home"
+    when currentPage == "songs" then "robyn-songs"
+    else "home"
+
+  $("##{activeTab}").addClass("active")
+
+  $("#search_value").on("keypress", (e) ->
+
+    if e.which == 10 or e.which == 13
+      $("#main-search").submit();
+
+  )
+
   statesEngine = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('search_value'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,

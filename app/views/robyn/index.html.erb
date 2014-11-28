@@ -1,18 +1,14 @@
-<h1>Robyn#index</h1>
-<p>Find me in app/views/robyn/index.html.erb</p>
+<div class>
 
+<%= form_tag('/robyn/index', :method => 'GET', :id => 'main-search') do %>
 
-<%= form_tag('/robyn/index', :method => 'GET') do %>
-
-<p>
-
-  <div>
-  <%= text_field_tag :search_value, params['search_value'], :class => 'typeahead', :placeholder => 'Type a search' %>
+  <div class="search-block">
+  <%= text_field_tag :search_value, params['search_value'], 
+                     :class => 'typeahead', 
+                     :placeholder => 'Type a search' %>
   </div>
   
-  <%= submit_tag "Search", :name => nil %>
 
-</p>
 
 <% end %>
 
@@ -51,3 +47,5 @@
 
 
 <% end %>
+
+</div>
