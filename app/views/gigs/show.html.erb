@@ -21,11 +21,14 @@
   <li> Date: <%= @gig.GigDate.to_date.to_formatted_s(:long) %> </li>
   <li> Type: <%= @gig.Type %> </li>
   <li> Venue: <%= @gig.Venue %> </li>
-  <li> City: <%= @gig.venue.City %> </li>
+
+  <% if @gig.venue %>
+    <li> City: <%= @gig.venue.City %> </li>
+  <% end %>
 
   <li> Billed As: <%= @gig.BilledAs %> </li>
 
-  <% if @gig.Guests %> %>
+  <% if @gig.Guests %>
     <li> Guests: <%= @gig.Guests %> </li>
   <% end %>
 

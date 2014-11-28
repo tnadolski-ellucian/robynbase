@@ -1,51 +1,80 @@
-<div class>
+<div class="main-page">
 
-<%= form_tag('/robyn/index', :method => 'GET', :id => 'main-search') do %>
+  <%= form_tag('/robyn/index', :method => 'GET', :id => 'main-search') do %>
 
-  <div class="search-block">
-  <%= text_field_tag :search_value, params['search_value'], 
-                     :class => 'typeahead', 
-                     :placeholder => 'Type a search' %>
-  </div>
-  
+    <div class="search-block">
+    <%= text_field_tag :search_value, params['search_value'], 
+                       :class => 'typeahead', 
+                       :placeholder => 'Type a search' %>
+    </div>
+    
 
 
-<% end %>
-
-<% if @songs.present? %>
-
-<h2>Songs</h2>
-<ul>
-  <% for song in @songs %>
-    <li> <%= link_to song.Song, song_path(song) %> </li>
   <% end %>
-</ul>
+
+  <% if @songs.present? %>
+
+  <h3 class="main-header">Songs</h3>
+  <table class="table table-hover main-search-list">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Author</th>
+    </tr>
+    </thead>
+    <% for song in @songs %>
+      <tr data-path="<%=song_path(song)%>">
+        <td class="main-column"> <%= song.Song %> </td>
+        <td> <%= song.Author.nil? ? "Robyn Hitchcock" : song.Author %> </td>
+      </tr>
+    <% end %>
+  </table>
 
 
-<% end %>
-
-
-<% if @gigs.present? %>
-
-<h2>Gigs</h2>
-<ul>
-  <% for gig in @gigs %>
-    <li> <%= link_to "#{gig.Venue} (#{gig.GigDate.to_date.to_formatted_s(:long)})", gig_path(gig) %> </li>
   <% end %>
-</ul>
 
-<% end %>
 
-<% if @compositions.present? %>
+  <% if @gigs.present? %>
 
-<h2>Compositions</h2>
-<ul>
-  <% for comp in @compositions %>
-    <li> <%= link_to comp.Title, composition_path(comp) %> </li>
+  <h3 class="main-header">Gigs</h3>
+
+  <table class="table table-hover main-search-list">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+    </tr>
+    </thead>
+
+    <% for gig in @gigs %>
+      <tr data-path="<%= gig_path(gig) %>">
+        <td class="main-column"> <%= gig.Venue %> </td>
+        <td> <%= gig.GigDate.to_date.to_formatted_s(:long) %> </td>
+      </tr>
+    <% end %>
+  </table>
+
   <% end %>
-</ul>
+
+  <% if @compositions.present? %>
+
+  <h3 class="main-header">Compositions</h3>
+
+  <table class="table table-hover main-search-list">
+    <thead>
+    <tr>
+      <th>Title</th>
+    </tr>
+    </thead>
+
+    <% for comp in @compositions %>
+      <tr data-path="<%= composition_path(comp) %>">
+        <td class="main-column"> <%= comp.Title %> </td>
+      </tr>
+    <% end %>
+  </table>
 
 
-<% end %>
+  <% end %>
 
 </div>

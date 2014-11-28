@@ -57,6 +57,10 @@ $(window).on("load", ->
 
   )
 
+  $(".main-search-list tr").on("click", (e) ->
+    window.location = $(e.currentTarget).data("path")
+  )
+
   statesEngine = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('search_value'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -105,6 +109,7 @@ $(window).on("load", ->
   initComplete = gig_engine.initialize()
 
   init = () -> 
+
     $(".typeahead").typeahead({
       hint: true,
       highlight: true,
@@ -116,10 +121,8 @@ $(window).on("load", ->
       displayKey: 'search_value',
       source: engine.ttAdapter(),
       templates: {
-        header: '<h3 class="">Songs</h3>'
+        header: '<h4 class="">Songs</h3>'
       }
-      # source: statesEngine.ttAdapter()
-      # source: substringMatcher(states)
     },
 
     {
@@ -127,7 +130,7 @@ $(window).on("load", ->
       displayKey: 'search_value',
       source: gig_engine.ttAdapter(),
       templates: {
-        header: '<h3 class="">Gigs</h3>'
+        header: '<h4 class="">Gigs</h4>'
       }
     })
 
@@ -140,6 +143,9 @@ $(window).on("load", ->
         when "gigs" then window.location = "/gigs/" + suggestion.id
 
     )
+
+    $("#search_value").focus()  
+
 
   initComplete.then(init)
 
