@@ -46,4 +46,20 @@ class RobynController < ApplicationController
 
   end
 
+  def search_compositions
+
+    search = params[:search_value] 
+
+    logger.info "composition search: #{search}"
+
+    if not search.nil? 
+      @compositions = Composition.search_by [:title], search
+    end
+
+    logger.info "found compositions: #{@compositions}"
+
+    render json: @compositions
+
+  end
+
 end

@@ -105,8 +105,25 @@ $(window).on("load", ->
     
   });
 
+  composition_engine = new Bloodhound({
+    # name: 'all'
+    # local: [{ val: 'dog' }, { val: 'pig' }, { val: 'moose' }],
+    remote:
+      url: '/robyn/search_compositions?utf8=%E2%9C%93&search_value=%QUERY'
+      filter: (results) ->
+        $.map(results, (result, index) ->
+          return {search_value: result.Title, id: result.COMPID}
+        )
+    datumTokenizer: (d) -> 
+      console.log(d)
+      return Bloodhound.tokenizers.whitespace(d.search_value)
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+    
+  });
+
   initComplete = engine.initialize()
   initComplete = gig_engine.initialize()
+  initComplete = composition_engine.initialize()
 
   init = () -> 
 
@@ -126,6 +143,15 @@ $(window).on("load", ->
     },
 
     {
+      name: 'compositions',
+      displayKey: 'search_value',
+      source: composition_engine.ttAdapter(),
+      templates: {
+        header: '<h4 class="">Compositions</h3>'
+      }
+    },
+
+    {
       name: 'gigs',
       displayKey: 'search_value',
       source: gig_engine.ttAdapter(),
@@ -141,6 +167,7 @@ $(window).on("load", ->
       switch dataset
         when "songs" then window.location = "/songs/" + suggestion.id
         when "gigs" then window.location = "/gigs/" + suggestion.id
+        when "compositions" then window.location = "/compositions/" + suggestion.id
 
     )
 

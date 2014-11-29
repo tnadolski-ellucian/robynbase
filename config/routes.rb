@@ -3,6 +3,7 @@ Robyn2::Application.routes.draw do
   get "songs/index"
   get "robyn/search"
   get "robyn/search_gigs"
+  get "robyn/search_compositions"
 
 
   resources :songs
