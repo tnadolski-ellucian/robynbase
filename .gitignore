@@ -24,5 +24,8 @@ config/database.yml
 # IntelliJ files
 .idea
 
+# ignore album image files (temporuary?)
+public/images/album-art/
+
 # Ignore the rdoc README
 README.rdoc

@@ -7,50 +7,78 @@
 
 <h3 class="main-header"> Details </h3>
 
-<% if @comp.Comments %>
-  <i> <%= @comp.Comments %> </i>
-<% end %>
+<!-- images: <%= @associated_images.to_s =%> -->
 
-<dl class="dl-horizontal">
-  <dt>Artist</dt>
-  <dd><%= @comp.Artist %></dd>
-</dl>
+<div class="row">
 
-<dl class="dl-horizontal">
-  <dt>Year</dt>
-  <dd><%= @comp.Year.to_i %></dd>
-</dl>
+  <div class="col-md-12">
 
-<dl class="dl-horizontal">
-  <dt>Medium</dt>
-  <dd><%= @comp.Medium %></dd>
-</dl>
+    <div class="album-description-block">
 
-<dl class="dl-horizontal">
-  <dt>Label</dt>
-  <dd><%= @comp.Label %> </dd>
-</dl>
+      <dl class="dl-horizontal">
+        <dt>Artist</dt>
+        <dd><%= @comp.Artist %></dd>
+      </dl>
 
-<dl class="dl-horizontal">
-  <dt>Catalog Number</dt>
-  <dd><%= @comp.CatNo %></dd>
-</dl>
+      <dl class="dl-horizontal">
+        <dt>Year</dt>
+        <dd><%= @comp.Year.to_i %></dd>
+      </dl>
 
-<dl class="dl-horizontal">
-  <dt>Type</dt>
-  <dd><%= @comp.Type %></dd>
-</dl>
+      <dl class="dl-horizontal">
+        <dt>Medium</dt>
+        <dd><%= @comp.Medium %></dd>
+      </dl>
+
+      <dl class="dl-horizontal">
+        <dt>Label</dt>
+        <dd><%= @comp.Label %> </dd>
+      </dl>
+
+      <dl class="dl-horizontal">
+        <dt>Catalog Number</dt>
+        <dd><%= @comp.CatNo %></dd>
+      </dl>
+
+      <dl class="dl-horizontal">
+        <dt>Type</dt>
+        <dd><%= @comp.Type %></dd>
+      </dl>
+
+      <% if @comp.Comments %>
+      <br/>
+      <b>Comments</b>
+
+      <p> <%= @comp.Comments %> </p>
+
+      <% end %>
 
 
-<!-- <ul>
-  <li> Artist: <%= @comp.Artist %>
-  <li> Year: <%= @comp.Year %> </li>
-  <li> Medium: <%= @comp.Medium %> </li>
-  <li> Label: <%= @comp.Label %> </li>
-  <li> Catalog Number: <%= @comp.CatNo %> </li>
-  <li> Type: <%= @comp.Type %> </li>
-</ul> 
- -->
+    </div>
+
+    <% if @associated_images.length > 0 %>
+      <a class="album-art" href="/<%= @associated_images.first.to_s %>">
+        <img src="/<%= @associated_images.first.to_s %>"/>
+      </a>
+
+      <% if @associated_images.length > 1 %>
+        <div style="display: none">
+
+          <% for img_index in 1...@associated_images.length %>
+          <a class="album-art" href="/<%= @associated_images[img_index].to_s %>">
+            <img src="/<%= @associated_images[img_index].to_s %>" />
+          </a>
+          <% end %>
+
+        </div>  
+
+      <% end %>
+
+    <% end %>
+
+  </div>
+</div>
+
 <h3 class="main-header"> Tracks </h3>
 
 <ol>
