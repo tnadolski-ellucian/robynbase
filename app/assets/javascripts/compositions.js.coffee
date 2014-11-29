@@ -3,5 +3,10 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(window).on("load", (e) ->
-  $("a.album-art").attr("rel", "gallery").fancybox({padding: 0})
+  $("a.album-art").attr("rel", "gallery").fancybox({helpers : { 
+    thumbs : {
+      width  : 50,
+      height : 50
+    }
+  }})
 )
