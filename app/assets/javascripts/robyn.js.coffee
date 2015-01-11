@@ -147,7 +147,7 @@ $(window).on("load", ->
       displayKey: 'search_value',
       source: composition_engine.ttAdapter(),
       templates: {
-        header: '<h4 class="">Compositions</h3>'
+        header: '<h4 class="">Albums</h3>'
       }
     },
 
