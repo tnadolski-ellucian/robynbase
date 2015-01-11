@@ -35,8 +35,8 @@ class Gig < ActiveRecord::Base
     end
 
     if search
-      gigs = where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
 
+      gigs = where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
 
       if kind.include? :venue_city
         venues = self.joins(:venue).where("City LIKE '%#{search}%'")
@@ -46,7 +46,8 @@ class Gig < ActiveRecord::Base
         end
       end
 
-      gigs
+      # sort final results by date
+      gigs.sort { |x,y | x.GigDate <=> y.GigDate }
 
     else
       all

@@ -43,7 +43,5 @@ group :development do
   gem 'capistrano' 
   gem 'capistrano-rails'
   gem 'rvm1-capistrano3', require: false
+  gem 'byebug'
 end
-
-# To use debugger
-# gem 'debugger'
