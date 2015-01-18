@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery-2.1.1.min
+//= require bootstrap.min
 //= require jquery_ujs
 //= require jquery.fancybox
 //= require jquery.fancybox-buttons

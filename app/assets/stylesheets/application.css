@@ -10,6 +10,8 @@
  *
  *= require_self
  *= require_tree .
+ *= require bootstrap-theme.min
+ *= require bootstrap-typeahead
  *= require jquery.fancybox
  *= require jquery.fancybox-buttons
  *= require jquery.fancybox-thumbs
