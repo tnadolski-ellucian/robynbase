@@ -42,4 +42,8 @@ class Song < ActiveRecord::Base
     end
   end
 
+  def get_albums
+    self.compositions.order('Year').group('Title')
+  end
+
 end   

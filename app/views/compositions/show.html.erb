@@ -3,58 +3,15 @@
 
 <!-- <%= link_to "Back", controller: 'robyn' %> -->
 
-<h2><%= @comp.Title %></h1>
+<div class="albums-page">
 
-<h3 class="main-header"> Details </h3>
+<h2><%= @comp.Title %></h2>
 
 <!-- images: <%= @associated_images.to_s =%> -->
 
 <div class="row">
 
-  <div class="col-md-12">
-
-    <div class="album-description-block">
-
-      <dl class="dl-horizontal">
-        <dt>Artist</dt>
-        <dd><%= @comp.Artist %></dd>
-      </dl>
-
-      <dl class="dl-horizontal">
-        <dt>Year</dt>
-        <dd><%= @comp.Year.to_i %></dd>
-      </dl>
-
-      <dl class="dl-horizontal">
-        <dt>Medium</dt>
-        <dd><%= @comp.Medium %></dd>
-      </dl>
-
-      <dl class="dl-horizontal">
-        <dt>Label</dt>
-        <dd><%= @comp.Label %> </dd>
-      </dl>
-
-      <dl class="dl-horizontal">
-        <dt>Catalog Number</dt>
-        <dd><%= @comp.CatNo %></dd>
-      </dl>
-
-      <dl class="dl-horizontal">
-        <dt>Type</dt>
-        <dd><%= @comp.Type %></dd>
-      </dl>
-
-      <% if @comp.Comments %>
-      <br/>
-      <b>Comments</b>
-
-      <p> <%= @comp.Comments %> </p>
-
-      <% end %>
-
-
-    </div>
+  <div class="col-md-5">
 
     <% if @associated_images.length > 0 %>
       <a class="album-art" href="/<%= @associated_images.first.to_s %>">
@@ -76,15 +33,48 @@
 
     <% end %>
 
+    <ol class="album-track-list">
+
+      <% for track in @comp.tracks %>
+        <li> <%= link_to track.song.Song, song_path(track.song) %></li>
+      <% end %>
+
+    </ol>
+
   </div>
+
+  <div class="col-md-7">
+
+    <h4>Details</h4>
+
+    <%= render partial: 'album_block', locals: {comp: @comp} %>
+
+    <% if @other_editions.present? %>
+
+      <h4>Other Editions</h4>
+
+      <% for comp in @other_editions %>
+
+        <div class="album-block-header" data-compid="<%= comp.COMPID %>">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          <%= album_block_header_title(comp) %>
+        </div>
+
+        <div class="album-block-container" style="display: none" data-compid="<%= comp.COMPID %>">
+          <%= render partial: 'album_block', locals: {comp: comp} %>
+        </div>
+
+        </br>
+
+      <% end %>
+
+    <% end %>
+
+  </div>
+
 </div>
 
-<h3 class="main-header"> Tracks </h3>
+</div>
 
-<ol>
+<!-- <h3 class="main-header"> Tracks </h3> -->
 
-  <% for track in @comp.tracks %>
-    <li> <%= link_to track.song.Song, song_path(track.song) %></li>
-  <% end %>
-
-</ol>

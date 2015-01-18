@@ -5,8 +5,16 @@ class CompositionsController < ApplicationController
   end
 
   def show
+
+    # get the requested album
     @comp = Composition.find(params[:id])
+
+    # get other editions of the same album
+    @other_editions = Composition.where(Title: @comp.Title).reject{|a| a.COMPID == @comp.COMPID}
+
+    # get album art (if any)
     @associated_images = get_associated_images(@comp.Title)
+
   end
 
   def get_associated_images(title)

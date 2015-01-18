@@ -6,7 +6,7 @@
 
 <h2 class="main-header"><%= @song.Song %> <small> <%= @song.Author.nil? ? "Robyn Hitchcock" : @song.Author %></small></h2>
 
-<h3 class="main-header">Compositions</h3>
+<h3 class="main-header">Albums</h3>
 
 <% if @song.compositions %>
 
@@ -17,7 +17,7 @@
       <th>Year</th>
     </tr>
     </thead>
-    <% for comp in @song.compositions %>
+    <% for comp in @song.get_albums %>
       <tr data-path="<%= composition_path(comp) %>">
         <td class="main-column"> <%= comp.Title %> </td>
         <td> <%= comp.Year.to_i %> </td>

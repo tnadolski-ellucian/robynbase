@@ -24,7 +24,10 @@ class Composition < ActiveRecord::Base
     end
 
     if search
-      where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
+
+      # grab albums according to the given search criteria, ordering by year, grouping by title to
+      # eliminate duplicates
+      where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%")).order("Year").group("Title")
     else
       all
     end

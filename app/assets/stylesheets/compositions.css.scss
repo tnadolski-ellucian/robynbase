@@ -2,15 +2,52 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.album-description-block {
-  float: left;
-  width: 400px;
-}
+.albums-page {
 
-.album-art {  
-  img {
-    float: right;
-    width: 300px;
-    height: 300px;
+  h4 {
+    margin-top: 0;
   }
+
+  .album-description-block {
+  }
+
+  .album-track-list {
+    padding-top: 10px;
+    padding-left: 20px;
+  }
+
+  .album-block-header {
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    .glyphicon {
+      top: -1px;
+    }
+
+    .album-comments {
+      font-style: italic;
+      font-weight: normal;
+    }
+
+  }
+
+  .album-block-container {
+
+    padding-top: 5px;
+    padding-left: 12px;
+
+  }
+
+  .album-art {  
+    img {
+      // float: right;
+      width: 300px;
+      height: 300px;
+    }
+  }
+
 }

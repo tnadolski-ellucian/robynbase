@@ -39,7 +39,7 @@ class Gig < ActiveRecord::Base
       gigs = where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
 
       if kind.include? :venue_city
-        venues = self.joins(:venue).where("City LIKE '%#{search}%'")
+        venues = self.joins(:venue).where("City LIKE ?",  search)
 
         if not venues.nil? 
           gigs.concat(venues)
