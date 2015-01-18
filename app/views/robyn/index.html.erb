@@ -24,7 +24,7 @@
     </thead>
     <% for song in @songs %>
       <tr data-path="<%=song_path(song)%>">
-        <td class="main-column"> <%= song.Song %> </td>
+        <td class="main-column"> <%= song.full_name %> </td>
         <td> <%= song.Author.nil? ? "Robyn Hitchcock" : song.Author %> </td>
       </tr>
     <% end %>

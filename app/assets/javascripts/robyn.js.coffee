@@ -80,7 +80,8 @@ $(window).on("load", ->
       url: '/robyn/search?utf8=%E2%9C%93&search_value=%QUERY'
       filter: (results) ->
         $.map(results, (result, index) ->
-          return {search_value: result.Song, id: result.SONGID}
+          prefix = if result.Prefix then (result.Prefix + " ") else ""
+          return {search_value: prefix + result.Song, id: result.SONGID}
         )
     datumTokenizer: (d) -> 
       console.log(d)

@@ -46,4 +46,8 @@ class Song < ActiveRecord::Base
     self.compositions.order('Year').group('Title')
   end
 
+  def full_name
+    (self.Prefix.present? ? "#{self.Prefix} " : "") + self.Song
+  end
+
 end   

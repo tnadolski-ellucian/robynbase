@@ -52,7 +52,7 @@
 <ol class="list-unstyled">
 
 <% for song in @gig.songs %>
-  <li> <%= link_to song.Song, song_path(song) %></li>
+  <li> <%= link_to song.full_name, song_path(song) %></li>
 <% end %>
 
 </ol>

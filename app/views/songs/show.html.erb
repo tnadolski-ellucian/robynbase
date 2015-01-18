@@ -4,7 +4,7 @@
 
 <!-- <%= link_to "Back", controller: 'robyn' %> -->
 
-<h2 class="main-header"><%= @song.Song %> <small> <%= @song.Author.nil? ? "Robyn Hitchcock" : @song.Author %></small></h2>
+<h2 class="main-header"><%= @song.full_name %> <small> <%= @song.Author.nil? ? "Robyn Hitchcock" : @song.Author %></small></h2>
 
 <h3 class="main-header">Albums</h3>
 
