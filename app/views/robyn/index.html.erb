@@ -1,17 +1,5 @@
 <div class="main-page">
 
-  <%= form_tag('/robyn/index', :method => 'GET', :id => 'main-search') do %>
-
-    <div class="search-block">
-    <%= text_field_tag :search_value, params['search_value'], 
-                       :class => 'typeahead', 
-                       :placeholder => 'Type a search' %>
-    </div>
-    
-
-
-  <% end %>
-
   <% if @songs.present? %>
 
   <h3 class="main-header">Songs</h3>

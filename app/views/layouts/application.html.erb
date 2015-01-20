@@ -26,11 +26,26 @@
       <a class="navbar-brand" href="/">The Asking Tree</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav navbar-left">
         <li id="robyn-home"><a href="/">Home</a></li>
         <li id="robyn-songs"><a href="/songs">Songs</a></li>
         <li id="robyn-compositions"><a href="/compositions">Albums</a></li>
         <li id="robyn-gigs"><a href="/gigs">Gigs</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <%= form_tag('/robyn/index', :method => 'GET', :id => 'main-search') do %>
+
+            <div class="search-block">
+            <%= text_field_tag :search_value, params['search_value'], 
+                               :class => 'typeahead', 
+                               :placeholder => 'Search' %>
+            </div>
+            
+
+
+          <% end %>
+        </li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>

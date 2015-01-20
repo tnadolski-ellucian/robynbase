@@ -26,18 +26,6 @@ substringMatcher = (strs) ->
     cb(matches)
   
 
- 
-states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-]
-
 
 $(window).on("load", -> 
 
@@ -60,17 +48,6 @@ $(window).on("load", ->
   $(".main-search-list tr").on("click", (e) ->
     window.location = $(e.currentTarget).data("path")
   )
-
-  statesEngine = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('search_value'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    # `states` is an array of state names defined in "The Basics"
-    local: $.map(states, (state) -> 
-      return { search_value: state }
-    )
-  });
-
-  # initComplete = statesEngine.initialize()
    
 
   engine = new Bloodhound({
@@ -139,7 +116,7 @@ $(window).on("load", ->
       displayKey: 'search_value',
       source: engine.ttAdapter(),
       templates: {
-        header: '<h4 class="">Songs</h3>'
+        header: '<h4 class="">Songs</h4>'
       }
     },
 
@@ -148,7 +125,7 @@ $(window).on("load", ->
       displayKey: 'search_value',
       source: composition_engine.ttAdapter(),
       templates: {
-        header: '<h4 class="">Albums</h3>'
+        header: '<h4 class="">Albums</h4>'
       }
     },
 
