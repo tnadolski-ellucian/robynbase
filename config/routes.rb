@@ -1,6 +1,8 @@
 Robyn2::Application.routes.draw do
   get "robyn/index"
   get "songs/index"
+  get "gigs/index"
+  get "compositions/index"
   get "robyn/search"
   get "robyn/search_gigs"
   get "robyn/search_compositions"

@@ -1,0 +1,34 @@
+
+<%= form_tag('/gigs/index', :method => 'GET') do %>
+
+<p>
+  <%= text_field_tag :search_value, params['search_value'] %>
+
+
+  <%= check_box_tag 'search_type[]', 'venue', Array(params['search_type']).include?('venue') %> Venue
+  <%= check_box_tag 'search_type[]', 'gig_year', Array(params['search_type']).include?('gig_year')  %> Gig Year
+
+  <%= submit_tag "Search", :name => nil %>
+
+</p>
+
+<% end %>
+
+<% if @gigs %>
+
+<table class="table table-hover main-search-list">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Author</th>
+  </tr>
+  </thead>
+  <% for gig in @gigs %>
+    <tr data-path="<%= gig_path(gig) %>">
+      <td class="main-column"> <%= gig.Venue %> </td>
+      <td> <%= gig.GigDate.to_date.to_formatted_s(:long) %> </td>
+    </tr>
+  <% end %>
+</table>
+
+<% end %>

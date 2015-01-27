@@ -2,6 +2,10 @@ class CompositionsController < ApplicationController
 
   def index
     
+    if params[:search_type].present?
+      @compositions = Composition.search_by(params[:search_type] ? params[:search_type].map {|type| type.to_sym} : nil, params[:search_value])
+    end
+
   end
 
   def show

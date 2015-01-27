@@ -6,14 +6,14 @@ class Composition < ActiveRecord::Base
 
   def self.search_by(kind, search)
 
-    kind = [:title, :recorded_by, :release_year] if kind.nil? or kind.length == 0
+    kind = [:title, :release_year, :label] if kind.nil? or kind.length == 0
 
     conditions = Array(kind).map do |term|
 
       case term 
         when :title
           column = "Title"
-        when :year
+        when :release_year
           column = "Year"
         when :label
           column = "Label"

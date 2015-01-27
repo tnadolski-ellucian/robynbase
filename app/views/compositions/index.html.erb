@@ -1,0 +1,40 @@
+
+<%= form_tag('/compositions/index', :method => 'GET') do %>
+
+<p>
+  <%= text_field_tag :search_value, params['search_value'] %>
+
+
+  <%= check_box_tag 'search_type[]', 'title', Array(params['search_type']).include?('title') %> Title
+  <%= check_box_tag 'search_type[]', 'label', Array(params['search_type']).include?('label')  %> Label
+  <%= check_box_tag 'search_type[]', 'year', Array(params['search_type']).include?('year')  %> Year
+
+  <%= submit_tag "Search", :name => nil %>
+
+</p>
+
+<% end %>
+
+<% if @compositions %>
+
+  <table class="table table-hover main-search-list">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Label</th>
+        <th>Type</th>
+        <th>Year</th>
+      </tr>
+    </thead>
+
+    <% for comp in @compositions %>
+      <tr data-path="<%= composition_path(comp) %>">
+        <td class="main-column"> <%= comp.Title %> </td>
+        <td class="main-column"> <%= comp.Label %> </td>
+        <td> <%= comp.Type %> </td>
+        <td> <%= comp.Year.to_i %> </td>
+      </tr>
+    <% end %>
+  </table>
+
+<% end %>

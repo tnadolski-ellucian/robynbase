@@ -33,8 +33,10 @@ $(window).on("load", ->
 
   activeTab = switch
     when currentPage == "" then "robyn-home"
-    when currentPage == "songs" then "robyn-songs"
-    else "home"
+    when currentPage.indexOf("songs") == 0 then "robyn-songs"
+    when currentPage.indexOf("compositions") == 0 then "robyn-compositions"
+    when currentPage.indexOf("gigs") == 0 then "robyn-gigs"
+    else "robyn-home"
 
   $("##{activeTab}").addClass("active")
 

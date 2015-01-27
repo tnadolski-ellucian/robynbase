@@ -1,6 +1,3 @@
-<h1>Robyn#index</h1>
-<p>Find me in app/views/songs/index.html.erb</p>
-
 
 <%= form_tag('/songs/index', :method => 'GET') do %>
 
@@ -20,11 +17,19 @@
 
 <% if @songs %>
 
-<h2>Songs</h2>
-<ul>
+<table class="table table-hover main-search-list">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Author</th>
+  </tr>
+  </thead>
   <% for song in @songs %>
-    <li> <%= link_to song.full_name, song_path(song) %> </li>
+    <tr data-path="<%=song_path(song)%>">
+      <td class="main-column"> <%= song.full_name %> </td>
+      <td> <%= song.Author.nil? ? "Robyn Hitchcock" : song.Author %> </td>
+    </tr>
   <% end %>
-</ul>
+</table>
 
 <% end %>
