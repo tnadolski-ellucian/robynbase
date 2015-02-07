@@ -17,16 +17,23 @@
   }
 
   .album-block-header {
-    font-weight: bold;
+
     cursor: pointer;
 
-    &:hover {
-      text-decoration: underline;
+    .glyphicon {
+      font-size: 10px;
     }
 
-    .glyphicon {
-      top: -1px;
+    .edition-type {
+      font-weight: bold;
     }
+
+    &:hover {
+      .edition-type {
+        text-decoration: underline;
+      }
+    }
+
 
     .album-comments {
       font-style: italic;
@@ -38,7 +45,7 @@
   .album-block-container {
 
     padding-top: 5px;
-    padding-left: 12px;
+    padding-left: 14px;
 
   }
 

@@ -60,8 +60,8 @@
       <% for comp in @other_editions %>
 
         <div class="album-block-header" data-compid="<%= comp.COMPID %>">
-          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-          <%= album_block_header_title(comp) %>
+          <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+          <span class="edition-type"><%= album_block_header_title(comp) %></span>
         </div>
 
         <div class="album-block-container" style="display: none" data-compid="<%= comp.COMPID %>">

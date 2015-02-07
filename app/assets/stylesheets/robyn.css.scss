@@ -26,9 +26,16 @@ table.main-search-list {
     color: #337ab7;
   }
 
-  // td:first-child, th:first-child {
-  //   width: 70%;
-  // }
+  td:first-child, th:first-child {
+    padding: 8px 8px 8px 0;
+    // width: 70%;
+  }
+
+  
+  .glyphicon {
+    top: 2px;
+    margin-left: 5px;
+  }
 
 }
 
@@ -177,10 +184,6 @@ dl.dl-horizontal {
   }
 }
 
-.glyphicon {
-  top: 2px;
-  margin-left: 5px;
-}
 
 .lyrics {
   pre {
