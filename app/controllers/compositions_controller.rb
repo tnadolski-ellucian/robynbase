@@ -1,7 +1,7 @@
 class CompositionsController < ApplicationController
 
   # types of media, and the order in which they should appear
-  $MEDIA_TYPES = {
+  MEDIA_TYPES = {
     'CD'         => 0,
     'Vinyl LP'   => 1,
     'Vinyl 12"'  => 2,
@@ -15,7 +15,7 @@ class CompositionsController < ApplicationController
     'Other'      => 10
   }
 
-  $MEDIA_TYPES.default = 10;
+  MEDIA_TYPES.default = 10;
 
   def index
     
@@ -34,7 +34,7 @@ class CompositionsController < ApplicationController
     @other_editions = Composition.where(Title: comp.Title).sort do |a, b| 
 
       # first sort by medium
-      medium_order = $MEDIA_TYPES[a.Medium] <=> $MEDIA_TYPES[b.Medium]
+      medium_order = MEDIA_TYPES[a.Medium] <=> MEDIA_TYPES[b.Medium]
 
       # if the media match, sort the ones *without* notes higher
       if medium_order == 0

@@ -7,7 +7,18 @@
   </thead>
   <% for song in songs %>
     <tr data-path="<%=song_path(song)%>">
-      <td class="main-column"> <%= song.full_name %> </td>
+      <td class="main-column"> 
+        <%= song.full_name %> 
+
+        <% if song.Lyrics.present? %>
+          <span title="Lyrics provided" class="glyphicon glyphicon-book" aria-hidden="true"></span>
+        <% end %>
+        
+        <% if song.Tab.present? %>
+          <span title="Tablature provided" class="glyphicon glyphicon-music" aria-hidden="true"></span>
+        <% end %>
+
+      </td>
       <td> <%= song.Author.nil? ? "Robyn Hitchcock" : song.Author %> </td>
     </tr>
   <% end %>

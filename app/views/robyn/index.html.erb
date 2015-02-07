@@ -9,13 +9,13 @@
   <!-- albums -->
   <% if @compositions.present? %>
     <h3 class="main-header">Albums</h3>
-    <%= render partial: '/compositions/album_list', locals: {albums: @compositions} %>
+    <%= render partial: '/compositions/album_list', locals: {albums: @compositions, suppress_header: false} %>
   <% end %>
 
   <!-- gigs -->
   <% if @gigs.present? %>
     <h3 class="main-header">Gigs</h3>
-    <%= render partial: '/gigs/gig_list', locals: {gigs: @gigs} %>
+    <%= render partial: '/gigs/gig_list', locals: {gigs: @gigs, suppress_header: false} %>
   <% end %>
 
 </div>

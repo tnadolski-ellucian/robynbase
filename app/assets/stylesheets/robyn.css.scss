@@ -26,9 +26,9 @@ table.main-search-list {
     color: #337ab7;
   }
 
-  td:first-child, th:first-child {
-    width: 70%;
-  }
+  // td:first-child, th:first-child {
+  //   width: 70%;
+  // }
 
 }
 
@@ -177,3 +177,23 @@ dl.dl-horizontal {
   }
 }
 
+.glyphicon {
+  top: 2px;
+  margin-left: 5px;
+}
+
+.lyrics {
+  pre {
+    display: block;
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: white;
+    border: none;
+    border-radius: 0;
+  }
+}
