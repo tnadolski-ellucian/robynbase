@@ -6,48 +6,21 @@
 
 <h2 class="main-header"><%= @song.full_name %> <small> <%= @song.Author.nil? ? "Robyn Hitchcock" : @song.Author %></small></h2>
 
-<h3 class="main-header">Albums</h3>
 
-<% if @song.compositions %>
-
-  <table class="table table-hover main-search-list">
-    <thead>
-    <tr>
-      <th>Title</th>
-      <th>Year</th>
-    </tr>
-    </thead>
-    <% for comp in @song.get_albums %>
-      <tr data-path="<%= composition_path(comp) %>">
-        <td class="main-column"> <%= comp.Title %> </td>
-        <td> <%= comp.Year.to_i %> </td>
-      </tr>
-    <% end %>
-  </table>
-
+<!-- albums section -->
+<% if @song.compositions.present? %>
+  <h3 class="main-header">Albums</h3>
+  <%= render partial: '/compositions/album_list', locals: {albums: @song.get_albums} %>
 <% end %>
 
-<h3 class="main-header">Gigs</h3>
+<% if @song.gigs.present? %>
+  <h3 class="main-header">Gigs</h3>
+  <%= render partial: '/gigs/gig_list', locals: {gigs: @song.gigs} %>
+<% end %>
 
-  <table class="table table-hover main-search-list">
-
-    <thead>
-    <tr>
-      <th>Venue</th>
-      <th>Date</th>
-    </tr>
-    </thead>
-
-    <% for gig in @song.gigs %>
-      <tr data-path="<%= gig_path(gig) %>">
-        <td class="main-column"> <%= gig.Venue %> </td>
-        <td> <%= gig.GigDate.to_date.to_formatted_s(:long) %> </td>
-      </tr>
-    <% end %>
-
-  </table>
-
-<h3 class="main-header">Lyrics</h3>
-
-<pre><%= @song.Lyrics =%> </pre>
+<!-- lyrics -->
+<% if @song.Lyrics.present? %>
+  <h3 class="main-header">Lyrics</h3>
+  <pre><%= @song.Lyrics =%> </pre>
+<% end %>
 

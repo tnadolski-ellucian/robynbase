@@ -15,26 +15,6 @@
 
 <% end %>
 
-<% if @compositions %>
-
-  <table class="table table-hover main-search-list">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Label</th>
-        <th>Type</th>
-        <th>Year</th>
-      </tr>
-    </thead>
-
-    <% for comp in @compositions %>
-      <tr data-path="<%= composition_path(comp) %>">
-        <td class="main-column"> <%= comp.Title %> </td>
-        <td class="main-column"> <%= comp.Label %> </td>
-        <td> <%= comp.Type %> </td>
-        <td> <%= comp.Year.to_i %> </td>
-      </tr>
-    <% end %>
-  </table>
-
+<% if @compositions.present? %>
+  <%= render partial: '/compositions/album_list', locals: {albums: @compositions} %>
 <% end %>

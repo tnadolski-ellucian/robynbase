@@ -41,33 +41,33 @@ table.main-search-list {
   }
 }
 
-h3.main-header {
-  background-color: rgb(225, 135, 40);
-  color: white !important;
-  position: relative;
-  // border: solid gray;
-  // border-width: 0 0 2px 0;
-  padding: 5px 0;
+// h3.main-header {
+//   background-color: rgb(225, 135, 40);
+//   color: white !important;
+//   position: relative;
+//   // border: solid gray;
+//   // border-width: 0 0 2px 0;
+//   padding: 5px 0;
 
 
-  &:after, &:before {
-    content: "";
-    position: absolute;
-    background: rgb(225, 135, 40);  /* Match the background */
-    top: 0;
-    bottom: 0;
-    width: 9999px;   /* some huge width */
-  } 
+//   &:after, &:before {
+//     content: "";
+//     position: absolute;
+//     background: rgb(225, 135, 40);  /* Match the background */
+//     top: 0;
+//     bottom: 0;
+//     width: 9999px;   /* some huge width */
+//   } 
 
-  &:before {
-    right: 100%; 
-  }
+//   &:before {
+//     right: 100%; 
+//   }
 
-  &:after {
-    left: 100%;
-  }
+//   &:after {
+//     left: 100%;
+//   }
 
-} 
+// } 
 
 
 /* typeahead overrides */

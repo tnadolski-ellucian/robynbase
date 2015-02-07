@@ -1,0 +1,14 @@
+<table class="table table-hover main-search-list">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Author</th>
+  </tr>
+  </thead>
+  <% for song in songs %>
+    <tr data-path="<%=song_path(song)%>">
+      <td class="main-column"> <%= song.full_name %> </td>
+      <td> <%= song.Author.nil? ? "Robyn Hitchcock" : song.Author %> </td>
+    </tr>
+  <% end %>
+</table>

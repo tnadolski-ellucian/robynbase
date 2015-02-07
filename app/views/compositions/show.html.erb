@@ -36,7 +36,11 @@
     <ol class="album-track-list">
 
       <% for track in @comp.tracks %>
-        <li> <%= link_to track.song.full_name, song_path(track.song) %></li>
+        <% if track.song.present? %>
+          <li> <%= link_to track.song.full_name, song_path(track.song) %></li>
+        <% else %>
+          <li> <%= track.Song %></li>
+        <% end %>
       <% end %>
 
     </ol>
