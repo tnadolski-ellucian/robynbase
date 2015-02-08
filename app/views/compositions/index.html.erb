@@ -1,20 +1,96 @@
 
+<div class="album-list">
+
 <%= form_tag('/compositions/index', :method => 'GET') do %>
 
-<p>
-  <%= text_field_tag :search_value, params['search_value'] %>
+<div class="search-criteria">
 
+  <div class="row">
 
-  <%= check_box_tag 'search_type[]', 'title', Array(params['search_type']).include?('title') %> Title
-  <%= check_box_tag 'search_type[]', 'label', Array(params['search_type']).include?('label')  %> Label
-  <%= check_box_tag 'search_type[]', 'year', Array(params['search_type']).include?('year')  %> Year
+    <div class="col-sm-12">
 
-  <%= submit_tag "Search", :name => nil %>
+      <%= text_field_tag :search_value, params['search_value'] %>
 
-</p>
+      <%= submit_tag "Search", :name => nil %>
+
+      <span class="criteria search-type-criteria">
+        <%= radio_button_tag 'search_type[]', 'title', Array(params['search_type']).include?('title') %>  <span class="radio-label">Title</span>
+        <%= radio_button_tag 'search_type[]', 'label', Array(params['search_type']).include?('label')  %> <span class="radio-label">Label</span>
+        <%= radio_button_tag 'search_type[]', 'year', Array(params['search_type']).include?('year')  %>   <span class="radio-label">Year</span>
+      </span>
+
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm-12">
+
+      <% expand_advanced = ( params["media_type"].present? or params["release_type"].present? ) %>
+
+      <div class="advanced-options-header">
+        <span class="glyphicon glyphicon-triangle-<%= expand_advanced ? 'bottom' : 'right'%>" aria-hidden="true"></span>
+        <span class="header-name">Advanced Options</span>
+      </div>
+
+      <!-- advanced option block -->
+      <div class="row advanced-options <%= expand_advanced ? 'expanded' : '' %>">
+
+        <!-- media types -->
+        <div class="col-sm-6">
+
+          <div class="criteria">
+
+            <div class="header-name">Media</div>
+
+            <div class="criteria-options" >
+              <% Composition::MEDIA_TYPES.each do |name, key| %>    
+                <%= check_box_tag 'media_type[]', key, Array(params['media_type']).include?(key.to_s) %>  
+                <span class="radio-label"> <%= name %> </span> <br/>
+              <% end %>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- release types -->
+        <div class="col-sm-6">
+
+          <div class="criteria">
+
+            <div class="header-name">Release Type</div>
+
+            <div class="criteria-options">
+
+              <% Composition::RELEASE_TYPES.each do |name, key| %>    
+                <%= check_box_tag 'release_type[]', key, Array(params['release_type']).include?(key.to_s) %> 
+                <span class="radio-label"> <%= name %> </span> <br/>
+              <% end %>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
 <% end %>
 
-<% if @compositions.present? %>
-  <%= render partial: '/compositions/album_list', locals: {albums: @compositions} %>
-<% end %>
+<div class="search-results">
+
+  <% if @compositions.present? %>
+    <%= render partial: '/compositions/album_list', locals: {albums: @compositions} %>
+  <% end %>
+
+</div>
+
+</div>

@@ -1,26 +1,22 @@
 class CompositionsController < ApplicationController
 
-  # types of media, and the order in which they should appear
-  MEDIA_TYPES = {
-    'CD'         => 0,
-    'Vinyl LP'   => 1,
-    'Vinyl 12"'  => 2,
-    'Vinyl 7"'   => 3,
-    'Cassette'   => 4,
-    'CD 3"'      => 5,
-    'CD Single'  => 6,
-    'DVD'        => 7,
-    'Fixel-disc' => 8,
-    'Videotape'  => 9,
-    'Other'      => 10
-  }
-
-  MEDIA_TYPES.default = 10;
-
   def index
-    
-    if params[:search_type].present?
-      @compositions = Composition.search_by(params[:search_type] ? params[:search_type].map {|type| type.to_sym} : nil, params[:search_value])
+
+    # if the user entered any search terms at all    
+    if params[:search_type].present? || params[:media_type].present? || params[:release_type].present?
+
+      # textual search
+      search_type = params[:search_type] ? params[:search_type].map {|type| type.to_sym} : nil
+
+      # media types
+      media_types = params[:media_type].map {|type| type.to_i} if params[:media_type].present?
+
+      # release types
+      release_types = params[:release_type].map {|type| type.to_i} if params[:release_type].present?
+
+      # grab the albums, based on the given search criteria
+      @compositions = Composition.search_by(search_type, params[:search_value], media_types, release_types)
+      
     end
 
   end
@@ -34,7 +30,7 @@ class CompositionsController < ApplicationController
     @other_editions = Composition.where(Title: comp.Title).sort do |a, b| 
 
       # first sort by medium
-      medium_order = MEDIA_TYPES[a.Medium] <=> MEDIA_TYPES[b.Medium]
+      medium_order = Composition::MEDIA_TYPES[a.Medium] <=> Composition::MEDIA_TYPES[b.Medium]
 
       # if the media match, sort the ones *without* notes higher
       if medium_order == 0

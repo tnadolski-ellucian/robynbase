@@ -14,8 +14,10 @@
 
 table.main-search-list {
 
-  tr:hover {
-    cursor: pointer;
+  tbody {
+    tr:hover {
+     cursor: pointer;
+    }
   }
 
   .main-column {
@@ -68,6 +70,20 @@ table.main-search-list {
     .radio-label {
       margin-right: 5px;
     }
+
+    .header-name {
+      font-weight: bold;
+    }
+
+    .criteria-options {
+      padding-top: 5px;
+      // padding-left: 15px;
+
+      -webkit-columns: 3;
+         -moz-columns: 3;
+              columns: 3;
+    }
+
   }
 
 }

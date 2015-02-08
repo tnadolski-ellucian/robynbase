@@ -20,4 +20,12 @@ $(window).on("load", (e) ->
     albumHeader.find(".glyphicon").toggleClass("glyphicon-triangle-right glyphicon-triangle-bottom")
   )
 
+  # hide show advanced options in list page
+  $(".album-list .advanced-options-header").on("click", (e) ->
+    header = $(e.target).parents(".advanced-options-header")
+    criteriaBlock = header.next();
+    criteriaBlock.toggleClass("expanded");
+    header.find(".glyphicon").toggleClass("glyphicon-triangle-right glyphicon-triangle-bottom")
+  )
+
 )

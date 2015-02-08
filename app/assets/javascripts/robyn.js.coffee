@@ -47,7 +47,7 @@ $(window).on("load", ->
 
   )
 
-  $(".main-search-list tr").on("click", (e) ->
+  $(".main-search-list tbody tr").on("click", (e) ->
     window.location = $(e.currentTarget).data("path")
   )
    

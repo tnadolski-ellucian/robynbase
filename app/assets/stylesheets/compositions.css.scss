@@ -2,6 +2,63 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.album-list {
+
+  input[name=search_value] {
+    width: 300px;
+  }
+
+  .search-type-criteria {
+    padding-left: 15px;
+  }
+
+  .advanced-options-header {
+    cursor: pointer;
+
+    padding-top: 10px;
+
+    .glyphicon {
+      font-size: 10px;
+      top: 0;
+    }
+
+    &:hover {
+      .header-name {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .advanced-options {
+
+    display: none;
+    padding-left: 15px;
+
+
+    .criteria {
+
+      .header-name {
+        font-style: italic;
+        font-size: 13px;
+        font-weight: normal;
+      }
+
+      .criteria-options {
+        padding: 10px;
+        border: 1px gray dotted;
+        font-size: 12px;
+      }
+
+    }
+
+    &.expanded {
+      display: block;
+    }
+
+  }
+
+}
+
 .albums-page {
 
   h4 {
