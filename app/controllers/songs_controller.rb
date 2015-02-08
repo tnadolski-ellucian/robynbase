@@ -1,9 +1,14 @@
 class SongsController < ApplicationController
 
   def index
+
     if params[:search_type].present?
       @songs = Song.search_by(params[:search_type] ? params[:search_type].map {|type| type.to_sym} : nil, params[:search_value])
+    else 
+      params[:search_type] = "title"
     end
+
+    @show_lyrics = (params[:search_type].size == 1 and params[:search_type].first == "lyrics")
 
   end
 

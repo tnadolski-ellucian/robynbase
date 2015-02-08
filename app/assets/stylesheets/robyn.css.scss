@@ -14,10 +14,6 @@
 
 table.main-search-list {
 
-  // thead th {
-  //   border-top: none;
-  // }
-
   tr:hover {
     cursor: pointer;
   }
@@ -27,11 +23,11 @@ table.main-search-list {
   }
 
   td:first-child, th:first-child {
-    padding: 8px 8px 8px 0;
+    padding: 8px 8px 8px 4px;
     // width: 70%;
   }
 
-  
+
   .glyphicon {
     top: 2px;
     margin-left: 5px;
@@ -47,6 +43,38 @@ table.main-search-list {
     margin-left: 20px;
   }
 }
+
+.search-criteria {
+
+  padding: 10px 0 20px;
+
+  input[type=submit] {
+    margin-left: 5px;
+    padding: 6px;
+  }
+
+  input[type=text] {
+    padding: 4px 12px;
+  }
+
+  button {
+    padding-left: 10px;
+  }
+
+  .criteria {
+
+    padding-top: 10px;
+
+    .radio-label {
+      margin-right: 5px;
+    }
+  }
+
+}
+
+.search-results {
+}
+
 
 // h3.main-header {
 //   background-color: rgb(225, 135, 40);
@@ -177,7 +205,9 @@ dl.dl-horizontal {
   margin-bottom: 0px;
   dt {
     text-align: left;
-    width: 140px
+    width: 140px;
+    font-weight: 400;
+    font-style: italic;
   }
   dd {
     margin-left: 20px;

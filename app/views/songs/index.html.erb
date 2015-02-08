@@ -1,20 +1,26 @@
 
 <%= form_tag('/songs/index', :method => 'GET') do %>
 
-<p>
+<div class="search-criteria">
+
   <%= text_field_tag :search_value, params['search_value'] %>
-
-
-  <%= check_box_tag 'search_type[]', 'title', Array(params['search_type']).include?('title') %> Title
-  <%= check_box_tag 'search_type[]', 'lyrics', Array(params['search_type']).include?('lyrics')  %> Lyrics
-  <%= check_box_tag 'search_type[]', 'author', Array(params['search_type']).include?('author')  %> Author
 
   <%= submit_tag "Search", :name => nil %>
 
-</p>
+  <div class="criteria">
+    <%= radio_button_tag 'search_type[]', 'title', Array(params['search_type']).include?('title')   %> <span class="radio-label">Title</span>
+    <%= radio_button_tag 'search_type[]', 'lyrics', Array(params['search_type']).include?('lyrics') %> <span class="radio-label">Lyrics</span>
+    <%= radio_button_tag 'search_type[]', 'author', Array(params['search_type']).include?('author') %> <span class="radio-label">Author</span>
+  </div>
+
+</div>
 
 <% end %>
 
-<% if @songs %>
-  <%= render partial: '/songs/song_list', locals: {songs: @songs} %>
-<% end %>
+<div class="search-results">
+
+  <% if @songs.present? %>
+    <%= render partial: '/songs/song_list', locals: {songs: @songs, show_lyrics_snippet: @show_lyrics ? params[:search_value] : nil} %>
+  <% end %>
+
+</div>

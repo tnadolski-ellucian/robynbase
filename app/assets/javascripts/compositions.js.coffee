@@ -14,7 +14,7 @@ $(window).on("load", (e) ->
 
   # hide/show album blocks
   $(".album-block-header").on("click", (e) -> 
-    albumHeader = $(e.target).parent(".album-block-header");
+    albumHeader = $(e.target).parents(".album-block-header");
     albumBlock = $(".album-block-container[data-compid=" + albumHeader.data("compid") + "]")
     albumBlock.toggle()
     albumHeader.find(".glyphicon").toggleClass("glyphicon-triangle-right glyphicon-triangle-bottom")

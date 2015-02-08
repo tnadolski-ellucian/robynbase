@@ -1,3 +1,6 @@
+
+<%= show_lyrics_snippet = nil unless local_assigns.has_key? :show_lyrics_snippet %>
+
 <table class="table table-hover main-search-list">
   <thead>
   <tr>
@@ -11,11 +14,19 @@
         <%= song.full_name %> 
 
         <% if song.Lyrics.present? %>
-          <span title="Lyrics provided" class="glyphicon glyphicon-book" aria-hidden="true"></span>
+          <a href="<%=song_path(song)%>#lyrics">
+            <span title="Lyrics provided" class="glyphicon glyphicon-book" aria-hidden="true"></span>
+          </a>
         <% end %>
         
         <% if song.Tab.present? %>
+        <a href="<%=song_path(song)%>#tabs">
           <span title="Tablature provided" class="glyphicon glyphicon-music" aria-hidden="true"></span>
+        </a>
+        <% end %>
+
+        <% if show_lyrics_snippet.present? and song.Lyrics.present? %>
+          <div class="lyrics-snippet"> <%= highlight_search_lyrics(show_lyrics_snippet, song.Lyrics) %></div>
         <% end %>
 
       </td>

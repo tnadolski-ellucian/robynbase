@@ -5,7 +5,7 @@
 
 <div class="albums-page">
 
-<h2><%= @comp.Title %></h2>
+<h2 class="album-title"><%= @comp.Title %></h2>
 
 <!-- images: <%= @associated_images.to_s =%> -->
 
@@ -33,17 +33,23 @@
 
     <% end %>
 
-    <ol class="album-track-list">
+    <div class="album-track-list">
 
-      <% for track in @comp.tracks %>
-        <% if track.song.present? %>
-          <li> <%= link_to track.song.full_name, song_path(track.song) %></li>
-        <% else %>
-          <li> <%= track.Song %></li>
+      <h5>Tracks</h5>
+
+      <ol>
+
+        <% for track in @comp.tracks %>
+          <% if track.song.present? %>
+            <li> <%= link_to track.song.full_name, song_path(track.song) %></li>
+          <% else %>
+            <li> <%= track.Song %></li>
+          <% end %>
         <% end %>
-      <% end %>
 
-    </ol>
+      </ol>
+
+    </div>
 
   </div>
 

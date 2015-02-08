@@ -6,22 +6,8 @@
 <div class="inpage-navigation">
   <% if @albums_present %> <a href="#albums">Albums</a> <% end %>
   <% if @gigs_present %> | <a href="#gigs">Gigs</a> <% end %>
+  <% if @song.Lyrics %> | <a href="#lyrics">Lyrics</a> <% end %>
   <% if @song.Tab %> | <a href="#tabs">Tablature</a> <% end %>
-</div>
-
-<div class="row">
-  <div class="col-sm-12">
-
-    <!-- lyrics -->
-    <a name="lyrics"></a>
-    <% if @song.Lyrics.present? %>
-      <h3 class="main-header">Lyrics</h3>
-      <div class="lyrics">
-        <pre><%= @song.Lyrics =%> </pre>
-      </div>
-    <% end %>
-
-  </div>
 </div>
 
 <!-- albums on which the song appears-->
@@ -31,22 +17,9 @@
 
     <div class="col-sm-6">
 
-        <a name="albums"></a>
-        <h3 class="main-header">Albums</h3>
-        <%= render partial: '/compositions/album_list', locals: {albums: @song.get_albums,  suppress_header: true} %>
-
-    </div>
-
-  <% end %>
-
-  <!-- gigs at whichs the song was played -->
-  <% if @song.gigs.present? %>
-
-    <div class="col-sm-6">
-
-      <a name="gigs"></a>
-      <h3 class="main-header">Gigs</h3>
-      <%= render partial: '/gigs/gig_list', locals: {gigs: @song.gigs, suppress_header: true} %>
+      <a name="albums"></a>
+      <h3 class="main-header">Albums</h3>
+      <%= render partial: '/compositions/album_list', locals: {albums: @song.get_albums,  suppress_header: true} %>
 
     </div>
 
@@ -54,18 +27,51 @@
 
 </div>
 
+<!-- gigs at whichs the song was played -->
+<% if @song.gigs.present? %>
+
+<div class="row">
+
+  <div class="col-sm-6">
+
+    <a name="gigs"></a>
+    <h3 class="main-header">Gigs</h3>
+    <%= render partial: '/gigs/gig_list', locals: {gigs: @song.gigs, suppress_header: true} %>
+
+  </div>
+
+</div>
+
+<% end %>
+
+<!-- lyrics -->
+<% if @song.Lyrics.present? %>
 
 <div class="row">
   <div class="col-sm-12">
 
-    <!-- lyrics -->
-    <a name="tabs"></a>
-    <% if @song.Tab.present? %>
-      <h3 class="main-header">Tablature</h3>
-      <div class="lyrics">
-        <pre><%= @song.Tab =%> </pre>
-      </div>
-    <% end %>
+    <a name="lyrics"></a>
+    <h3 class="main-header">Lyrics</h3>
+    <div class="lyrics">
+      <pre><%= @song.Lyrics =%> </pre>
+    </div>
 
   </div>
 </div>
+<% end %>
+
+<!-- tablature -->
+<% if @song.Tab.present? %>
+
+<div class="row">
+  <div class="col-sm-12">
+
+    <a name="tabs"></a>
+    <h3 class="main-header">Tablature</h3>
+    <div class="lyrics">
+      <pre><%= @song.Tab =%> </pre>
+    </div>
+  </div>
+</div>
+
+<% end %>
