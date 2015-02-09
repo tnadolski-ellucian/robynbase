@@ -37,7 +37,7 @@ class Composition < ActiveRecord::Base
   RELEASE_TYPES.default = 8;
     
 
-  def self.search_by(kind, search, media_types, release_types)
+  def self.search_by(kind, search, media_types = nil, release_types = nil)
 
     kind = [:title, :release_year, :label] if kind.nil? or kind.length == 0
 

@@ -1,9 +1,13 @@
+<%= suppress_header = nil unless local_assigns.has_key? :suppress_header %>
+
 <table class="table table-hover main-search-list">
 
   <% if not suppress_header %>
     <thead>
     <tr>
       <th>Venue</th>
+      <th>City</th>
+      <th>Country</th>
       <th>Date</th>
     </tr>
     </thead>
@@ -12,6 +16,8 @@
   <% for gig in gigs %>
     <tr data-path="<%= gig_path(gig) %>">
       <td class="main-column"> <%= gig.Venue %> </td>
+      <td> <%= gig.venue.City %> </td>
+      <td> <%= gig.venue.Country %> </td>
       <td> <%= gig.GigDate.to_date.to_formatted_s(:long) %> </td>
     </tr>
   <% end %>

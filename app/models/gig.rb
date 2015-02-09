@@ -11,7 +11,7 @@ class Gig < ActiveRecord::Base
 
   has_many :gigsets, foreign_key: "GIGID"
   has_many :songs, through: :gigsets, foreign_key: "GIGID"
-  has_one :venue, foreign_key: "VENUEID"
+  belongs_to :venue, foreign_key: "VENUEID"
 
   def self.search_by(kind, search)
 
@@ -19,7 +19,7 @@ class Gig < ActiveRecord::Base
 
     kind = [:venue, :gig_year, :venue_city] if kind.nil? or kind.length == 0
 
-    conditions = Array(kind).reject{|x| x == :venue_city}.map do |term|
+    conditions = Array(kind).reject{|x| x == :venue_city || x == :venue_country}.map do |term|
 
       case term
         when :venue
@@ -39,15 +39,15 @@ class Gig < ActiveRecord::Base
       gigs = where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
 
       if kind.include? :venue_city
-        venues = self.joins(:venue).where("City LIKE ?",  search)
+        gigs = self.joins(:venue).where("City LIKE ?", search)
+      end
 
-        if not venues.nil? 
-          gigs.concat(venues)
-        end
+      if kind.include? :venue_country
+        gigs = self.joins(:venue).where("Country LIKE ?", search)
       end
 
       # sort final results by date
-      gigs.sort { |x,y | x.GigDate <=> y.GigDate }
+      gigs.includes(:venue).sort { |x,y | x.GigDate <=> y.GigDate }
 
     else
       all

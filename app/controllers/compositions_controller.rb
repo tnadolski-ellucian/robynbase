@@ -2,21 +2,29 @@ class CompositionsController < ApplicationController
 
   def index
 
+    search_type_param  = params[:search_type]
+    media_type_param   = params[:media_type]
+    release_type_param = params[:release_type]
+
+    if search_type_param.nil?
+      params[:search_type] = "title"
+    end
+
     # if the user entered any search terms at all    
-    if params[:search_type].present? || params[:media_type].present? || params[:release_type].present?
+    if search_type_param.present? || media_type_param.present? || release_type_param.present?
 
       # textual search
-      search_type = params[:search_type] ? params[:search_type].map {|type| type.to_sym} : nil
+      search_type = search_type_param ? search_type_param.map {|type| type.to_sym} : nil
 
       # media types
-      media_types = params[:media_type].map {|type| type.to_i} if params[:media_type].present?
+      media_types = media_type_param.map {|type| type.to_i} if media_type_param.present?
 
       # release types
-      release_types = params[:release_type].map {|type| type.to_i} if params[:release_type].present?
+      release_types = release_type_param.map {|type| type.to_i} if release_type_param.present?
 
       # grab the albums, based on the given search criteria
       @compositions = Composition.search_by(search_type, params[:search_value], media_types, release_types)
-      
+
     end
 
   end

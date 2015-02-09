@@ -48,6 +48,14 @@ table.main-search-list {
 
 .search-criteria {
 
+  input[name=search_value] {
+    width: 300px;
+  }
+
+  .search-type-criteria {
+    padding-left: 15px;
+  }
+
   padding: 10px 0 20px;
 
   input[type=submit] {
@@ -89,6 +97,7 @@ table.main-search-list {
 }
 
 .search-results {
+  padding-top: 10px;
 }
 
 
