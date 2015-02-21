@@ -37,9 +37,33 @@ table.main-search-list {
 
 }
 
+.inpage-navigation {
+  font-size: 14px;
+
+  span {
+    padding-left: 7px;
+
+    &:after {
+      content: "|";
+      padding-left: 7px;
+
+    }
+
+    &:last-child:after {
+      content: ""
+    }
+  }
+
+}
+
+.underlined-header {
+  border-bottom: 1px solid rgb(221, 221, 221);
+  padding-bottom: 3px;
+}
 
 .main-header {
   margin-top: 30px;
+  margin-bottom: 30px;
 
   small {
     margin-left: 20px;
@@ -50,6 +74,7 @@ table.main-search-list {
   .typeahead,
   .tt-query,
   .tt-hint {
+    font-size: 20px;
     outline: none;
     border-radius: 0;
   }
@@ -58,7 +83,8 @@ table.main-search-list {
 
 .search-criteria {
 
-  input[name=search_value] {
+  // input[name=search_value] {
+  .search-field {
     width: 300px;
     padding: 4px 12px;
   }

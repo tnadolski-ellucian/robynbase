@@ -1,13 +1,56 @@
 
 <!-- <%= link_to "Back", controller: 'robyn' %> -->
 
-<h2 class="main-header"><%= @song.full_name %> <small> <%= @song.Author.nil? ? "Robyn Hitchcock" : @song.Author %></small></h2>
+<h2 class="main-header"><%= @song.full_name %> 
 
-<div class="inpage-navigation">
-  <% if @albums_present %> <a href="#albums">Albums</a> <% end %>
-  <% if @gigs_present %> | <a href="#gigs">Gigs</a> <% end %>
-  <% if @song.Lyrics %> | <a href="#lyrics">Lyrics</a> <% end %>
-  <% if @song.Tab %> | <a href="#tabs">Tablature</a> <% end %>
+  <small>
+    <span class="inpage-navigation">
+      <% if @albums_present %> <span><a href="#albums">Albums</a></span> <% end %>
+      <% if @gigs_present %> <span><a href="#gigs">Gigs</a></span> <% end %>
+      <% if @song.Lyrics %> <span><a href="#lyrics">Lyrics</a></span> <% end %>
+      <% if @song.Tab %> <span><a href="#tabs">Tablature</a></span> <% end %>
+    </span>
+  </small>
+
+</h2>
+
+<div class="row">
+
+  <div class="col-sm-9">
+
+    <h4 class="underlined-header">Details</h4>
+
+    <div class="album-description-block">
+
+      <dl class="dl-horizontal">
+        <dt>Author</dt>
+        <dd><%= @song.Author.nil? ? "Robyn Hitchcock" : @song.Author %></dd>
+      </dl>
+
+      <% if @song.Versions %>
+
+        <dl class="dl-horizontal">
+          <dt>Versions</dt>
+          <dd><%= @song.Versions %></dd>
+        </dl>
+
+      <% end %>
+
+      <% if @song.OrigBand %>
+
+        <dl class="dl-horizontal">
+          <dt>Original Band</dt>
+          <dd><%= @song.OrigBand %></dd>
+        </dl>
+
+      <% end %>
+
+      </br>
+      
+    </div>
+
+  </div>
+
 </div>
 
 <!-- albums on which the song appears-->
@@ -15,10 +58,10 @@
 
   <% if @song.compositions.present? %>
 
-    <div class="col-sm-6">
+    <div class="col-sm-9">
 
       <a name="albums"></a>
-      <h3 class="main-header">Albums</h3>
+      <h4>Albums</h4>
       <%= render partial: '/compositions/album_list', locals: {albums: @song.get_albums,  suppress_header: true} %>
 
     </div>
@@ -32,10 +75,10 @@
 
 <div class="row">
 
-  <div class="col-sm-6">
+  <div class="col-sm-9">
 
     <a name="gigs"></a>
-    <h3 class="main-header">Gigs</h3>
+    <h4>Gigs</h4>
     <%= render partial: '/gigs/gig_list', locals: {gigs: @song.gigs, suppress_header: true} %>
 
   </div>
@@ -51,7 +94,7 @@
   <div class="col-sm-12">
 
     <a name="lyrics"></a>
-    <h3 class="main-header">Lyrics</h3>
+    <h4 class="underlined-header">Lyrics</h4>
     <div class="lyrics">
       <pre><%= @song.Lyrics =%> </pre>
     </div>

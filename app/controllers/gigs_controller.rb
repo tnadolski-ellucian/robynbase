@@ -46,7 +46,7 @@ class GigsController < ApplicationController
       end
 
       # grab gigs that meet *all* the secified criteria
-      @gigs = Gig.search_by(search_type, params[:search_value], date_criteria)
+      @gigs = Gig.search_by(search_type, params[:gig_search_value], date_criteria)
 
     else
       params[:search_type] = "venue"

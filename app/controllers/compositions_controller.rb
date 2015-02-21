@@ -23,7 +23,7 @@ class CompositionsController < ApplicationController
       release_types = release_type_param.map {|type| type.to_i} if release_type_param.present?
 
       # grab the albums, based on the given search criteria
-      @compositions = Composition.search_by(search_type, params[:search_value], media_types, release_types)
+      @compositions = Composition.search_by(search_type, params[:album_search_value], media_types, release_types)
 
     end
 
