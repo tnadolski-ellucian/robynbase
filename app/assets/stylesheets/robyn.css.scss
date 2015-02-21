@@ -46,6 +46,16 @@ table.main-search-list {
   }
 }
 
+.main-page {
+  .typeahead,
+  .tt-query,
+  .tt-hint {
+    outline: none;
+    border-radius: 0;
+  }
+
+}
+
 .search-criteria {
 
   input[name=search_value] {
