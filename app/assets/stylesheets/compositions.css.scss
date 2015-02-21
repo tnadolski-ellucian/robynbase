@@ -4,50 +4,7 @@
 
 .album-list {
 
-  .advanced-options-header {
-    cursor: pointer;
 
-    padding-top: 10px;
-
-    .glyphicon {
-      font-size: 10px;
-      top: 0;
-    }
-
-    &:hover {
-      .header-name {
-        text-decoration: underline;
-      }
-    }
-  }
-
-  .advanced-options {
-
-    display: none;
-    padding-left: 15px;
-
-
-    .criteria {
-
-      .header-name {
-        font-style: italic;
-        font-size: 13px;
-        font-weight: normal;
-      }
-
-      .criteria-options {
-        padding: 10px;
-        border: 1px gray dotted;
-        font-size: 12px;
-      }
-
-    }
-
-    &.expanded {
-      display: block;
-    }
-
-  }
 
 }
 

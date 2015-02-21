@@ -7,13 +7,15 @@
 
 
 class Gig < ActiveRecord::Base
+
   self.table_name = "GIG"
 
   has_many :gigsets, foreign_key: "GIGID"
   has_many :songs, through: :gigsets, foreign_key: "GIGID"
   belongs_to :venue, foreign_key: "VENUEID"
 
-  def self.search_by(kind, search)
+
+  def self.search_by(kind, search, date_criteria = nil)
 
     logger.info ("::::::::::: gigs: #{search}")
 
@@ -44,6 +46,16 @@ class Gig < ActiveRecord::Base
 
       if kind.include? :venue_country
         gigs = self.joins(:venue).where("Country LIKE ?", search)
+      end
+
+      if date_criteria.present?
+        date = date_criteria[:date]
+        range_type = date_criteria[:range_type]
+        range = date_criteria[:range]
+
+        # debugger
+        
+        gigs = where(:gigdate => date.advance(range_type => -range) .. date.advance(range_type => range))
       end
 
       # sort final results by date

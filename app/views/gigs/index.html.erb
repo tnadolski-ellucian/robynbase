@@ -13,11 +13,62 @@
       <%= submit_tag "Search", :name => nil %>
 
       <span class="criteria search-type-criteria">
-        <%= radio_button_tag 'search_type[]', 'venue', Array(params['search_type']).include?('venue') %>        <span class="radio-label">Venue</span>
-        <%= radio_button_tag 'search_type[]', 'venue_city', Array(params['search_type']).include?('venue_city') %>   <span class="radio-label">City</span>
-        <%= radio_button_tag 'search_type[]', 'venue_country', Array(params['search_type']).include?('venue_country') %>   <span class="radio-label">Country</span>
-        <%= radio_button_tag 'search_type[]', 'gig_year', Array(params['search_type']).include?('gig_year')  %> <span class="radio-label">Gig Year</span>
+        <%= radio_button_tag 'search_type[]', 'venue', Array(params['search_type']).include?('venue') %>                 <span class="radio-label">Venue</span>
+        <%= radio_button_tag 'search_type[]', 'venue_city', Array(params['search_type']).include?('venue_city') %>       <span class="radio-label">City</span>
+        <%= radio_button_tag 'search_type[]', 'venue_country', Array(params['search_type']).include?('venue_country') %> <span class="radio-label">Country</span>
+        <%= radio_button_tag 'search_type[]', 'gig_year', Array(params['search_type']).include?('gig_year')  %>          <span class="radio-label">Gig Year</span>
       </span>
+
+    </div>
+
+  </div>
+
+  <div class="row">
+
+  <div class="col-sm-12">
+
+    <% expand_advanced = ( params["gig_date"].present? ) %>
+
+    <div class="advanced-options-header">
+      <span class="glyphicon glyphicon-triangle-<%= expand_advanced ? 'bottom' : 'right'%>" aria-hidden="true"></span>
+      <span class="header-name">Advanced Options</span>
+    </div>
+
+    <!-- advanced option block -->
+    <div class="row advanced-options <%= expand_advanced ? 'expanded' : '' %>">
+
+      <!-- media types -->
+      <div class="col-sm-6">
+
+        <div class="criteria dates">
+          <div class="header-name">Gig happened</div>
+
+          <div class="criteria-body" >
+
+            <span>within</span>
+
+            <span>
+              <%= text_field_tag :gig_range, params['gig_range'], { :size => 4 } %>
+            </span>
+
+            <span>
+              <%= select_tag :gig_range_type, options_for_select({
+                      "Days" => GigsController::RANGE_TYPE[:days],
+                      "Months" => GigsController::RANGE_TYPE[:months], 
+                      "Years"=> GigsController::RANGE_TYPE[:years]                      
+                    }, params['gig_range_type'].to_i)
+            %>
+            </span>
+
+            <span>of</span>
+
+            <%= text_field_tag :gig_date, params['gig_date'], { :size => 10 } %>
+
+          </div>
+
+        </div>
+
+      </div>
 
     </div>
 

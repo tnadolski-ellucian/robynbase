@@ -50,6 +50,7 @@ table.main-search-list {
 
   input[name=search_value] {
     width: 300px;
+    padding: 4px 12px;
   }
 
   .search-type-criteria {
@@ -61,10 +62,6 @@ table.main-search-list {
   input[type=submit] {
     margin-left: 5px;
     padding: 6px;
-  }
-
-  input[type=text] {
-    padding: 4px 12px;
   }
 
   button {
@@ -254,4 +251,49 @@ dl.dl-horizontal {
     border: none;
     border-radius: 0;
   }
+}
+
+.advanced-options-header {
+  cursor: pointer;
+
+  padding-top: 10px;
+
+  .glyphicon {
+    font-size: 10px;
+    top: 0;
+  }
+
+  &:hover {
+    .header-name {
+      text-decoration: underline;
+    }
+  }
+}
+
+.advanced-options {
+
+  display: none;
+  padding-left: 15px;
+
+
+  .criteria {
+
+    .header-name {
+      font-style: italic;
+      font-size: 13px;
+      font-weight: normal;
+    }
+
+    .criteria-body {
+      padding: 10px;
+      border: 1px gray dotted;
+      font-size: 12px;      
+    }
+
+  }
+
+  &.expanded {
+    display: block;
+  }
+
 }

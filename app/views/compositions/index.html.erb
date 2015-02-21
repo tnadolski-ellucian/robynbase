@@ -44,7 +44,7 @@
 
             <div class="header-name">Media</div>
 
-            <div class="criteria-options" >
+            <div class="criteria-body criteria-options" >
               <% Composition::MEDIA_TYPES.each do |name, key| %>    
                 <%= check_box_tag 'media_type[]', key, Array(params['media_type']).include?(key.to_s) %>  
                 <span class="radio-label"> <%= name %> </span> <br/>
@@ -62,7 +62,7 @@
 
             <div class="header-name">Release Type</div>
 
-            <div class="criteria-options">
+            <div class="criteria-body criteria-options">
 
               <% Composition::RELEASE_TYPES.each do |name, key| %>    
                 <%= check_box_tag 'release_type[]', key, Array(params['release_type']).include?(key.to_s) %> 
