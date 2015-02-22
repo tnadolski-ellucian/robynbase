@@ -17,4 +17,5 @@
 //= require jquery.fancybox-buttons
 //= require jquery.fancybox-media
 //= require jquery.fancybox-thumbs
+//= require jquery-ui.min
 //= require_tree .

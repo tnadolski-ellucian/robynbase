@@ -55,7 +55,8 @@ class Gig < ActiveRecord::Base
 
         # debugger
         
-        gigs = where(:gigdate => date.advance(range_type => -range) .. date.advance(range_type => range))
+        gigs = gigs.where(:gigdate => date.advance(range_type => -range) .. date.advance(range_type => range))
+
       end
 
       # sort final results by date
