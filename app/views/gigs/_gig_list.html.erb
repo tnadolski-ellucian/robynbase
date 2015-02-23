@@ -18,7 +18,7 @@
       <td class="main-column"> <%= gig.Venue %> </td>
       <td> <%= gig.venue.nil? ? "N/A" : gig.venue.City %> </td>
       <td> <%= gig.venue.nil? ? "N/A" : gig.venue.Country %> </td>
-      <td> <%= gig.GigDate.to_date.to_formatted_s(:long) %> </td>
+      <td class="date-cell"> <%= gig.GigDate.to_date.to_formatted_s(:long) %> </td>
     </tr>
   <% end %>
 

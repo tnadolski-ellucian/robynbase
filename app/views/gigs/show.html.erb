@@ -3,57 +3,80 @@
 
 <!-- <%= link_to "Back", controller: 'robyn' %> -->
 
-<h2><%= @gig.Venue %></h3>
+<div class="gig-page">
 
-<h3 class="main-header"> Details </h3>
+<h2><%= @gig.Venue %></h2>
 
-<dl class="dl-horizontal">
-  <dt>Date</dt>
-  <dd><%= @gig.GigDate.to_date.to_formatted_s(:long) %></dd>
-</dl>
+<div class="row">
 
-<dl class="dl-horizontal">
-  <dt>Type</dt>
-  <dd><%= @gig.Type %></dd>
-</dl>
+  <div class="col-sm-12">
 
-<dl class="dl-horizontal">
-  <dt>Venue</dt>
-  <dd><%= @gig.Venue %> <% @gig.venue.nil? ? "" : " (#{@gig.venue.City})" %></dd>
-</dl>
 
-<dl class="dl-horizontal">
-  <dt>Billed As</dt>
-  <dd><%= @gig.BilledAs %></dd>
-</dl>
-
-<% if @gig.Guests %>
+  <h4 class="underlined-header"> Details </h4>
 
   <dl class="dl-horizontal">
-    <dt>Guests</dt>
-    <dd><%= @gig.Guests %></dd>
+    <dt>Date</dt>
+    <dd><%= @gig.GigDate.to_date.to_formatted_s(:long) %></dd>
   </dl>
 
+  <dl class="dl-horizontal">
+    <dt>Type</dt>
+    <dd><%= @gig.Type %></dd>
+  </dl>
+
+  <dl class="dl-horizontal">
+    <dt>Venue</dt>
+    <dd><%= @gig.Venue %> <% @gig.venue.nil? ? "" : " (#{@gig.venue.City})" %></dd>
+  </dl>
+
+  <dl class="dl-horizontal">
+    <dt>Billed As</dt>
+    <dd><%= @gig.BilledAs %></dd>
+  </dl>
+
+  <% if @gig.Guests %>
+
+    <dl class="dl-horizontal">
+      <dt>Guests</dt>
+      <dd><%= @gig.Guests %></dd>
+    </dl>
+
+  <% end %>
+
+  <dl class="dl-horizontal">
+    <dt>Tape Exists</dt>
+    <dd><%= @gig.TapeExists ? "Yes" : "No" %></dd>
+  </dl>
+
+  <dl class="dl-horizontal">
+    <dt>Length</dt>
+    <dd><%= @gig.Length == 0 ? "Unknown" : @gig.Length %> </dd>
+  </dl>
+
+  </div>
+
+</div>
+
+<% if @gig.songs.present? %>
+
+<div class="row" style="margin-top: 30px">
+
+  <div class="col-sm-12">
+
+    <h4 class="underlined-header"> Set </h4>
+
+    <ol class="list-unstyled">
+
+    <% for song in @gig.songs %>
+      <li> <%= link_to song.full_name, song_path(song) %></li>
+    <% end %>
+
+    </ol>
+
+  </div>
+
+</div>
+
 <% end %>
 
-<dl class="dl-horizontal">
-  <dt>Tape Exists</dt>
-  <dd><%= @gig.TapeExists ? "Yes" : "No" %></dd>
-</dl>
-
-<dl class="dl-horizontal">
-  <dt>Length</dt>
-  <dd><%= @gig.Length == 0 ? "Unknown" : @gig.Length %> </dd>
-</dl>
-
-
-<h3 class="main-header"> Set </h3>
-
-<ol class="list-unstyled">
-
-<% for song in @gig.songs %>
-  <li> <%= link_to song.full_name, song_path(song) %></li>
-<% end %>
-
-</ol>
-
+</div>
