@@ -6,6 +6,7 @@
     <thead>
     <tr>
       <th>Title</th>
+      <th>Artist</th>
       <th>Label</th>
       <th>Type</th>    
       <th>Year</th>
@@ -16,6 +17,7 @@
   <% for comp in albums %>
     <tr data-path="<%= composition_path(comp) %>">
       <td class="main-column"> <%= comp.Title %> </td>
+      <td class="main-column"> <%= comp.Artist %> </td>
       <td class="main-column"> <%= comp.Label %> </td>
       <td> <%= comp.Type %> </td>
       <td> <%= comp.Year.to_i %> </td>

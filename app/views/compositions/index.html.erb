@@ -16,6 +16,7 @@
       <span class="criteria search-type-criteria">
         <%= radio_button_tag 'search_type[]', 'title', Array(params['search_type']).include?('title') %>  <span class="radio-label">Title</span>
         <%= radio_button_tag 'search_type[]', 'label', Array(params['search_type']).include?('label')  %> <span class="radio-label">Label</span>
+        <%= radio_button_tag 'search_type[]', 'artist', Array(params['search_type']).include?('artist')  %>   <span class="radio-label">Artist</span>
         <%= radio_button_tag 'search_type[]', 'year', Array(params['search_type']).include?('year')  %>   <span class="radio-label">Year</span>
       </span>
 

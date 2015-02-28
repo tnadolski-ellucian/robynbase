@@ -50,6 +50,8 @@ class Composition < ActiveRecord::Base
           column = "Year"
         when :label
           column = "Label"
+        when :artist
+          column = "Artist"
       end
 
       "#{column} LIKE ?"
