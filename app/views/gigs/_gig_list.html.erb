@@ -5,6 +5,7 @@
   <% if not suppress_header %>
     <thead>
     <tr>
+      <th>Billed As</th>
       <th>Venue</th>
       <th>City</th>
       <th>Country</th>
@@ -15,7 +16,8 @@
 
   <% for gig in gigs %>
     <tr data-path="<%= gig_path(gig) %>">
-      <td class="main-column"> <%= gig.Venue %> </td>
+      <td class="main-column"> <%= gig.BilledAs %> </td>
+      <td> <%= gig.Venue %> </td>
       <td> <%= gig.venue.nil? ? "N/A" : gig.venue.City %> </td>
       <td> <%= gig.venue.nil? ? "N/A" : gig.venue.Country %> </td>
       <td> <%= gig.GigDate.to_date.to_formatted_s(:long) %> </td>
