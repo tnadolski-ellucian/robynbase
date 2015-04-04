@@ -1,6 +1,10 @@
-<%= suppress_header = nil unless local_assigns.has_key? :suppress_header %>
+<% suppress_header = nil unless local_assigns.has_key? :suppress_header %>
+<% use_paging = false unless local_assigns.has_key? :use_paging %>
+<% show_search = false unless local_assigns.has_key? :show_search %>
+<% page_length = 10 unless local_assigns.has_key? :page_length %>
 
-<table class="table table-hover main-search-list">
+
+<table class="table table-hover main-search-list"  data-paging="<%= use_paging %>" data-searching="<%= show_search %>" data-page-length="<%= page_length %>" data-length-change="false">
 
   <% if not suppress_header %>
     <thead>
@@ -19,7 +23,7 @@
       <td class="main-column"> <%= comp.Title %> </td>
       <td class="main-column"> <%= comp.Artist %> </td>
       <td class="main-column"> <%= comp.Label %> </td>
-      <td> <%= comp.Type %> </td>
+      <td> <%= comp.Type %> </td> 
       <td> <%= comp.Year.to_i %> </td>
     </tr>
   <% end %>

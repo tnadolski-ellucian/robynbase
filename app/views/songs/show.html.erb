@@ -16,7 +16,7 @@
 
 <div class="row">
 
-  <div class="col-sm-9">
+  <div class="col-sm-12">
 
     <h4 class="underlined-header">Details</h4>
 
@@ -54,32 +54,33 @@
 </div>
 
 <!-- albums on which the song appears-->
-<div class="row">
+<% if @song.compositions.present? %>
 
-  <% if @song.compositions.present? %>
+<div class="row page-section">
 
-    <div class="col-sm-9">
+  <div class="col-sm-12">
 
-      <a name="albums"></a>
-      <h4>Albums</h4>
-      <%= render partial: '/compositions/album_list', locals: {albums: @song.get_albums,  suppress_header: true} %>
+    <a name="albums"></a>
+    <h4>Albums</h4>
+    <%= render partial: '/compositions/album_list', locals: {albums: @song.get_albums, use_paging: true, show_search: false} %>
 
-    </div>
-
-  <% end %>
+  </div>
 
 </div>
+
+<% end %>
+
 
 <!-- gigs at whichs the song was played -->
 <% if @song.gigs.present? %>
 
-<div class="row">
+<div class="row page-section">
 
-  <div class="col-sm-9">
+  <div class="col-sm-12">
 
     <a name="gigs"></a>
     <h4>Gigs</h4>
-    <%= render partial: '/gigs/gig_list', locals: {gigs: @song.gigs, suppress_header: true} %>
+    <%= render partial: '/gigs/gig_list', locals: {gigs: @song.gigs, use_paging: true, show_search: false} %>
 
   </div>
 
@@ -90,11 +91,11 @@
 <!-- lyrics -->
 <% if @song.Lyrics.present? %>
 
-<div class="row">
+<div class="row page-section">
   <div class="col-sm-12">
 
     <a name="lyrics"></a>
-    <h4 class="underlined-header">Lyrics</h4>
+    <h4>Lyrics</h4>
     <div class="lyrics">
       <pre><%= @song.Lyrics =%> </pre>
     </div>
@@ -106,11 +107,11 @@
 <!-- tablature -->
 <% if @song.Tab.present? %>
 
-<div class="row">
+<div class="row page-section">
   <div class="col-sm-12">
 
     <a name="tabs"></a>
-    <h3 class="main-header">Tablature</h3>
+    <h4>Tablature</h3>
     <div class="lyrics">
       <pre><%= @song.Tab =%> </pre>
     </div>

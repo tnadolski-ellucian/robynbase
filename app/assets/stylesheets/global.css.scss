@@ -1,0 +1,14 @@
+
+
+/* ====== dataTable style overrides */
+
+
+/* make the table filter appear as a 'text' rather than a 'search' field in chrome */
+input[type=search] {
+  -webkit-appearance: textfield;
+} 
+
+/* adjust padding for the "results per page" control */
+.dataTables_length {
+  padding-top: 10px;
+}

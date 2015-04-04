@@ -18,4 +18,5 @@
 //= require jquery.fancybox-media
 //= require jquery.fancybox-thumbs
 //= require jquery-ui.min
+//= require jquery.dataTables.min
 //= require_tree .
