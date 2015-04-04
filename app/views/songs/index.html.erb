@@ -26,8 +26,12 @@
 
 <div class="search-results">
 
-  <% if @songs.present? %>
-    <%= render partial: '/songs/song_list', locals: {songs: @songs, show_lyrics_snippet: @show_lyrics ? params[:song_search_value] : nil} %>
+  <% if not @songs.nil? %>
+    <% if @songs.empty? %> 
+      <%= render partial: '/robyn/nothing_found' %>
+    <% else %>
+      <%= render partial: '/songs/song_list', locals: {songs: @songs, show_lyrics_snippet: @show_lyrics ? params[:song_search_value] : nil} %>
+    <% end %>
   <% end %>
 
 </div>

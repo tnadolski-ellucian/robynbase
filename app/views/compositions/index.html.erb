@@ -88,8 +88,12 @@
 
 <div class="search-results">
 
-  <% if @compositions.present? %>
-    <%= render partial: '/compositions/album_list', locals: {albums: @compositions} %>
+  <% if not @compositions.nil? %>
+    <% if @compositions.empty? %> 
+      <%= render partial: '/robyn/nothing_found' %>
+    <% else %>
+      <%= render partial: '/compositions/album_list', locals: {albums: @compositions} %>
+    <% end %>
   <% end %>
 
 </div>

@@ -78,8 +78,12 @@
 
 <div class="search-results">
 
-  <% if @gigs.present? %>
-    <%= render partial: '/gigs/gig_list', locals: {gigs: @gigs} %>
+  <% if not @gigs.nil? %>
+    <% if @gigs.empty? %> 
+      <%= render partial: '/robyn/nothing_found' %>
+    <% else %>
+      <%= render partial: '/gigs/gig_list', locals: {gigs: @gigs} %>
+    <% end %>
   <% end %>
 
 </div>

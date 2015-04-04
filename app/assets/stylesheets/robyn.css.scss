@@ -61,8 +61,12 @@ table.main-search-list {
   padding-bottom: 3px;
 }
 
+.main-search {
+  margin-bottom: 10px;
+}
+
 .main-header {
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom: 30px;
 
   small {
@@ -93,8 +97,8 @@ table.main-search-list {
     padding-left: 15px;
   }
 
-  padding: 10px 0 20px;
-
+  padding: 10px 0 0;
+  
   input[type=submit] {
     margin-left: 5px;
     padding: 6px;
@@ -342,4 +346,13 @@ dl.dl-horizontal {
     display: block;
   }
 
+}
+
+.nothing-found {
+  text-align: center;
+  font-size: 15px;
+
+  div {
+    display: inline-block;
+  }
 }
