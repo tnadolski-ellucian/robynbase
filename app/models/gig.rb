@@ -10,10 +10,19 @@ class Gig < ActiveRecord::Base
 
   self.table_name = "GIG"
 
-  has_many :gigsets, foreign_key: "GIGID"
+  has_many :gigsets, -> {order 'Chrono'}, foreign_key: "GIGID"
   has_many :songs, through: :gigsets, foreign_key: "GIGID"
   belongs_to :venue, foreign_key: "VENUEID"
 
+  # returns the songs played in the gig (non-encore)
+  def get_set
+    self.gigsets.includes(:song).where(encore: false)
+  end
+
+  # returns the songs played in the encore
+  def get_set_encore
+    self.gigsets.includes(:song).where(encore: true)
+  end
 
   def self.search_by(kind, search, date_criteria = nil)
 

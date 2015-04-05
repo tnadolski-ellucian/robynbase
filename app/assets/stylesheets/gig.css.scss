@@ -20,4 +20,31 @@
     margin-bottom: 30px;
   }
 
+  .set-list-section {
+
+    ol.set-list {
+
+      padding-left: 25px;
+
+      .gig-song-author {
+        margin-left: 5px;
+        color: gray;
+        font-style: italic;
+      }
+
+      .gig-song-version-notes {
+        margin-left: 5px;
+      }
+
+    }
+
+    .set-list-encore {
+      font-size: 13px;
+      color: gray;
+      font-style: italic;
+      padding: 10px 0 5px;
+    }
+
+  }
 }
+

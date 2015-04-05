@@ -57,21 +57,37 @@
 
 </div>
 
-<% if @gig.songs.present? %>
+<% if @gig.get_set.present? %>
 
-<div class="row" style="margin-top: 30px">
+<div class="row set-list-section" style="margin-top: 30px">
 
   <div class="col-sm-12">
 
+    <!-- songs in the set -->
     <h4 class="underlined-header"> Set </h4>
 
-    <ol class="list-unstyled">
+    <ol class="set-list">
 
-    <% for song in @gig.songs %>
-      <li> <%= link_to song.full_name, song_path(song) %></li>
+    <% for gig_song in @gig.get_set  %>
+      <li> <%= link_to gig_song.Song, song_path(gig_song.song) %> <%= gig_song_details(gig_song) %> </li>
     <% end %>
 
     </ol>
+
+    <% if @gig.get_set_encore.present? %>
+
+      <!-- songs in the encore -->
+      <div class="set-list-encore"> Encore </div>
+
+      <ol class="set-list">
+
+        <% for gig_song in @gig.get_set_encore  %>
+          <li> <%= link_to gig_song.Song, song_path(gig_song.song) %> <%= gig_song_details(gig_song) %> </li>
+        <% end %>
+
+      </ol>
+
+    <% end %>
 
   </div>
 
