@@ -2,7 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
 .top-container {
   padding-top: 60px;
 }
@@ -355,4 +354,50 @@ dl.dl-horizontal {
   div {
     display: inline-block;
   }
+}
+
+.quick-queries {
+
+  /** position the quick-query section */
+  position: fixed;
+  top: 30%;
+  left: 50%;  
+  -ms-transform: translate(-50%, -30%);
+  -webkit-transform: translate(-50%, -30%);
+  transform: translate(-50%, -30%);
+
+  padding: 20px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  border: 1px solid #f1f1f1;
+
+  .header {
+    font-variant: small-caps;
+    padding-bottom: 5px;    
+  }
+
+  small {
+
+    padding-left: 5px;
+    text-transform: lowercase;
+
+    a {
+      color: #777;
+
+      &:visited {
+        color: #777;
+      }
+
+    }
+
+    &:before {
+      content: "| "
+    }
+
+  }
+
+  li {
+    padding-top: 5px;
+  }
+
 }

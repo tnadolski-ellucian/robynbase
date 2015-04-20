@@ -12,12 +12,18 @@ class SongsController < ApplicationController
 
   end
 
+  def quick_query
+    @songs = Song.quick_query(params[:query_id], params[:query_attribute])
+    render "index"
+  end
+
   def show
+
     @song = Song.find(params[:id])
 
     @gigs_present = @song.gigs.present?
     @albums_present = @song.compositions.present? 
     
   end
-  
+
 end

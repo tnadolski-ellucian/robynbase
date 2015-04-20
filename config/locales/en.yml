@@ -3,3 +3,16 @@
 
 en:
   hello: "Hello world"
+
+  quick_query:
+    songs:
+      not_written_by_robyn: "Songs not written by Robyn himself"
+      never_released: "Songs that Robyn has never released"
+      never_released_originals: Originals only
+      never_released_covers: Covers only
+      has_guitar_tabs: Songs with guitar tabs
+      has_guitar_tabs_no_tabs: No tabs
+      has_lyrics: Songs for which lyrics have been entered
+      has_lyrics_no_lyrics: No lyrics
+      released_never_played_live: Released songs that Robyn has never played live
+
