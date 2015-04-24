@@ -58,4 +58,9 @@ class GigsController < ApplicationController
     @gig = Gig.find(params[:id])
   end
 
+  def quick_query
+    @gigs = Gig.quick_query(params[:query_id], params[:query_attribute])
+    render "index"
+  end
+
 end

@@ -20,6 +20,14 @@ module QuickQueryHelper
     type.get_quick_queries.collect {|qq| render_quick_query(qq)}
   end
 
+  # get 5 random queries, across the given object types
+  def get_random_quick_queries(types)
+    allTypes = types.collect {|type| type.get_quick_queries}.flatten
+    prng = Random.new
+    random_qq = allTypes.sort {|item1, item2| prng.rand(-1 .. 1)  }.slice(0, 5)
+    random_qq.collect {|qq| render_quick_query(qq)}
+  end
+
   def render_link(qq, secondary = nil)
     "<a href='#{qq.route(secondary)}'>#{qq.label(secondary)}</a>"
   end

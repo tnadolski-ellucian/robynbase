@@ -94,8 +94,6 @@ class Song < ActiveRecord::Base
     # songs = joins(:compositions).distinct
     songs = Song.joins("LEFT OUTER JOIN trak ON song.songid = trak.songid").where("trak.songid IS NULL").distinct
 
-    debugger
-
     case secondary_attribute
       when "originals"
         songs = songs.where(:author => nil)

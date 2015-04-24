@@ -38,6 +38,12 @@
 
     <% end %>
 
+  <% else %>
+  
+    <% quick_queries = get_random_quick_queries([Gig, Song, Composition]) %>
+
+    <%= render partial: '/robyn/quick_queries', locals: {quick_queries: quick_queries} %>
+
   <% end %>
 
 </div>

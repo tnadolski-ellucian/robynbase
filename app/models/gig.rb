@@ -5,7 +5,6 @@
 #   Rarity
 
 
-
 class Gig < ActiveRecord::Base
 
   self.table_name = "GIG"
@@ -13,6 +12,11 @@ class Gig < ActiveRecord::Base
   has_many :gigsets, -> {order 'Chrono'}, foreign_key: "GIGID"
   has_many :songs, through: :gigsets, foreign_key: "GIGID"
   belongs_to :venue, foreign_key: "VENUEID"
+
+  @@quick_queries = [ 
+    QuickQuery.new('gigs', :with_setlists, [:without]),
+    QuickQuery.new('gigs', :without_definite_dates)
+  ]
 
   # returns the songs played in the gig (non-encore)
   def get_set
@@ -75,6 +79,36 @@ class Gig < ActiveRecord::Base
       all
     end
 
+  end
+
+
+  # an array of all available quick queries
+  def self.get_quick_queries 
+    @@quick_queries
+  end
+
+  # look up songs based on the given quick query
+  def self.quick_query(id, secondary_attribute)
+
+    case id
+      when :with_setlists.to_s
+        gigs = quick_query_gigs_with_setlists(secondary_attribute)
+      when :without_definite_dates.to_s
+        gigs = quick_query_gigs_without_definite_dates
+    end
+
+    gigs.where.not(:venue => nil)
+
+  end
+
+
+  ## quick queries
+  def self.quick_query_gigs_with_setlists(secondary_attribute)
+    joins("LEFT OUTER JOIN gset on gig.gigid = gset.gigid").where("gset.setid IS #{secondary_attribute.nil? ? 'NOT' : ''} NULL").distinct    
+  end
+
+  def self.quick_query_gigs_without_definite_dates
+    where(:circa => 1)
   end
 
 end

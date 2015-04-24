@@ -35,6 +35,12 @@ class Composition < ActiveRecord::Base
   }
 
   RELEASE_TYPES.default = 8;
+
+
+  @@quick_queries = [ 
+    QuickQuery.new('compositions', :major_cd_releases),
+    QuickQuery.new('compositions', :other_bands)
+  ]
     
 
   def self.search_by(kind, search, media_types = nil, release_types = nil)
@@ -82,5 +88,34 @@ class Composition < ActiveRecord::Base
     end
 
   end 
+
+  # an array of all available quick queries
+  def self.get_quick_queries 
+    @@quick_queries
+  end
+
+  # look up songs based on the given quick query
+  def self.quick_query(id, secondary_attribute)
+
+    case id
+      when :major_cd_releases.to_s
+        albums = quick_query_major_releases
+      when :other_bands.to_s
+        albums = quick_query_other_bands
+    end
+
+    albums
+
+  end
+
+
+  ## quick queries
+  def self.quick_query_major_releases
+    where("majrid IS NOT NULL AND majrid <> 0 AND type = 'Authorized' AND medium = 'CD'").order(:year)
+  end
+
+  def self.quick_query_other_bands
+    where("artist not like '%robyn%'")
+  end
 
 end

@@ -67,4 +67,15 @@ class CompositionsController < ApplicationController
     Dir["public/images/album-art/*"].entries.select { |name| name.index(/#{title}/i) }.sort.map{ |name| name.sub("public/", "").sub("[", "%5B").sub("]", "%5D")}
   end
 
+  def quick_query
+    
+    if params[:query_id].to_sym == :major_cd_releases 
+      @initial_sort = { :column_index => 4, :direction => 'asc' }
+    end
+
+    @compositions = Composition.quick_query(params[:query_id], params[:query_attribute])
+    render "index"
+
+  end
+
 end

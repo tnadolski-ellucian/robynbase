@@ -366,12 +366,14 @@ dl.dl-horizontal {
   -webkit-transform: translate(-50%, -30%);
   transform: translate(-50%, -30%);
 
+  min-width: 400px;
   padding: 20px;
   background-color: #f1f1f1;
   border-radius: 10px;
   border: 1px solid #f1f1f1;
 
   .header {
+    font-size: 16px;
     font-variant: small-caps;
     padding-bottom: 5px;    
   }
