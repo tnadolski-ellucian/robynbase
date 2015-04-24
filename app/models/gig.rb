@@ -104,7 +104,7 @@ class Gig < ActiveRecord::Base
 
   ## quick queries
   def self.quick_query_gigs_with_setlists(secondary_attribute)
-    joins("LEFT OUTER JOIN gset on gig.gigid = gset.gigid").where("gset.setid IS #{secondary_attribute.nil? ? 'NOT' : ''} NULL").distinct    
+    joins("LEFT OUTER JOIN GSET on GIG.gigid = GSET.gigid").where("GSET.setid IS #{secondary_attribute.nil? ? 'NOT' : ''} NULL").distinct    
   end
 
   def self.quick_query_gigs_without_definite_dates
