@@ -23,6 +23,13 @@ class Gig < ActiveRecord::Base
     self.gigsets.includes(:song).where(encore: false)
   end
 
+  # returns the reviews for this gig (if any), formatted to display correctly in html
+  def get_reviews
+    if self.Reviews.present?
+      self.Reviews.gsub(/\r\n/, '<br>')
+    end
+  end
+
   # returns the songs played in the encore
   def get_set_encore
     self.gigsets.includes(:song).where(encore: true)
@@ -34,7 +41,7 @@ class Gig < ActiveRecord::Base
 
     kind = [:venue, :gig_year, :venue_city] if kind.nil? or kind.length == 0
 
-    conditions = Array(kind).reject{|x| x == :venue_city || x == :venue_country}.map do |term|
+    conditions = Array(kind).reject{|x| x == :venue_city || x == :venue_state}.map do |term|
 
       case term
         when :venue
@@ -57,8 +64,8 @@ class Gig < ActiveRecord::Base
         gigs = self.joins(:venue).where("City LIKE ?", search)
       end
 
-      if kind.include? :venue_country
-        gigs = self.joins(:venue).where("Country LIKE ?", search)
+      if kind.include? :venue_state
+        gigs = self.joins(:venue).where("State LIKE ?", search)
       end
 
       if date_criteria.present?

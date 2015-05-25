@@ -6,7 +6,7 @@ module GigHelper
 
     # author (if not robyn)
     if gig_song.song.Author.present? 
-      out += "<span class='gig-song-author'> <small>#{gig_song.song.Author}</small> </span>"
+      out += "<span class='subsidiary-info'> <small>#{gig_song.song.Author}</small> </span>"
     end
 
     # includes segue marker

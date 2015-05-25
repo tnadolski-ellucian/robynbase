@@ -11,7 +11,7 @@
       <th>Billed As</th>
       <th>Venue</th>
       <th>City</th>
-      <th>Country</th>
+      <th>State</th>
       <th>Date</th>
     </tr>
     </thead>
@@ -22,7 +22,7 @@
       <td class="main-column"> <%= gig.BilledAs %> </td>
       <td> <%= gig.Venue %> </td>
       <td> <%= gig.venue.nil? ? "N/A" : gig.venue.City %> </td>
-      <td> <%= gig.venue.nil? ? "N/A" : gig.venue.Country %> </td>
+      <td> <%= gig.venue.nil? ? "N/A" : gig.venue.State %> </td>
       <td> <%= gig.GigDate.to_date.to_formatted_s(:long) %> </td>
     </tr>
   <% end %>

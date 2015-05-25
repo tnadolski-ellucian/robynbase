@@ -14,7 +14,7 @@ class Composition < ActiveRecord::Base
     'CD 3"'      => 5,
     'CD Single'  => 6,
     'DVD'        => 7,
-    'Fixel-disc' => 8,
+    'Flexi-disc' => 8,
     'Videotape'  => 9,
     'Other'      => 10
   }

@@ -26,7 +26,18 @@
 
   <dl class="dl-horizontal">
     <dt>Venue</dt>
-    <dd><%= @gig.Venue %> <% @gig.venue.nil? ? "" : " (#{@gig.venue.City})" %></dd>
+    <dd>
+
+      <%= @gig.Venue %>
+
+      <% if @gig.venue.present? %>
+        <span class="subsidiary-info">
+          <small><%= "#{@gig.venue.City}, #{@gig.venue.State}" %></small>
+        </span
+      <% end %>
+ 
+    </dd>
+
   </dl>
 
   <dl class="dl-horizontal">
@@ -69,7 +80,11 @@
     <ol class="set-list">
 
     <% for gig_song in @gig.get_set  %>
-      <li> <%= link_to gig_song.Song, song_path(gig_song.song) %> <%= gig_song_details(gig_song) %> </li>
+      <% if gig_song.song.present? %>
+        <li> <%= link_to gig_song.Song, song_path(gig_song.song) %> <%= gig_song_details(gig_song) %> </li>
+      <% else %>
+        <li> <%= gig_song.Song %> </li>
+      <% end %>
     <% end %>
 
     </ol>
@@ -82,7 +97,11 @@
       <ol class="set-list">
 
         <% for gig_song in @gig.get_set_encore  %>
-          <li> <%= link_to gig_song.Song, song_path(gig_song.song) %> <%= gig_song_details(gig_song) %> </li>
+          <% if gig_song.song.present? %>
+            <li> <%= link_to gig_song.Song, song_path(gig_song.song) %> <%= gig_song_details(gig_song) %> </li>
+          <% else %>
+            <li> <%= gig_song.Song %> </li>
+          <% end %> 
         <% end %>
 
       </ol>
@@ -94,5 +113,17 @@
 </div>
 
 <% end %>
+
+<% if @gig.get_reviews.present? %>
+
+  <!-- songs in the set -->
+  <h4 class="underlined-header"> Reviews </h4>
+
+  <div>
+    <%= @gig.get_reviews.html_safe %>
+  </div>
+
+<% end %>
+
 
 </div>
