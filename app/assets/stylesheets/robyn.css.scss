@@ -362,6 +362,13 @@ dl.dl-horizontal {
   font-style: italic;
 }
 
+.anchor {
+  display: block; 
+  position: relative; 
+  top: -60px; 
+  visibility: hidden;
+}
+
 .quick-queries {
 
   /** position the quick-query section */

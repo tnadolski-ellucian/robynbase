@@ -60,7 +60,7 @@
 
   <div class="col-sm-12">
 
-    <a name="albums"></a>
+    <a class="anchor" name="albums"></a>
     <h4>Albums</h4>
     <%= render partial: '/compositions/album_list', locals: {albums: @song.get_albums, use_paging: true, show_search: false} %>
 
@@ -78,7 +78,7 @@
 
   <div class="col-sm-12">
 
-    <a name="gigs"></a>
+    <a class="anchor" name="gigs"></a>
     <h4>Gigs</h4>
     <%= render partial: '/gigs/gig_list', locals: {gigs: @song.gigs, use_paging: true, show_search: false} %>
 
@@ -94,7 +94,7 @@
 <div class="row page-section">
   <div class="col-sm-12">
 
-    <a name="lyrics"></a>
+    <a class="anchor" name="lyrics"></a>
     <h4>Lyrics</h4>
     <div class="lyrics">
       <pre><%= @song.Lyrics =%> </pre>
@@ -110,7 +110,7 @@
 <div class="row page-section">
   <div class="col-sm-12">
 
-    <a name="tabs"></a>
+    <a class="anchor" name="tabs"></a>
     <h4>Tablature</h3>
     <div class="lyrics">
       <pre><%= @song.Tab =%> </pre>

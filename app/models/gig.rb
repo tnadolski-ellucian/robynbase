@@ -15,7 +15,8 @@ class Gig < ActiveRecord::Base
 
   @@quick_queries = [ 
     QuickQuery.new('gigs', :with_setlists, [:without]),
-    QuickQuery.new('gigs', :without_definite_dates)
+    QuickQuery.new('gigs', :without_definite_dates),
+    QuickQuery.new('gigs', :with_reviews, [:without])
   ]
 
   # returns the songs played in the gig (non-encore)
@@ -102,6 +103,8 @@ class Gig < ActiveRecord::Base
         gigs = quick_query_gigs_with_setlists(secondary_attribute)
       when :without_definite_dates.to_s
         gigs = quick_query_gigs_without_definite_dates
+      when :with_reviews.to_s
+        gigs = quick_query_gigs_with_reviews(secondary_attribute)
     end
 
     gigs.where.not(:venue => nil)
@@ -110,12 +113,17 @@ class Gig < ActiveRecord::Base
 
 
   ## quick queries
+
   def self.quick_query_gigs_with_setlists(secondary_attribute)
     joins("LEFT OUTER JOIN GSET on GIG.gigid = GSET.gigid").where("GSET.setid IS #{secondary_attribute.nil? ? 'NOT' : ''} NULL").distinct    
   end
 
   def self.quick_query_gigs_without_definite_dates
     where(:circa => 1)
+  end
+
+  def self.quick_query_gigs_with_reviews(no_reviews)
+    where("Reviews IS #{no_reviews.nil? ? 'NOT' : ''} NULL")
   end
 
 end
