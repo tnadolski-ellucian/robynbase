@@ -51,5 +51,8 @@ module Robyn2
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # allow frame inclusion from glass hotel (technique culled from http://stackoverflow.com/q/18445782) 
+    config.action_dispatch.default_headers['X-Frame-Options'] = "ALLOW-FROM http://glasshotel.net/"
+
   end
 end
