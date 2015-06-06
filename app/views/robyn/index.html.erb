@@ -21,19 +21,19 @@
 
       <% if @songs.present? %>
         <h3 class="main-header">Songs</h3>
-        <%= render partial: '/songs/song_list', locals: { songs: @songs, use_paging: true, page_length: 20 } %>
+        <%= render partial: '/songs/song_list', locals: { songs: @songs, table_id: "song-omni", use_paging: true, page_length: 20 } %>
       <% end %>
 
       <!-- albums -->
       <% if @compositions.present? %>
         <h3 class="main-header">Albums</h3>
-        <%= render partial: '/compositions/album_list', locals: { albums: @compositions, suppress_header: false, use_paging: true, page_length: 20 } %>
+        <%= render partial: '/compositions/album_list', locals: { albums: @compositions, table_id: "album-omni",suppress_header: false, use_paging: true, page_length: 20 } %>
       <% end %>
 
       <!-- gigs -->
       <% if @gigs.present? %>
         <h3 class="main-header">Gigs</h3>
-        <%= render partial: '/gigs/gig_list', locals: { gigs: @gigs, suppress_header: false, use_paging: true, page_length: 20 } %>
+        <%= render partial: '/gigs/gig_list', locals: { gigs: @gigs, table_id: "gig-omni", suppress_header: false, use_paging: true, page_length: 20 } %>
       <% end %>
 
     <% end %>

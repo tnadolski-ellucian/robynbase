@@ -62,7 +62,7 @@
 
     <a class="anchor" name="albums"></a>
     <h4>Albums</h4>
-    <%= render partial: '/compositions/album_list', locals: {albums: @song.get_albums, use_paging: true, show_search: false} %>
+    <%= render partial: '/compositions/album_list', locals: {albums: @song.get_albums, table_id: "album-song", use_paging: true, show_search: false} %>
 
   </div>
 
@@ -80,7 +80,7 @@
 
     <a class="anchor" name="gigs"></a>
     <h4>Gigs</h4>
-    <%= render partial: '/gigs/gig_list', locals: {gigs: @song.gigs, use_paging: true, show_search: false} %>
+    <%= render partial: '/gigs/gig_list', locals: {gigs: @song.gigs, table_id: "gig-song", use_paging: true, show_search: false} %>
 
   </div>
 

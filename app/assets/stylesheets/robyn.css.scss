@@ -362,6 +362,7 @@ dl.dl-horizontal {
   font-style: italic;
 }
 
+/* used to position href anchors to take the fixed header into account (http://goo.gl/HyQBPH) */
 .anchor {
   display: block; 
   position: relative; 

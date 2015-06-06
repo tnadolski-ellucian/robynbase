@@ -19,4 +19,5 @@
 //= require jquery.fancybox-thumbs
 //= require jquery-ui.min
 //= require jquery.dataTables.min
+//= require js.cookie
 //= require_tree .
