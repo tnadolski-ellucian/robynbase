@@ -2,14 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.performance-video {
+.performances-page {
 
-  padding-top: 40px;
-    
-  iframe {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+  .performance-video {
+
+    padding-top: 40px;
+      
+    iframe {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+
   }
 
 }

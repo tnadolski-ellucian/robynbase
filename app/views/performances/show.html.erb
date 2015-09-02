@@ -4,7 +4,15 @@
 
 <div class="performances-page">
 
-<h2 class="main-header"><%= @performance.name %> </h2>
+<h2 class="main-header"><%= @performance.name %> 
+
+  <small>
+    <span class="inpage-navigation">
+      <% if @performance.songs.present? %> <span><a href="#songs">Songs</a></span> <% end %>
+    </span>
+  </small>
+
+</h2>
 
 <div class="row">
 
@@ -45,7 +53,21 @@
 
 </div>
 
+<% if @performance.songs.present? %>
 
+<div class="row page-section">
+
+  <div class="col-sm-12">
+
+    <a class="anchor" name="songs"></a>
+    <h4>Media</h4>
+    <%= render partial: '/songs/song_list', locals: {songs: @performance.songs, table_id: "song-performance", use_paging: true, show_search: false} %>
+
+  </div>
+
+</div>
+
+<% end %>
 <!--
 
 this works: https://archive.org/embed/RHJoolsHolland (https://archive.org/details/RHJoolsHolland)
