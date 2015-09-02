@@ -14,8 +14,8 @@ class Song < ActiveRecord::Base
   belongs_to :album, foreign_key: "MAJRID"
   
   # set up the many-many relationship with the performance table
-  has_many :song_performance
-  has_many :performances, :through => :song_performance
+  has_many :song_performances
+  has_many :performances, :through => :song_performances
 
   @@quick_queries = [ 
     QuickQuery.new('songs', :not_written_by_robyn),

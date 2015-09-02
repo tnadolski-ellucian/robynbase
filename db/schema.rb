@@ -250,13 +250,13 @@ ActiveRecord::Schema.define(version: 20150810114536) do
   end
 
   create_table "song_performances", force: true do |t|
-    t.integer  "songs_id"
+    t.integer  "song_id"
     t.integer  "performance_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
 
   add_index "song_performances", ["performance_id"], name: "index_song_performances_on_performance_id", using: :btree
-  add_index "song_performances", ["songs_id"], name: "index_song_performances_on_songs_id", using: :btree
+  add_index "song_performances", ["song_id"], name: "index_song_performances_on_song_id", using: :btree
 
 end

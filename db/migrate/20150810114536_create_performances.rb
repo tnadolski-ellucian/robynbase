@@ -13,7 +13,7 @@ class CreatePerformances < ActiveRecord::Migration
     end
 
     create_table :song_performances do |t|
-      t.belongs_to :songs, foreign_key: 'SONGID', index: true
+      t.belongs_to :song, foreign_key: 'SONGID', index: true
       t.belongs_to :performance, index: true
       t.timestamps null: false
     end
