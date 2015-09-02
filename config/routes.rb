@@ -4,6 +4,8 @@ Robyn2::Application.routes.draw do
   get "songs/quick_query"
   get "gigs/index"
   get "gigs/quick_query"
+  get 'performances/index'
+  get 'performances/quick_query'
   get "compositions/index"
   get "compositions/quick_query"
   get "robyn/search"
@@ -15,6 +17,7 @@ Robyn2::Application.routes.draw do
   resources :gigs
   resources :venues
   resources :compositions
+  resources :performances
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20150810114536) do
 
   create_table "COMP", primary_key: "COMPID", force: true do |t|
     t.string  "Artist",     limit: 64
     t.string  "Title",      limit: 64
-    t.float   "Year"
+    t.float   "Year",       limit: 53
     t.string  "Medium",     limit: 16
     t.string  "MCODE",      limit: 1
     t.string  "Label",      limit: 64
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 0) do
   create_table "MAJR", primary_key: "MAJRID", force: true do |t|
     t.string  "AlbumTitles",       limit: 64
     t.string  "RecordedBy",        limit: 64
-    t.float   "ReleaseYear"
+    t.float   "ReleaseYear",       limit: 53
     t.integer "COMPID",                               default: 0
     t.string  "AltVersion",        limit: 128
     t.integer "COMPID2",                              default: 0
@@ -236,5 +236,27 @@ ActiveRecord::Schema.define(version: 0) do
   end
 
   add_index "xref", ["XREFID"], name: "XREFID", using: :btree
+
+  create_table "performances", force: true do |t|
+    t.string   "url"
+    t.string   "name"
+    t.string   "venue"
+    t.integer  "host"
+    t.integer  "medium"
+    t.integer  "performance_type"
+    t.date     "performance_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "song_performances", force: true do |t|
+    t.integer  "songs_id"
+    t.integer  "performance_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "song_performances", ["performance_id"], name: "index_song_performances_on_performance_id", using: :btree
+  add_index "song_performances", ["songs_id"], name: "index_song_performances_on_songs_id", using: :btree
 
 end

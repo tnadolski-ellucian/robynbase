@@ -1,14 +1,18 @@
 
-<div class="quick-queries bg-warning">
+<% if quick_queries.present? %>
 
-  <div class="header text-muted">Quick Queries</div>
+  <div class="quick-queries bg-warning">
 
-  <ul class="list-unstyled">
+    <div class="header text-muted">Quick Queries</div>
 
-  <% for qq in quick_queries %>
-    <li> <%= qq %> </li>
-  <% end %>
+    <ul class="list-unstyled">
 
-  </ul>
+    <% for qq in quick_queries %>
+      <li> <%= qq %> </li>
+    <% end %>
 
-</div>
+    </ul>
+
+  </div>
+
+<% end %>

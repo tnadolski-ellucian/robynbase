@@ -17,7 +17,9 @@ module QuickQueryHelper
   end
 
   def get_all_quick_queries(type)
-    type.get_quick_queries.collect {|qq| render_quick_query(qq)}
+    if type.get_quick_queries.present?
+      type.get_quick_queries.collect {|qq| render_quick_query(qq)}
+    end
   end
 
   # get 5 random queries, across the given object types
