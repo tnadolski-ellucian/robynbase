@@ -23,25 +23,37 @@ class Performance < ActiveRecord::Base
 
   def self.search_by(kind, search, media = nil, performance_types = nil)
 
-    kind = [:name, :performance_type, :medium] if kind.nil? or kind.length == 0
-
+    kind = [:name] if kind.nil? or kind.length == 0
+    
+    # grab conditions for all "simple" criteria -- ie criteria that are local to the model, and don't require joins
     conditions = Array(kind).map do |term|
 
       case term
+
         when :name
           column = "name"
-        when :venue
-          column = "venue"
-        else
-          column = "name"
+
       end
 
-      "#{column} LIKE ?"
+      if column.present?
+        "#{column} LIKE ?" 
+      end
 
-    end
+    end.reject { |item| item.nil? }
+
+    performances = Performance.all
     
-    if search
-      performances = where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
+    if not search.empty?
+
+      # do the appropriate joins to search by song name
+      if kind.include? :song
+        performances = performances.joins("INNER JOIN song_performances ON song_performances.performance_id = performances.id INNER JOIN song ON song_performances.song_id = song.songid WHERE song.song LIKE '%#{search}%'")
+      end
+
+      # clauses for simple search criteria
+      if not conditions.empty?
+        performances = performances.where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
+      end
 
       # filter by media
       if media.present?
@@ -53,11 +65,10 @@ class Performance < ActiveRecord::Base
         performances = performances.where(performance_type: performance_types)
       end
 
-      performances
-
-    else
-      all
     end
+
+    performances
+
   end
 
   # returns an array of all available quick queries
