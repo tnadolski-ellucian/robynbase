@@ -1,5 +1,7 @@
 class Performance < ActiveRecord::Base
 
+  self.primary_key = "performanceid"
+
   MEDIUM = {
     'Audio' => 1,
     'Video' => 2,
@@ -47,7 +49,7 @@ class Performance < ActiveRecord::Base
 
       # do the appropriate joins to search by song name
       if kind.include? :song
-        performances = performances.joins("INNER JOIN song_performances ON song_performances.performance_id = performances.id INNER JOIN song ON song_performances.song_id = song.songid WHERE song.song LIKE '%#{search}%'")
+        performances = performances.joins("INNER JOIN song_performances ON song_performances.performance_id = performances.performanceid INNER JOIN song ON song_performances.song_id = song.songid WHERE song.song LIKE '%#{search}%'")
       end
 
       # clauses for simple search criteria

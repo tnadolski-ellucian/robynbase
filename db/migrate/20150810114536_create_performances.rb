@@ -1,7 +1,7 @@
 class CreatePerformances < ActiveRecord::Migration
   def change
-    create_table :performances do |t|
-      t.integer :performanceid
+    create_table :performances, :id => false do |t|
+      t.integer :performanceid, :primary => true
       t.string :url
       t.string :name
       t.string :venue

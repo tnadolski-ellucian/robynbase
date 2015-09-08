@@ -237,7 +237,7 @@ ActiveRecord::Schema.define(version: 20150810114536) do
 
   add_index "xref", ["XREFID"], name: "XREFID", using: :btree
 
-  create_table "performances", force: true do |t|
+  create_table "performances", id: false, force: true do |t|
     t.integer  "performanceid"
     t.string   "url"
     t.string   "name"
