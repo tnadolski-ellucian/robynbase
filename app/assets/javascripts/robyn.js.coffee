@@ -112,7 +112,7 @@ $(window).on("load", ->
       url: '/robyn/search_performances?utf8=%E2%9C%93&search_value=%QUERY'
       filter: (results) ->
         $.map(results, (result, index) ->
-          return {search_value: result.name, id: result.id}
+          return {search_value: result.name, id: result.performanceid}
         )
     datumTokenizer: (d) -> 
       console.log(d)
