@@ -7,6 +7,53 @@
   padding-bottom: 30px;
 }
 
+/* navbar customizations */
+.navbar-robyn {
+
+  background-color: #000000;
+  background-image: none;
+  background-repeat: no-repeat;
+  color: #9d9d9d;
+
+  border-color: #CE1515;
+
+  .navbar-nav {
+
+    li {
+
+      a {
+        background-image: none; 
+        background-repeat: no-repeat;
+        color: #9d9d9d;
+
+        &:hover {
+          color: white;
+        }
+
+      }
+
+      &.active {
+
+        a {
+          background-image: none; 
+          background-repeat: no-repeat;
+          color: white;
+          background-color: #CE1515;
+
+          &:hover {
+            background-color: #CE1515;
+          }
+        }
+
+      }
+
+    }
+
+
+  }
+
+}
+
 .search-block {
   position: relative;
   text-align: center;
@@ -183,7 +230,6 @@ table.main-search-list {
 
   form {
     padding-top: 15px;
-    padding-bottom: 15px;
   }
 
   .typeahead,
