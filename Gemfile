@@ -7,7 +7,8 @@ gem 'rails', '4.2.7.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # gem 'sqlite3'
-gem 'mysql2', '0.3.11'
+#gem 'mysql2', '0.3.11'
+gem 'mysql2'
 
 
 gem 'sass-rails'
