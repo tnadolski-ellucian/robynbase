@@ -36,22 +36,21 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    airbrussh (1.3.0)
-      sshkit (>= 1.6.1, != 1.7.0)
     arel (6.0.4)
     builder (3.2.3)
     byebug (9.1.0)
-    capistrano (3.10.1)
-      airbrussh (>= 1.0.0)
+    capistrano (3.3.5)
+      capistrano-stats (~> 1.1.0)
       i18n
       rake (>= 10.0.0)
-      sshkit (>= 1.9.0)
+      sshkit (~> 1.3)
     capistrano-bundler (1.3.0)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
-    capistrano-rails (1.3.1)
+    capistrano-rails (1.1.2)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
+    capistrano-stats (1.1.1)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0)
@@ -121,7 +120,7 @@ GEM
     rvm1-capistrano3 (1.4.0)
       capistrano (~> 3.0)
       sshkit (>= 1.2)
-    sass (3.5.3)
+    sass (3.5.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -153,8 +152,8 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
-  capistrano
-  capistrano-rails
+  capistrano (= 3.3.5)
+  capistrano-rails (= 1.1.2)
   coffee-rails
   jquery-rails
   mysql2

@@ -41,8 +41,8 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 group :development do
-  gem 'capistrano' 
-  gem 'capistrano-rails'
+  gem 'capistrano', '3.3.5'
+  gem 'capistrano-rails', '1.1.2'
   gem 'rvm1-capistrano3', require: false
   gem 'byebug'
 end
