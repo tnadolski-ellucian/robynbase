@@ -8,7 +8,7 @@ gem 'rails', '4.2.7.1'
 
 # gem 'sqlite3'
 #gem 'mysql2', '0.3.11'
-gem 'mysql2'
+gem 'mysql2', '~> 0.4.10'
 
 
 gem 'sass-rails'
