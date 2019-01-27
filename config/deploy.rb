@@ -29,7 +29,7 @@ set :rails_env, "production"
 # download the repository to the local machine, then upload to server
 set :deploy_via, :copy
 
-# use agent forwaring 
+# use agent forwaring
 set :ssh_options, { :forward_agent => true }
 
 # keep some releases around on the server
@@ -40,13 +40,13 @@ set :pty, true
 
 # had to do this because i don't have any indication in the home directory
 # of which version of ruby rvm is on
-set :rvm1_ruby_version, 'ruby-2.1.5'
+set :rvm1_ruby_version, 'ruby-2.5.1'
 
-# this is used by the built-in 'deploy:symlink:linked_files'. links up the 
+# this is used by the built-in 'deploy:symlink:linked_files'. links up the
 # shared database.yml file to the latest release
 set :linked_files, %w{config/database.yml}
 
-# this is used by the built-in 'deploy:symlink:linked_dirs'. links up the 
+# this is used by the built-in 'deploy:symlink:linked_dirs'. links up the
 # shared album art directory to the latest release
 set :linked_dirs, %w{public/images/album-art}
 
@@ -74,7 +74,7 @@ namespace :deploy do
     on roles(:app) do
       execute "touch #{ current_path }/tmp/restart.txt"
     end
-  end    
+  end
 
   after :deploy, 'deploy:restart_passenger'
 
