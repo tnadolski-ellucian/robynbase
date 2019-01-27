@@ -148,6 +148,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler (= 1.17.1)
   byebug
   capistrano (= 3.3.5)
   capistrano-rails (= 1.1.3)
