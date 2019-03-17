@@ -1,4 +1,4 @@
-class Composition < ActiveRecord::Base
+class Composition < ApplicationRecord
 
   self.table_name = "COMP"
 
@@ -30,11 +30,10 @@ class Composition < ActiveRecord::Base
     'Unauthorized'     => 4,
     'Internet'         => 5,
     'Fan Club release' => 6,
-    'Compilation'      => 7,
-    'Other'            => 8
+    'Other'            => 7
   }
 
-  RELEASE_TYPES.default = 8;
+  RELEASE_TYPES.default = 7;
 
 
   @@quick_queries = [ 
@@ -80,7 +79,8 @@ class Composition < ActiveRecord::Base
       end
 
       # ordering by year, grouping by title to eliminate duplicates
-      albums.order("Year").group("Title")
+      albums.order("Year");
+      albums.to_a.uniq { |f| [f.Title ] }
 
     else
       all

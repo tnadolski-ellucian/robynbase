@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'bundler', '1.17.1'
 
-gem 'rails', '4.2.11'
+gem 'rails', '5.0.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -26,6 +26,8 @@ gem 'coffee-rails'
 #  gem 'uglifier', '>= 1.0.3'
 #end
 
+gem 'uglifier', '>= 1.3.0'
+
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
@@ -44,5 +46,6 @@ group :development do
   gem 'capistrano', '3.3.5'
   gem 'capistrano-rails', '1.1.3'
   gem 'rvm1-capistrano3', require: false
+  gem 'web-console'
   gem 'byebug'
 end

@@ -27,8 +27,17 @@ config/database.yml
 # IntelliJ files
 .idea
 
-# ignore album image files 
+# album image files 
 public/images/album-art/
+
+# precompiled assets
+public/assets
 
 # Ignore the rdoc README
 README.rdoc
+
+# byebug 
+.byebug_history
+
+# leaving secrets.yml out of the repo for now; not sure what it's for, and this seems to be the recommendation
+config/secrets.yml

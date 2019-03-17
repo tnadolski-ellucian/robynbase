@@ -5,7 +5,7 @@
 #   Rarity
 
 
-class Gig < ActiveRecord::Base
+class Gig < ApplicationRecord
 
   self.table_name = "GIG"
 

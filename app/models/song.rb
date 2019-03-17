@@ -1,7 +1,7 @@
 # Columns not in use:
 #   GIGID
 
-class Song < ActiveRecord::Base
+class Song < ApplicationRecord
 
   self.table_name = "SONG"
 
@@ -54,7 +54,8 @@ class Song < ActiveRecord::Base
   end
 
   def get_albums
-    self.compositions.order('Year').group('Title')
+    compositions = self.compositions.order('Year')
+    compositions.to_a.uniq { |f| [f.Title ] }    
   end
 
   def full_name

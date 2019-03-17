@@ -1,4 +1,4 @@
-class Album < ActiveRecord::Base
+class Album < ApplicationRecord
   self.table_name = "MAJR"
 
   has_many :songs, foreign_key: "MAJRID"

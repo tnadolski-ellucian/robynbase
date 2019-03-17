@@ -1,4 +1,4 @@
-class Performance < ActiveRecord::Base
+class Performance < ApplicationRecord
 
   self.primary_key = "performanceid"
 

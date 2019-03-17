@@ -1,7 +1,7 @@
 # what is NameSearch column for?
 # Not used:
 #   TaperFriendly
-class Venue < ActiveRecord::Base
+class Venue < ApplicationRecord
   self.table_name = "VENUE"
 
   def gigs
