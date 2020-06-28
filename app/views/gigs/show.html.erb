@@ -43,7 +43,7 @@
 
       <% if @gig.venue.present? %>
         <span class="subsidiary-info">
-          <small><%= "#{@gig.venue.City}, #{@gig.venue.State}" %></small>
+          <small><%= "#{@gig.venue.City}, #{@gig.venue.State.present? ? @gig.venue.State : @gig.venue.Country}" %> </small>
         </span
       <% end %>
  
