@@ -27,6 +27,10 @@ config/database.yml
 # IntelliJ files
 .idea
 
+# temporary files
+dumps/
+import/csv
+
 # album image files 
 public/images/album-art/
 
