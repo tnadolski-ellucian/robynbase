@@ -17,4 +17,4 @@ mysqldump --column-statistics=0 -u root $SOURCE_DB > $SOURCE_DB.sql
 
 # hydrate the backup db
 echo "Hydrating backup db $BACKUP_DB"
-mysql -u root $BACKUP_DB < $SOURCE_DB.sql
+mysql -u $USER $BACKUP_DB < $SOURCE_DB.sql
