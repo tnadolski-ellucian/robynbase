@@ -75,11 +75,6 @@ OptionParser.new do |opts|
 
 end.parse!
 
-p options
-p ARGV
-
-
-
 # handle venue import
 CsvVenueImport.import_venues(import_table, options[:preview], options[:csv])
 

@@ -47,37 +47,6 @@ module CsvVenueImport
     a + venues.map {|v| "#{venue_to_csv(v, show_metadata)}"}.join("\n")
   end
 
-
-  # def self.prepare_mismatched_csv(venues)
-  #
-  #   csv_data = "DB Name|DB City|DB State|DB Country|Import Name|Import City|Import State|Import Country|Import Index\n"
-  #
-  #   mismatched_venues = venues.select { |v| not v[:venue_name].nil?}.sort {|a, b| a[:venue_name] <=> b[:venue_name]}
-  #
-  #   prepare_venue_list(mismatched_venues).each do |venue|
-  #
-  #     csv_data << venue_to_csv(venue)
-  #     csv_data << '|'
-  #     csv_data << venue_to_csv(venue[:import_venue])
-  #     csv_data << '|'
-  #     csv_data << "#{venue[:import_venue][:index]}"
-  #     csv_data << "\n"
-  #
-  #   end
-  #
-  #   csv_data
-  #
-  # end
-
-
-  # def print_venue_csv(v)
-  #   puts("#{v[:venue_name]}|#{v[:city]}|#{v[:state]}|#{v[:country]}#{v[:index].nil? ? '' : "|#{v[:index]}"}")
-  # end
-
-  # def prepare_venue_list(venues)
-  #   venues.select { |v| not v[:venue_name].nil?}.sort {|a, b| a[:venue_name] <=> b[:venue_name]}
-  # end
-
   # Add the given list of venues to the database
   def self.create_venues(venues)
 
@@ -149,29 +118,7 @@ module CsvVenueImport
 
         # if we didn't find the venue, add it to the list of new venues; otherwise the list of extant venues
         if venue.blank?
-
-          # # look it up by name
-          # actual_venue = Venue.where(:Name => venue_info[:venue_name])
-          #
-          # # if it's there, assume there was a mismatch between the import data and the db
-          # if actual_venue.present?
-          #
-          #   mismatched_venues.push(
-          #       {
-          #         :venue_name   => actual_venue.first.Name,
-          #         :city         => actual_venue.first.City,
-          #         :state        => actual_venue.first.State,
-          #         :country      => actual_venue.first.Country,
-          #         :import_venue => venue_info
-          #       }
-          #   )
-          #
-          # # otherwise it's legit not there
-          # else
           new_venues.push(venue_info)
-
-          # end
-
         else
           extant_venues.push(venue_info)
         end
