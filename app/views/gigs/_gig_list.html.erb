@@ -13,6 +13,7 @@
       <th>Venue</th>
       <th>City</th>
       <th>State</th>
+      <th>Country</th>
       <th>Date</th>
     </tr>
     </thead>
@@ -22,8 +23,9 @@
     <tr data-path="<%= gig_path(gig) %>">
       <td class="main-column"> <%= gig.BilledAs %> </td>
       <td> <%= gig.Venue %> </td>
-      <td> <%= gig.venue.nil? ? "N/A" : gig.venue.City %> </td>
-      <td> <%= gig.venue.nil? ? "N/A" : gig.venue.State %> </td>
+      <td> <%= gig.venue.nil? ? nil : gig.venue.City %> </td>
+      <td> <%= gig.venue.nil? || gig.venue.State.nil? ? nil : gig.venue.State %> </td>
+      <td> <%= gig.venue.nil? ? nil : gig.venue.Country %> </td>
       <td> <%= gig.GigDate.to_date.to_formatted_s(:long) %> </td>
     </tr>
   <% end %>
