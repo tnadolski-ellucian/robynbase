@@ -1,11 +1,9 @@
 require 'csv'
 require 'active_record'
 
-require '../app/models/application_record.rb'
-require '../app/models/gig.rb'
-require '../app/models/venue.rb'
-
-require 'byebug'
+require_relative '../app/models/application_record.rb'
+require_relative '../app/models/gig.rb'
+require_relative '../app/models/venue.rb'
 
 # CSV Gig import utilities
 module CsvGigImport
@@ -249,7 +247,7 @@ module CsvGigImport
   #   - gigs_new.csv
   #   - gigs_extant.csv
   #   - gigs_data_issues.csv
-  # 
+  #
   def self.import_gigs(import_table, preview_only = false, output_csv_directory = nil)
 
     prepared_gigs = self.prepare_gigs(import_table)
