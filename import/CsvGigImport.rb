@@ -4,6 +4,7 @@ require 'active_record'
 require_relative '../app/models/application_record.rb'
 require_relative '../app/models/gig.rb'
 require_relative '../app/models/venue.rb'
+require_relative './import_helpers.rb'
 
 # CSV Gig import utilities
 module CsvGigImport
@@ -30,6 +31,8 @@ module CsvGigImport
       csv_data << '|'
       csv_data << g[:billed_as]
       csv_data << '|'
+      csv_data << g[:set_num].to_s
+      csv_data << '|'
       csv_data << g[:gig_type]
       csv_data << '|'
       csv_data << g[:guests]
@@ -43,7 +46,8 @@ module CsvGigImport
 
       csv_data
 
-    rescue TypeError
+    rescue TypeError => e
+      puts "Error getting gig! #{e.message}"
       puts g.inspect
     end
 
@@ -59,35 +63,48 @@ module CsvGigImport
   #   - reason it was marked invalid
   #
   def self.gigs_to_csv(gigs, show_metadata = false)
-    a = "Venue Name|Venue ID|Date|Billed As|Gig Type|Guests" + (show_metadata ? "|Index|Reason" : "") + "\n"
+    a = "Venue Name|Venue ID|Date|Billed As|Set Num|Gig Type|Guests" + (show_metadata ? "|Index|Reason" : "") + "\n"
     a + gigs.map {|g| "#{gig_to_csv(g, show_metadata)}"}.join("\n")
   end
 
 
   # Add the given list of gigs to the database
-  def self.create_gigs(gigs)
+  def self.crupdate_gigs(gigs, update)
 
     gigs.each do |gig_info|
 
-      new_gig = Gig.new do |g|
-        # byebug
-        g.BilledAs = gig_info[:billed_as]
-        g.Venue    = gig_info[:venue_name]
-        g.VENUEID  = gig_info[:venue_id]
-        g.GigType  = gig_info[:gig_type]
-        g.GigDate  = gig_info[:gig_date]
-        g.GigYear  = gig_info[:gig_date].year.to_s
-        g.Circa    = gig_info[:circa]
-        g.SetNum   = gig_info[:set_num]
-        g.Guests   = gig_info[:guests]
+      # if we're updating the gig, grab it first; otherwise create a new one
+      if update
+        gig = Gig.where(:GigDate => gig_info[:gig_date], :VENUEID => gig_info[:venue_id],  :SetNum => gig_info[:set_num])
+        gig = gig.to_a.first
+      else
+        gig = Gig.new
       end
 
-      new_gig.save
+      gig.BilledAs = gig_info[:billed_as]
+      gig.Venue    = gig_info[:venue_name]
+      gig.VENUEID  = gig_info[:venue_id]
+      gig.GigType  = gig_info[:gig_type]
+      gig.GigDate  = gig_info[:gig_date]
+      gig.GigYear  = gig_info[:gig_date].year.to_s
+      gig.Circa    = gig_info[:circa]
+      gig.SetNum   = gig_info[:set_num]
+      gig.Guests   = gig_info[:guests]
+
+      gig.save
 
     end
 
   end
 
+  # Returns the import value if it's available; otherwise return the extant value
+  def self.get_field(import_value, extant_value)
+    if import_value.blank?
+      extant_value
+    else
+      import_value
+    end    
+  end
 
   # Analyzes the given CSV table, to prepare the gigs for import
   #
@@ -100,6 +117,7 @@ module CsvGigImport
 
     extant_gigs = []
     new_gigs = []
+    updated_gigs = []
     data_errors = []
 
     index = 0
@@ -183,10 +201,26 @@ module CsvGigImport
             # look for the current gig in the database
             #
             # note: we use gig date and venue name as the unique key
-            gig = Gig.where(:GigDate => gig_date, :VENUEID => venue.VENUEID)
+            gig = Gig.where(:GigDate => gig_date, :VENUEID => venue.VENUEID, :SetNum => gig_info[:set_num])
 
             if gig.present?
-              extant_gigs.push(gig_info)
+
+              gig = gig.to_a.first
+
+              # update gig with spreadsheet data
+              gig.BilledAs = get_field(gig_info[:billed_as], gig.BilledAs)
+              gig.GigType  = get_field(gig_info[:gig_type], gig.GigType)
+              gig.GigYear  = get_field(gig_info[:gig_date].year.to_s, gig.GigYear)
+              gig.Circa    = get_field(gig_info[:circa], gig.Circa)
+              gig.SetNum   = get_field(gig_info[:set_num], gig.SetNum)
+              gig.Guests   = get_field(gig_info[:guests], gig.Guests)
+
+              if gig.changed?
+                updated_gigs.push(gig_info)
+              else
+                extant_gigs.push(gig_info)
+              end
+
             else
               new_gigs.push(gig_info)
             end
@@ -196,8 +230,9 @@ module CsvGigImport
         end
 
       else
-        # byebug
+        
         venue_name = row['Venue']
+        
         if venue_name.present?
           data_errors.push(gig_info.merge({:reason => "Could not find venue #{venue_name}"}))
         else
@@ -212,7 +247,7 @@ module CsvGigImport
     # remove the 'index' element from all new gigs
     new_gigs.map! {|v| v.reject {|k, v| k == :index}}
 
-    [new_gigs, extant_gigs, data_errors]
+    [new_gigs, updated_gigs, extant_gigs, data_errors]
 
   end
 
@@ -222,13 +257,18 @@ module CsvGigImport
 
     new_gigs_csv = "#{output_csv_directory}/gigs_new.csv"
     extant_gigs_csv = "#{output_csv_directory}/gigs_extant.csv"
+    updated_gigs_csv = "#{output_csv_directory}/gigs_updated.csv"
     gig_data_issues_csv = "#{output_csv_directory}/gigs_data_issues.csv"
 
-    new_gigs, extant_gigs, data_issues = prepared_gigs
+    new_gigs, updated_gigs, extant_gigs, data_issues = prepared_gigs
 
     # write out new gigs
     File.write(new_gigs_csv, gigs_to_csv(new_gigs))
     puts("New Gigs: #{new_gigs_csv}")
+
+    # write out updated gigs
+    File.write(updated_gigs_csv, gigs_to_csv(updated_gigs, true))
+    puts("Updated Gigs: #{updated_gigs_csv}")
 
     # write out existing gigs
     File.write(extant_gigs_csv, gigs_to_csv(extant_gigs, true))
@@ -256,12 +296,23 @@ module CsvGigImport
       dump_gig_csv(prepared_gigs, output_csv_directory)
     end
 
-    new_gigs, extant_gigs, data_issues = prepared_gigs
+    new_gigs, updated_gigs, extant_gigs, data_issues = prepared_gigs
 
-    # if there are any new gigs, add them to the database
-    if not preview_only and new_gigs.present?
-      puts "Importing new gigs"
-      create_gigs(new_gigs);
+    # if we're not in preview-only mode, update db
+    unless preview_only
+
+      # if there are any new gigs, add them to the database
+      if new_gigs.present?
+        puts "Importing new gigs"
+        crupdate_gigs(new_gigs, false)
+      end
+
+      # if there are any updated gigs, add them to the database
+      if updated_gigs.present?
+        puts "Updating changed gigs"
+        crupdate_gigs(updated_gigs, true)
+      end
+
     end
 
   end
