@@ -12,5 +12,5 @@ mysql -u $USER -e "create database $DEV_DB;"
 
 
 # hydrate the db
-echo "Hydrating backup db $DEV_DB using $1"
+echo "Hydrating db $DEV_DB using $1"
 mysql -u $USER $DEV_DB < $1

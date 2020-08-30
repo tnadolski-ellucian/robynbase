@@ -1,10 +1,8 @@
 require 'csv'
 require 'active_record'
 
-require '../app/models/application_record.rb'
-require '../app/models/venue.rb'
-
-require 'byebug'
+require_relative '../app/models/application_record.rb'
+require_relative '../app/models/venue.rb'
 
 # CSV Venue Import Utilities
 module CsvVenueImport
