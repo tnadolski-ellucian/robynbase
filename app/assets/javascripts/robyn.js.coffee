@@ -37,6 +37,7 @@ $(window).on("load", ->
     when currentPage.indexOf("compositions") == 0 then "robyn-compositions"
     when currentPage.indexOf("gigs") == 0 then "robyn-gigs"
     when currentPage.indexOf("performances") == 0 then "robyn-performances"
+    when currentPage.indexOf("about") == 0 then "robyn-about"
     else "robyn-home"
 
   $("##{activeTab}").addClass("active")
