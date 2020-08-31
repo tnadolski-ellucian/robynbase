@@ -12,14 +12,15 @@ Robyn2::Application.routes.draw do
   get "robyn/search_gigs"
   get "robyn/search_compositions"
   get "robyn/search_performances"
-
-
+  
+  
   resources :songs
   resources :gigs
   resources :venues
   resources :compositions
   resources :performances
-
+  resources :about
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
