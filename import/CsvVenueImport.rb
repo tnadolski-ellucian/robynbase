@@ -92,7 +92,7 @@ module CsvVenueImport
 
       # put together data on the gig venu
       venue_info = {
-          :venue_name => row['Venue'].nil? ? nil : row['Venue'].strip,
+          :venue_name => row['Name'].nil? ? nil : row['Name'].strip,
           :city       => row['City'].nil? ? nil : row['City'].strip,
           :state      => row['State'].nil? ? nil : row['State'].strip,
           :country    => row['Country'].nil? ? nil : row['Country'].strip,
