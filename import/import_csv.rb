@@ -61,7 +61,8 @@ def get_col_value(row, col)
 end
 
 
-import_csv_file = ARGV[0]
+import_type = ARGV[0]
+import_csv_file = ARGV[1]
 
 # pull in the csv file we're importing, and convert it into a CSV table
 import_table = CSV.parse(File.read(import_csv_file), headers: true, converters: [custom_converter, :numeric, :date_time])
@@ -73,7 +74,7 @@ options = {
 }
 
 OptionParser.new do |opts|
-  opts.banner = "Usage: import_csv.rb [options]"
+  opts.banner = "Usage: import_csv.rb IMPORT_TYPE CSV_FILE [options]"
 
   opts.on("-cCSVDIR", "--csv", "Write CSV action to the given directory") do |c|
     options[:csv] = c
@@ -85,8 +86,17 @@ OptionParser.new do |opts|
 
 end.parse!
 
-# handle venue import
-CsvVenueImport.import_venues(import_table, options[:preview], options[:csv])
 
-# handle gig import
-CsvGigImport.import_gigs(import_table, options[:preview], options[:csv])
+case import_type
+  when 'venue'
+      # handle venue import
+      CsvVenueImport.import_venues(import_table, options[:preview], options[:csv])
+  when 'gig'
+      # handle gig import
+      CsvGigImport.import_gigs(import_table, options[:preview], options[:csv])
+  else
+      puts "Invalid import type! #{import_type}. Valid import types are 'venue' and 'gig'."
+end
+
+
+
