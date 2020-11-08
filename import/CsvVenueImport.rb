@@ -182,7 +182,7 @@ module CsvVenueImport
   #   - venues_extant.csv
   #   - venues_data_issues.csv
   #
-  def self.import_venues(import_table, preview_only = false, output_csv_directory = nil)
+  def self.import_venues(import_table, preview_only = false, output_csv_directory = nil, no_updates = false, no_creates = false)
 
     venue_analysis = self.analyze_venues(import_table)
 
@@ -193,8 +193,8 @@ module CsvVenueImport
     new_venues, mismatched_venues, data_issues = venue_analysis
 
     # if there are any new venues, add them to the database
-    if not preview_only and new_venues.present?
-      puts 'Importing new venues'
+    if not preview_only and new_venues.present? and not no_creates
+      puts 'Creating new venues'
       self.create_venues(new_venues)
     end
 

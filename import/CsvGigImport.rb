@@ -173,9 +173,13 @@ module CsvGigImport
 
           venue = venue_query.to_a.first
 
+          # use the gig-specific venue name if it's available; otherwise fall back to official venue
+          # name
+          venue_name = row['GigVenue'].nil? ? venue.Name : row['GigVenue'].strip
+
           gig_info.merge!({
               :venue_id => venue.VENUEID,
-              :venue_name => venue.Name,
+              :venue_name => venue_name,
           })
 
           gig_date = nil
@@ -288,7 +292,7 @@ module CsvGigImport
   #   - gigs_extant.csv
   #   - gigs_data_issues.csv
   #
-  def self.import_gigs(import_table, preview_only = false, output_csv_directory = nil)
+  def self.import_gigs(import_table, preview_only = false, output_csv_directory = nil, no_updates = false, no_creates = false)
 
     prepared_gigs = self.prepare_gigs(import_table)
 
@@ -302,13 +306,13 @@ module CsvGigImport
     unless preview_only
 
       # if there are any new gigs, add them to the database
-      if new_gigs.present?
-        puts "Importing new gigs"
+      if new_gigs.present? and not no_creates
+        puts "Creating new gigs"
         crupdate_gigs(new_gigs, false)
       end
 
       # if there are any updated gigs, add them to the database
-      if updated_gigs.present?
+      if updated_gigs.present? and not no_updates
         puts "Updating changed gigs"
         crupdate_gigs(updated_gigs, true)
       end

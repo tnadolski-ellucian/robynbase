@@ -84,16 +84,25 @@ OptionParser.new do |opts|
     options[:preview] = c
   end
 
+
+  opts.on("-u", "--noupdate", "Don't update existing records when there are changes") do |c|
+    options[:noupdate] = c
+  end
+
+  opts.on("-a", "--noadd", "Don't add new records for missing items") do |c|
+    options[:noadd] = c
+  end
+
 end.parse!
 
 
 case import_type
   when 'venue'
       # handle venue import
-      CsvVenueImport.import_venues(import_table, options[:preview], options[:csv])
+      CsvVenueImport.import_venues(import_table, options[:preview], options[:csv], options[:noupdate], options[:noadd])
   when 'gig'
       # handle gig import
-      CsvGigImport.import_gigs(import_table, options[:preview], options[:csv])
+      CsvGigImport.import_gigs(import_table, options[:preview], options[:csv], options[:noupdate], options[:noadd])
   else
       puts "Invalid import type! #{import_type}. Valid import types are 'venue' and 'gig'."
 end

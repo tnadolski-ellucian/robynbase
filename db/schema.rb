@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_25_105411) do
+ActiveRecord::Schema.define(version: 2020_11_08_142620) do
 
   create_table "COMP", primary_key: "COMPID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "Artist", limit: 64
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2020_07_25_105411) do
     t.integer "SetNum", limit: 1, default: 0
     t.datetime "StartTime"
     t.integer "Length", default: 0
-    t.string "Guests", limit: 150
+    t.string "Guests", limit: 512
     t.string "ShortNote", limit: 64
     t.string "Shirts", limit: 24
     t.text "Reviews", limit: 4294967295
