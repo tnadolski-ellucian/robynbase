@@ -78,14 +78,19 @@ class Composition < ApplicationRecord
         albums = albums.where(Type: RELEASE_TYPES.select {|name, key| release_types.include?(key)}.keys )        
       end
 
-      # ordering by year, grouping by title to eliminate duplicates
-      albums.order("Year");
-      albums.to_a.uniq { |f| [f.Title ] }
-
     else
-      all
+      albums = all
 
     end
+
+    # order by year
+    albums = albums.order(:Year => :asc)
+
+    # remove duplicated albums (ie, albums with multiple editions)
+    # TODO: why aren't i just doing this in the query? group by title?
+    albums = albums.to_a.uniq { |f| [f.Title ] }
+
+    albums
 
   end 
 
