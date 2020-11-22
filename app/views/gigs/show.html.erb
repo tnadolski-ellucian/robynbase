@@ -43,7 +43,7 @@
 
       <% if @gig.venue.present? %>
         <span class="subsidiary-info">
-          <small><%= "#{@gig.venue.City}, #{@gig.venue.State.present? ? @gig.venue.State : @gig.venue.Country}" %> </small>
+          <small><%= "#{@gig.venue.City}, #{@gig.venue.State.present? ? @gig.venue.State : @gig.venue.Country} #{@gig.venue.SubCity.present? ? '(' + @gig.venue.SubCity + ')' : ''}" %> </small>
         </span
       <% end %>
  
@@ -53,7 +53,7 @@
 
   <dl class="dl-horizontal">
     <dt>Billed As</dt>
-    <dd><%= @gig.BilledAs %></dd>
+    <dd><%= @gig.BilledAs.present? ? @gig.BilledAs : 'Robyn Hitchcock' %> </dd>
   </dl>
 
   <% if @gig.Guests %>

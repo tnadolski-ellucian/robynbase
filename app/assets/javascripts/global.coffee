@@ -13,8 +13,8 @@ $(window).on("load", (e) ->
     # look for any previous sorts for this grid (in the current session)
     orderCookie = Cookies.getJSON("order-" + tableId)
 
-    # default order
-    order = [[0, "asc"]]
+    # no table ordering by default (just display the records in the order they were returned)
+    order = []
 
     # if the table requests an initial sort, always use that for the render
     if (tableSort)
@@ -31,7 +31,7 @@ $(window).on("load", (e) ->
         search: "Filter: "
       },
 
-      # hide the pageination controls if the table only has one page
+      # hide the pagination controls if the table only has one page
       # (solution taken from http://stackoverflow.com/a/12393232)
       fnDrawCallback: (oSettings) ->
         if oSettings._iDisplayLength > oSettings.fnRecordsDisplay()

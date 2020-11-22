@@ -204,7 +204,7 @@ module CsvGigImport
 
             # look for the current gig in the database
             #
-            # note: we use gig date and venue name as the unique key
+            # note: we use gig date / venue id / set num as the unique key
             gig = Gig.where(:GigDate => gig_date, :VENUEID => venue.VENUEID, :SetNum => gig_info[:set_num])
 
             if gig.present?

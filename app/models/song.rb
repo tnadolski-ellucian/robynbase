@@ -47,10 +47,13 @@ class Song < ApplicationRecord
     end
 
     if search
-      where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
+      songs = where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
     else
-      all
+      songs = all
     end
+
+    songs.order(:Song => :asc)
+
   end
 
   def get_albums
