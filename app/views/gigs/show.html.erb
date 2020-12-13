@@ -95,7 +95,7 @@
       <% if gig_song.song.present? %>
         <li> <%= link_to gig_song.Song, song_path(gig_song.song) %> <%= gig_song_details(gig_song) %> </li>
       <% else %>
-        <li> <%= gig_song.Song %> </li>
+        <li> <%= gig_song.Song %> <%= gig_song_details(gig_song) %> </li>
       <% end %>
     <% end %>
 

@@ -5,7 +5,7 @@ module GigHelper
     out = ""
 
     # author (if not robyn)
-    if gig_song.song.Author.present? 
+    if gig_song.song.present? and gig_song.song.Author.present? 
       out += "<span class='subsidiary-info'> <small>#{gig_song.song.Author}</small> </span>"
     end
 

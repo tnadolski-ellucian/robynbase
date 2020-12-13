@@ -3,11 +3,22 @@ require 'active_record'
 
 require_relative '../app/models/application_record.rb'
 require_relative '../app/models/gig.rb'
+require_relative '../app/models/song.rb'
+require_relative '../app/models/gigset.rb'
 require_relative '../app/models/venue.rb'
 require_relative './import_helpers.rb'
 
 # CSV Gig import utilities
 module CsvGigImport
+
+  #   /^                -> start
+  #   (.*?)\s*          -> song name
+  #   (?:\[(.+)\])?\s?  -> optional artist 
+  #   (?:<<(.+)>>)?     -> optional version notes
+  #   $/                -> end
+  SONG_MATCHER = /^(.*?)\s*(?:\[(.+)\])?\s?(?:<<(.+)>>)?$/
+
+  SongData = Struct.new(:song_name, :artist, :version_notes)
 
   # Returns the given gig in CSV format, using a pipe (|) separator)
   #
@@ -90,6 +101,27 @@ module CsvGigImport
       gig.Circa    = gig_info[:circa]
       gig.SetNum   = gig_info[:set_num]
       gig.Guests   = gig_info[:guests]
+
+      # import set list if present
+      if gig_info[:set_list].present?
+
+        # always start setlists from scratch
+        gig.gigsets.clear
+
+        # create a new gigset record for each song
+        gig_info[:set_list].each do |entry|
+
+          record = Gigset.new
+          record.Chrono = entry[:chrono]
+          record.Song   = entry[:song]
+          record.SONGID = entry[:song_id]
+          record.VersionNotes = entry[:version_notes]
+
+          gig.gigsets << record
+
+        end
+
+      end
 
       gig.save
 
@@ -202,6 +234,54 @@ module CsvGigImport
                 :gig_date => gig_date
             })
 
+            # only process setlists for shows after 2013
+            if gig_date.year > 2013 and row['SetList'].present?
+
+              set_list = []
+
+              index = 1
+                  
+              # loop through each line in the set list cell
+              row['SetList'].each_line(chomp: true) do |song|
+                      
+                # break the song name list into its constituent pieces
+                song_data = SONG_MATCHER.match(song) {|m| SongData.new(*m.captures)}
+
+                item = {
+                  :chrono => index,
+                  :song => song_data.song_name,
+                  :version_notes => song_data.version_notes
+                }
+
+                # look for a song with the given name
+                song_record = Song.find_full_name(song_data.song_name)
+      
+                # if there isn't one there, we're just display the song name (unlinked)
+                if song_record.empty?
+
+                  item[:song] = "#{song_data.song_name}#{song_data.artist.present? ? ' [' + song_data.artist + ']' : ''}"
+
+                  data_errors.push(gig_info.merge({
+                      :reason => "Could not find associated song for: #{song}"
+                  }))
+
+                # otherwise record the song id
+                else
+                  item[:song_id] = song_record.first.SONGID
+                end
+      
+                index += 1
+
+                # add to the set list
+                set_list << item
+      
+              end
+      
+              # register the set list for this gig
+              gig_info[:set_list] = set_list
+              
+            end      
+
             # look for the current gig in the database
             #
             # note: we use gig date / venue id / set num as the unique key
@@ -219,7 +299,7 @@ module CsvGigImport
               gig.SetNum   = get_field(gig_info[:set_num], gig.SetNum)
               gig.Guests   = get_field(gig_info[:guests], gig.Guests)
 
-              if gig.changed?
+              if gig.changed? or gig_info[:set_list].present?
                 updated_gigs.push(gig_info)
               else
                 extant_gigs.push(gig_info)

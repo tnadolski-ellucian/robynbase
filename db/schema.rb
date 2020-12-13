@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_16_133200) do
+ActiveRecord::Schema.define(version: 2020_12_13_151552) do
 
   create_table "COMP", primary_key: "COMPID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "Artist", limit: 64
@@ -100,8 +100,8 @@ ActiveRecord::Schema.define(version: 2020_11_16_133200) do
     t.integer "GIGID", default: 0
     t.integer "SONGID", default: 0
     t.integer "Chrono", default: 10
-    t.string "Song", limit: 50
-    t.string "VersionNotes", limit: 32
+    t.string "Song"
+    t.string "VersionNotes"
     t.boolean "Encore", default: false
     t.boolean "Segue", default: false
     t.boolean "Soundcheck", default: false
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 2020_11_16_133200) do
   end
 
   create_table "SONG", primary_key: "SONGID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "Song", limit: 64, null: false
+    t.string "Song", null: false
     t.string "Prefix", limit: 16
     t.string "Versions", limit: 50
     t.string "Band", limit: 32
@@ -193,7 +193,7 @@ ActiveRecord::Schema.define(version: 2020_11_16_133200) do
   create_table "TRAK", primary_key: "TRAKID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "COMPID"
     t.integer "SONGID"
-    t.string "Song", limit: 64
+    t.string "Song"
     t.integer "Disc", limit: 1, default: 0
     t.string "Side", limit: 1
     t.integer "Seq", limit: 1, default: 0
