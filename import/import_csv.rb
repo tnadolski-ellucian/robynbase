@@ -93,6 +93,10 @@ OptionParser.new do |opts|
     options[:noadd] = c
   end
 
+  opts.on("-s", "--createsongs", "Create new records for new songs") do |c|
+    options[:create_missing_songs] = c
+  end
+
 end.parse!
 
 
@@ -102,7 +106,7 @@ case import_type
       CsvVenueImport.import_venues(import_table, options[:preview], options[:csv], options[:noupdate], options[:noadd])
   when 'gig'
       # handle gig import
-      CsvGigImport.import_gigs(import_table, options[:preview], options[:csv], options[:noupdate], options[:noadd])
+      CsvGigImport.import_gigs(import_table, options[:preview], options[:csv], options[:noupdate], options[:noadd], options[:create_missing_songs])
   else
       puts "Invalid import type! #{import_type}. Valid import types are 'venue' and 'gig'."
 end

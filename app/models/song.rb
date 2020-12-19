@@ -85,6 +85,28 @@ class Song < ApplicationRecord
     
   end
 
+  # create a song record with the given name & author
+  def self.make_song_record(name, author = nil)
+
+    words = name.split(/\s+/)
+    article = nil
+
+    # separate leading articles (a/an/the) into their own column
+    if words.length > 1 and Articles.include? words.first.upcase
+      article = words.shift
+      song_name = words.join(' ')
+    else
+      song_name = name
+    end
+
+    Song.new do |s| 
+      s.Prefix = article
+      s.Song = song_name
+      s.Author = author
+    end
+
+  end
+
 
   # returns an array of all available quick queries
   def self.get_quick_queries 
