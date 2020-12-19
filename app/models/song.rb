@@ -25,6 +25,8 @@ class Song < ApplicationRecord
     QuickQuery.new('songs', :released_never_played_live)
   ]
 
+  Articles = ["A", "AN", "THE"]
+
   def self.search_by(kind, search)
 
     kind = [:title, :lyrics, :author, :song] if kind.nil? or kind.length == 0
@@ -64,6 +66,47 @@ class Song < ApplicationRecord
   def full_name
     (self.Prefix.present? ? "#{self.Prefix} " : "") + self.Song
   end
+
+
+  def self.find_full_name(name)
+
+    words = name.split(/\s+/)
+
+    if words.length > 1 and Articles.include? words.first.upcase
+
+      article = words.shift
+      rest = words.join(' ')
+
+      where(["SONG = ? and PREFIX = ?", rest, article])
+
+    else
+      where (["SONG = ?", name])
+    end
+    
+  end
+
+  # create a song record with the given name & author
+  def self.make_song_record(name, author = nil)
+
+    words = name.split(/\s+/)
+    article = nil
+
+    # separate leading articles (a/an/the) into their own column
+    if words.length > 1 and Articles.include? words.first.upcase
+      article = words.shift
+      song_name = words.join(' ')
+    else
+      song_name = name
+    end
+
+    Song.new do |s| 
+      s.Prefix = article
+      s.Song = song_name
+      s.Author = author
+    end
+
+  end
+
 
   # returns an array of all available quick queries
   def self.get_quick_queries 

@@ -9,7 +9,7 @@ class Gig < ApplicationRecord
 
   self.table_name = "GIG"
 
-  has_many :gigsets, -> {order 'Chrono'}, foreign_key: "GIGID"
+  has_many :gigsets, -> {order 'Chrono'}, foreign_key: "GIGID", dependent: :delete_all
   has_many :songs, through: :gigsets, foreign_key: "GIGID"
   belongs_to :venue, foreign_key: "VENUEID"
 

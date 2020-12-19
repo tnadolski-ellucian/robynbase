@@ -3,11 +3,23 @@ require 'active_record'
 
 require_relative '../app/models/application_record.rb'
 require_relative '../app/models/gig.rb'
+require_relative '../app/models/song.rb'
+require_relative '../app/models/gigset.rb'
 require_relative '../app/models/venue.rb'
 require_relative './import_helpers.rb'
 
 # CSV Gig import utilities
 module CsvGigImport
+
+  #   /^                -> start
+  #   (.*?)\s*          -> song name
+  #   (?:\[(.+)\])?\s?  -> optional artist 
+  #   (?:<<(.+)>>)?     -> optional version notes
+  #   (?:{{(Encore)}})? -> optional encore marker
+  #   $/                -> end
+  SONG_MATCHER = /^(.*?)\s*(?:\[(.+)\])?\s?(?:<<(.+)>>)?\s?(?:{{(Encore)}})?$/
+
+  SongData = Struct.new(:song_name, :artist, :version_notes, :encore)
 
   # Returns the given gig in CSV format, using a pipe (|) separator)
   #
@@ -67,9 +79,15 @@ module CsvGigImport
     a + gigs.map {|g| "#{gig_to_csv(g, show_metadata)}"}.join("\n")
   end
 
+  def self.missing_songs_to_csv(songs)
+    a = "Name|Author|\n"
+    a + songs.map {|s| "#{s.song_name}|#{s.artist ? s.artist : ''}|"}.join("\n")
+  end
 
   # Add the given list of gigs to the database
-  def self.crupdate_gigs(gigs, update)
+  def self.crupdate_gigs(gigs, update, create_missing_songs)
+
+    newly_created_songs = {}
 
     gigs.each do |gig_info|
 
@@ -90,6 +108,50 @@ module CsvGigImport
       gig.Circa    = gig_info[:circa]
       gig.SetNum   = gig_info[:set_num]
       gig.Guests   = gig_info[:guests]
+
+      # import set list if present
+      if gig_info[:set_list].present?
+
+        # always start setlists from scratch
+        gig.gigsets.clear
+
+        # create a new gigset record for each song
+        gig_info[:set_list].each do |entry|
+
+          song_name_compare = entry[:song].upcase
+
+          # create new song reecords for missing songs (if requested to do so)
+          if create_missing_songs and entry[:song_id].blank? 
+
+            # if we've already created this song, figure out the song id of that new record
+            if newly_created_songs[song_name_compare].present?
+              entry[:song_id] = newly_created_songs[song_name_compare]
+
+            # otherwise add the new song  
+            else
+              new_song = Song.make_song_record(entry[:song], entry[:author])
+              new_song.save
+              entry[:song_id] = new_song.SONGID            
+
+              # remember that we created this song
+              newly_created_songs[song_name_compare] = entry[:song_id]
+              
+            end
+
+          end
+
+          record = Gigset.new
+          record.Chrono = entry[:chrono]
+          record.Song   = entry[:song]
+          record.SONGID = entry[:song_id]
+          record.VersionNotes = entry[:version_notes]
+          record.Encore = entry[:encore] === "Encore"
+
+          gig.gigsets << record
+
+        end
+
+      end
 
       gig.save
 
@@ -113,12 +175,13 @@ module CsvGigImport
   # 3. Extracts gigs that have some sort of error that prevents them from being imported
   #
   # Returns a tuple with three items (one for each list of gigs)
-  def self.prepare_gigs(import_table)
+  def self.prepare_gigs(import_table, create_missing_songs)
 
     extant_gigs = []
     new_gigs = []
     updated_gigs = []
     data_errors = []
+    missing_songs = []
 
     index = 0
 
@@ -202,6 +265,69 @@ module CsvGigImport
                 :gig_date => gig_date
             })
 
+            # only process setlists for shows after 2013
+            if gig_date.year > 2013 and row['SetList'].present?
+
+              set_list = []
+
+              index = 1
+                  
+              # loop through each line in the set list cell
+              row['SetList'].each_line() do |song|
+                     
+                song.strip!
+
+                # break the song name list into its constituent pieces
+                song_data = SONG_MATCHER.match(song) {|m| SongData.new(*m.captures)}
+
+                item = {
+                  :chrono => index,
+                  :song => song_data.song_name,
+                  :version_notes => song_data.version_notes,
+                  :author => song_data.artist,
+                  :encore => song_data.encore
+                }
+
+                # only add to the set if the song name isn't blank
+                if song_data.song_name.present?
+
+                  # look for a song with the given name
+                  song_record = Song.find_full_name(song_data.song_name)
+        
+                  # if there isn't one there, we'll just display the song name (unlinked)
+                  if song_record.empty?
+
+                    missing_songs.push(song_data)
+
+                    if not create_missing_songs
+
+                      item[:song] = "#{song_data.song_name}#{song_data.artist.present? ? ' [' + song_data.artist + ']' : ''}"
+
+                      data_errors.push(gig_info.merge({
+                          :reason => "Could not find associated song for: #{song}"
+                      }))        
+
+                    end
+
+                  # otherwise record the song id
+                  else
+                    item[:song_id] = song_record.first.SONGID
+                  end
+
+                  index += 1
+
+                  # add to the set list
+                  set_list << item
+        
+                end
+
+              end
+      
+              # register the set list for this gig
+              gig_info[:set_list] = set_list
+              
+            end      
+
             # look for the current gig in the database
             #
             # note: we use gig date / venue id / set num as the unique key
@@ -219,7 +345,7 @@ module CsvGigImport
               gig.SetNum   = get_field(gig_info[:set_num], gig.SetNum)
               gig.Guests   = get_field(gig_info[:guests], gig.Guests)
 
-              if gig.changed?
+              if gig.changed? or gig_info[:set_list].present?
                 updated_gigs.push(gig_info)
               else
                 extant_gigs.push(gig_info)
@@ -251,7 +377,7 @@ module CsvGigImport
     # remove the 'index' element from all new gigs
     new_gigs.map! {|v| v.reject {|k, v| k == :index}}
 
-    [new_gigs, updated_gigs, extant_gigs, data_errors]
+    [new_gigs, updated_gigs, extant_gigs, data_errors, missing_songs]
 
   end
 
@@ -263,8 +389,9 @@ module CsvGigImport
     extant_gigs_csv = "#{output_csv_directory}/gigs_extant.csv"
     updated_gigs_csv = "#{output_csv_directory}/gigs_updated.csv"
     gig_data_issues_csv = "#{output_csv_directory}/gigs_data_issues.csv"
+    gig_missing_songs_csv = "#{output_csv_directory}/gigs_missing_songs.csv"
 
-    new_gigs, updated_gigs, extant_gigs, data_issues = prepared_gigs
+    new_gigs, updated_gigs, extant_gigs, data_issues, missing_songs = prepared_gigs
 
     # write out new gigs
     File.write(new_gigs_csv, gigs_to_csv(new_gigs))
@@ -282,19 +409,24 @@ module CsvGigImport
     File.write(gig_data_issues_csv, gigs_to_csv(data_issues, true))
     puts("Data Issues: #{gig_data_issues_csv}")
 
-  end
+    # write out missing songs
+    File.write(gig_missing_songs_csv, missing_songs_to_csv(missing_songs.uniq {|s| s[:song_name].upcase}.sort{|a, b| a[:song_name] <=> b[:song_name]}))
+    puts("Missing songs: #{gig_missing_songs_csv}")
+
+end
 
 
   # Extracts gigs from the given csv import_table, and writes them to the database
   #
-  # If dump_csv is set, writes the gig analysis to three CSV files:
+  # If dump_csv is set, writes the gig analysis to csv files CSV files:
   #   - gigs_new.csv
   #   - gigs_extant.csv
   #   - gigs_data_issues.csv
+  #   - gig_missing_songs.csv
   #
-  def self.import_gigs(import_table, preview_only = false, output_csv_directory = nil, no_updates = false, no_creates = false)
+  def self.import_gigs(import_table, preview_only = false, output_csv_directory = nil, no_updates = false, no_creates = false, create_missing_songs = false)
 
-    prepared_gigs = self.prepare_gigs(import_table)
+    prepared_gigs = self.prepare_gigs(import_table, create_missing_songs)
 
     if output_csv_directory.present?
       dump_gig_csv(prepared_gigs, output_csv_directory)
@@ -308,13 +440,13 @@ module CsvGigImport
       # if there are any new gigs, add them to the database
       if new_gigs.present? and not no_creates
         puts "Creating new gigs"
-        crupdate_gigs(new_gigs, false)
+        crupdate_gigs(new_gigs, false, create_missing_songs)
       end
 
       # if there are any updated gigs, add them to the database
       if updated_gigs.present? and not no_updates
         puts "Updating changed gigs"
-        crupdate_gigs(updated_gigs, true)
+        crupdate_gigs(updated_gigs, true, create_missing_songs)
       end
 
     end
