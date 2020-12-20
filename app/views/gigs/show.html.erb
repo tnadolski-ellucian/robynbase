@@ -31,11 +31,6 @@
   </dl>
 
   <dl class="dl-horizontal">
-    <dt>Type</dt>
-    <dd><%= @gig.Type %></dd>
-  </dl>
-
-  <dl class="dl-horizontal">
     <dt>Venue</dt>
     <dd>
 
@@ -65,19 +60,20 @@
 
   <% end %>
 
-  <dl class="dl-horizontal">
-    <dt>Tape Exists</dt>
-    <dd><%= @gig.TapeExists ? "Yes" : "No" %></dd>
-  </dl>
+<% if @gig.ShortNote.present? %>
 
-  <dl class="dl-horizontal">
-    <dt>Length</dt>
-    <dd><%= @gig.Length == 0 ? "Unknown" : @gig.Length %> </dd>
-  </dl>
-
+<div style="margin-top: 30px">
+  
+  <a class="anchor" name="notes"></a>
+  <h4 class="underlined-header"> Notes </h4>
+  
+  <div>
+    <%= @gig.ShortNote.html_safe %>
   </div>
 
 </div>
+
+<% end %>
 
 <% if @gig.get_set.present? %>
 
