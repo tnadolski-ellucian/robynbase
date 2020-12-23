@@ -11,7 +11,8 @@
 
   <small>
     <span class="inpage-navigation">
-      <% if @gig.get_set.present? %> <span><a href="#setlist">Set list</a></span> <% end %>
+      <% if @gig.get_set.present? %> <span><a href="#setlist">Set List</a></span> <% end %>
+      <% if @gig.ShortNote.present? %> <span><a href="#notes">Notes</a></span> <% end %>
       <% if @gig.get_reviews.present? %> <span><a href="#reviews">Reviews</a></span> <% end %>
     </span>
   </small>
@@ -62,16 +63,17 @@
 
 <% if @gig.ShortNote.present? %>
 
-<div style="margin-top: 30px">
+  <!-- notes about the gig -->
+  <div style="margin-top: 30px">
+    
+    <a class="anchor" name="notes"></a>
+    <h4 class="underlined-header"> Notes </h4>
+    
+    <div>
+      <%= @gig.ShortNote.html_safe %>
+    </div>
   
-  <a class="anchor" name="notes"></a>
-  <h4 class="underlined-header"> Notes </h4>
-  
-  <div>
-    <%= @gig.ShortNote.html_safe %>
   </div>
-
-</div>
 
 <% end %>
 
@@ -83,7 +85,7 @@
 
     <!-- songs in the set -->
     <a class="anchor" name="setlist"></a>
-    <h4 class="underlined-header"> Set </h4>
+    <h4 class="underlined-header"> Set List </h4>
 
     <ol class="set-list">
 
