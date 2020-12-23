@@ -266,7 +266,7 @@ module CsvGigImport
             })
 
             # only process setlists for shows after 2013
-            if gig_date.year > 2013 and row['SetList'].present?
+            if gig_date.year >= 2013 and row['SetList'].present?
 
               set_list = []
 
