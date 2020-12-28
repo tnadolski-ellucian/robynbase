@@ -52,7 +52,7 @@
     <dd><%= @gig.BilledAs.present? ? @gig.BilledAs : 'Robyn Hitchcock' %> </dd>
   </dl>
 
-  <% if @gig.Guests %>
+  <% if @gig.Guests.present? %>
 
     <dl class="dl-horizontal">
       <dt>Guests</dt>
@@ -70,7 +70,7 @@
     <h4 class="underlined-header"> Notes </h4>
     
     <div>
-      <%= @gig.ShortNote.html_safe %>
+      <%= simple_format(@gig.ShortNote.html_safe) %>
     </div>
   
   </div>

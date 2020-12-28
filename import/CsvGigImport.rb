@@ -48,6 +48,8 @@ module CsvGigImport
       csv_data << g[:gig_type]
       csv_data << '|'
       csv_data << g[:guests]
+      csv_data << '|'
+      csv_data << g[:notes]
 
       if show_metadata
         csv_data << '|'
@@ -75,7 +77,7 @@ module CsvGigImport
   #   - reason it was marked invalid
   #
   def self.gigs_to_csv(gigs, show_metadata = false)
-    a = "Venue Name|Venue ID|Date|Billed As|Set Num|Gig Type|Guests" + (show_metadata ? "|Index|Reason" : "") + "\n"
+    a = "Venue Name|Venue ID|Date|Billed As|Set Num|Gig Type|Guests|Notes" + (show_metadata ? "|Index|Reason" : "") + "\n"
     a + gigs.map {|g| "#{gig_to_csv(g, show_metadata)}"}.join("\n")
   end
 
@@ -99,15 +101,16 @@ module CsvGigImport
         gig = Gig.new
       end
 
-      gig.BilledAs = gig_info[:billed_as]
-      gig.Venue    = gig_info[:venue_name]
-      gig.VENUEID  = gig_info[:venue_id]
-      gig.GigType  = gig_info[:gig_type]
-      gig.GigDate  = gig_info[:gig_date]
-      gig.GigYear  = gig_info[:gig_date].year.to_s
-      gig.Circa    = gig_info[:circa]
-      gig.SetNum   = gig_info[:set_num]
-      gig.Guests   = gig_info[:guests]
+      gig.BilledAs  = gig_info[:billed_as]
+      gig.Venue     = gig_info[:venue_name]
+      gig.VENUEID   = gig_info[:venue_id]
+      gig.GigType   = gig_info[:gig_type]
+      gig.GigDate   = gig_info[:gig_date]
+      gig.GigYear   = gig_info[:gig_date].year.to_s
+      gig.Circa     = gig_info[:circa]
+      gig.SetNum    = gig_info[:set_num]
+      gig.Guests    = gig_info[:guests]
+      gig.ShortNote = gig_info[:notes]
 
       # import set list if present
       if gig_info[:set_list].present?
@@ -221,6 +224,7 @@ module CsvGigImport
           :circa => row['Circa'],
           :set_num => row['SetNum'],
           :guests => get_col_value(row, 'Guests'),
+          :notes => get_col_value(row, 'Notes'),
           :index => index
       }
 
@@ -338,12 +342,13 @@ module CsvGigImport
               gig = gig.to_a.first
 
               # update gig with spreadsheet data
-              gig.BilledAs = get_field(gig_info[:billed_as], gig.BilledAs)
-              gig.GigType  = get_field(gig_info[:gig_type], gig.GigType)
-              gig.GigYear  = get_field(gig_info[:gig_date].year.to_s, gig.GigYear)
-              gig.Circa    = get_field(gig_info[:circa], gig.Circa)
-              gig.SetNum   = get_field(gig_info[:set_num], gig.SetNum)
-              gig.Guests   = get_field(gig_info[:guests], gig.Guests)
+              gig.BilledAs  = get_field(gig_info[:billed_as], gig.BilledAs)
+              gig.GigType   = get_field(gig_info[:gig_type], gig.GigType)
+              gig.GigYear   = get_field(gig_info[:gig_date].year.to_s, gig.GigYear)
+              gig.Circa     = get_field(gig_info[:circa], gig.Circa)
+              gig.SetNum    = get_field(gig_info[:set_num], gig.SetNum)
+              gig.Guests    = get_field(gig_info[:guests], gig.Guests)
+              gig.ShortNote = get_field(gig_info[:notes], gig.ShortNote)
 
               if gig.changed? or gig_info[:set_list].present?
                 updated_gigs.push(gig_info)
