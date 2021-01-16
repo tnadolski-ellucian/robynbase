@@ -17,7 +17,7 @@ module CsvGigImport
   #   (?:<<(.+)>>)?     -> optional version notes
   #   (?:{{(Encore)}})? -> optional encore marker
   #   $/                -> end
-  SONG_MATCHER = /^(.*?)\s*(?:\[(.+)\])?\s?(?:<<(.+)>>)?\s?(?:{{(Encore)}})?$/
+  SONG_MATCHER = /^(.*?)\s*(?:\[(.+)\])?\s?(?:<<(.+)>>)?\s?(?:{{([Ee]ncore)}})?$/
 
   SongData = Struct.new(:song_name, :artist, :version_notes, :encore)
 
@@ -286,7 +286,7 @@ module CsvGigImport
 
                 item = {
                   :chrono => index,
-                  :song => song_data.song_name,
+                  :song => song_data.song_name.gsub("’", "'"),  # normalize apostrophes
                   :version_notes => song_data.version_notes,
                   :author => song_data.artist,
                   :encore => song_data.encore
