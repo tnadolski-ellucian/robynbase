@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_20_193404) do
+ActiveRecord::Schema.define(version: 2021_01_16_153936) do
 
   create_table "COMP", primary_key: "COMPID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "Artist", limit: 64
@@ -63,24 +63,7 @@ ActiveRecord::Schema.define(version: 2020_12_20_193404) do
     t.index ["WORDTYPE"], name: "WORDTYPE"
   end
 
-  create_table "GSET", primary_key: "SETID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "GIGID", default: 0
-    t.integer "SONGID", default: 0
-    t.integer "Chrono", default: 10
-    t.string "Song"
-    t.string "VersionNotes"
-    t.boolean "Encore", default: false
-    t.boolean "Segue", default: false
-    t.boolean "Soundcheck", default: false
-    t.string "Flaw", limit: 32
-    t.string "MP3Site", limit: 4
-    t.string "MP3File", limit: 64
-    t.index ["GIGID"], name: "GIGID"
-    t.index ["SETID"], name: "SETID"
-    t.index ["SONGID"], name: "SONGID"
-  end
-
-  create_table "Gig", primary_key: "GIGID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "GIG", primary_key: "GIGID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "BilledAs", limit: 75, default: "Robyn Hitchcock"
     t.string "Venue", limit: 128
     t.integer "VENUEID", default: 0
@@ -111,6 +94,23 @@ ActiveRecord::Schema.define(version: 2020_12_20_193404) do
     t.index ["BilledAs"], name: "BilledAs"
     t.index ["GigDate"], name: "GigDate"
     t.index ["VENUEID"], name: "VENUEID"
+  end
+
+  create_table "GSET", primary_key: "SETID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "GIGID", default: 0
+    t.integer "SONGID", default: 0
+    t.integer "Chrono", default: 10
+    t.string "Song"
+    t.string "VersionNotes"
+    t.boolean "Encore", default: false
+    t.boolean "Segue", default: false
+    t.boolean "Soundcheck", default: false
+    t.string "Flaw", limit: 32
+    t.string "MP3Site", limit: 4
+    t.string "MP3File", limit: 64
+    t.index ["GIGID"], name: "GIGID"
+    t.index ["SETID"], name: "SETID"
+    t.index ["SONGID"], name: "SONGID"
   end
 
   create_table "MAJR", primary_key: "MAJRID", id: :integer, default: 0, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(version: 2020_12_20_193404) do
     t.string "Band", limit: 32
     t.integer "MUSOID", default: 0
     t.integer "GIGID", default: 0
-    t.string "Author", limit: 40
+    t.string "Author"
     t.string "OrigBand", limit: 32
     t.string "AltTitles", limit: 64
     t.boolean "Improvised", default: false
