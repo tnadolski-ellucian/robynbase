@@ -66,7 +66,7 @@ class GigsController < ApplicationController
     @gig = Gig.new
 
     # get a list of all songs (for the songs selection dropddown)
-    @song_list = Song.order(:Song).collect{|s| [s.Song, s.SONGID]}
+    @song_list = Song.order(:Song).collect{|s| [s.full_name, s.SONGID]}
 
     save_referrer
 
@@ -79,7 +79,7 @@ class GigsController < ApplicationController
     @gig = Gig.find(params[:id]) 
 
     # get a list of all songs (for the songs selection dropddown)
-    @song_list = Song.order(:Song).collect{|s| [s.Song, s.SONGID]}
+    @song_list = Song.order(:Song).collect{|s| [s.full_name, s.SONGID]}
 
     save_referrer
 
@@ -168,7 +168,7 @@ class GigsController < ApplicationController
       b["Chrono"] = (last_index * 10).to_s
 
       # if there's no override song name, add in the real song name
-      b["Song"] = Song.find(b["SONGID"].to_i).Song if b["Song"].empty?
+      b["Song"] = Song.find(b["SONGID"].to_i).full_name if b["Song"].empty?
 
     end
 
