@@ -5,7 +5,7 @@
     <div class="row">
 
         <div class="col-sm-6">
-            <%= f.label :VENUEID, "Venue" %>
+            <%= f.label :VENUEID, "Venue" %> <span class="required">*</span>
             <%= f.select(:VENUEID, Venue.order(:Name).collect{|v| [v.Name, v.VENUEID]}, { include_blank: true } , {class: "form-control"}) %>
         </div>
     
@@ -13,7 +13,7 @@
             <div class="row">
 
                 <div class="col-sm-9">
-                    <%= f.label :GigDate %>
+                    <%= f.label :GigDate %> <span class="required">*</span>
                     <%= f.date_field :GigDate, :class => "form-control"  %> 
                 </div>
             

@@ -1,6 +1,6 @@
 class GigsController < ApplicationController
 
-  authorize_resource :only => [:new, :edit, :update]
+  authorize_resource :only => [:new, :edit, :update, :create, :destroy]
 
   RANGE_TYPE = {
     :years => 0,

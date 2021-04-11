@@ -1,6 +1,6 @@
 class SongsController < ApplicationController
 
-  authorize_resource :only => [:new, :edit, :update]
+  authorize_resource :only => [:new, :edit, :update, :create, :destroy]
 
   def index
 
