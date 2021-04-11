@@ -19,3 +19,78 @@ $(window).on("load", (e) ->
   });
   
 )
+
+
+songIndex = 100
+
+addSongSelector = (parent, index) ->
+
+  # grab another song selector from elsewhere on the page and make a copy
+  referenceSelector = $("#template-song-selector")
+  selectorCopy = referenceSelector.clone()
+
+  # configure for the current index
+  selectorCopy.attr("name", "gig[gigsets_attributes][#{index}][SONGID]")
+  selectorCopy.attr("id", "gig_gigsets_attributes_#{index}_SONGID")
+  selectorCopy.val("")
+
+  parent.append(selectorCopy)
+
+
+window.removeTableRow = (tableId, rowId) ->
+  row = $("##{tableId} tr[data-row=#{rowId}]");
+  identifier = row.next("input")
+
+  row.remove()
+  identifier.remove()
+
+
+window.addTableRow = (tableId, encore) ->
+
+  maxSequence = 0;
+
+  # find largest order index
+  $("##{tableId} tr").each((index, row) ->
+    sequence = $(row).find("td:first input").val();
+    maxSequence = Math.max(maxSequence, sequence) if sequence
+  )
+      
+
+  newRow = $("""
+    <tr data-row="#{songIndex}">
+        <td>
+            <input class="form-control" size="3" type="text" 
+                   value="#{maxSequence + 1}" 
+                   name="gig[gigsets_attributes][#{songIndex}][Chrono]" 
+                   id="gig_gigsets_attributes_#{songIndex}_Chrono">
+        </td>
+        <td></td>
+        <td>
+            <input class="form-control" type="text" value="" 
+                   name="gig[gigsets_attributes][#{songIndex}][Song]" 
+                   id="gig_gigsets_attributes_#{songIndex}_Song">
+        </td>
+        <td>
+            <input class="form-control" type="text" 
+                   name="gig[gigsets_attributes][#{songIndex}][VersionNotes]" 
+                   id="gig_gigsets_attributes_#{songIndex}_VersionNotes">
+            <input type="hidden" 
+                   value="#{encore}" 
+                   name="gig[gigsets_attributes][#{songIndex}][Encore]" 
+                   id="gig_gigsets_attributes_#{songIndex}_Encore">
+        </td>
+        <td> 
+            <button type="button" onclick="removeTableRow('#{tableId}', #{songIndex})">
+                Remove
+            </button>
+        </td>
+    </tr>
+  """)
+
+  $("##{tableId}").append(newRow)
+
+  songSelectorCell = newRow.find("td:nth(1)")
+
+  addSongSelector(songSelectorCell, songIndex)
+
+  songIndex++

@@ -1,5 +1,7 @@
 class GigsController < ApplicationController
 
+  authorize_resource :only => [:new, :edit, :update]
+
   RANGE_TYPE = {
     :years => 0,
     :months => 1,
@@ -58,9 +60,154 @@ class GigsController < ApplicationController
     @gig = Gig.find(params[:id])
   end
 
+  # prepare gig create page
+  def new
+
+    @gig = Gig.new
+
+    # get a list of all songs (for the songs selection dropddown)
+    @song_list = Song.order(:Song).collect{|s| [s.Song, s.SONGID]}
+
+  end
+
+
+   # prepare gig update page
+  def edit
+
+    @gig = Gig.find(params[:id]) 
+
+    # get a list of all songs (for the songs selection dropddown)
+    @song_list = Song.order(:Song).collect{|s| [s.Song, s.SONGID]}
+
+  end
+
+  # create a new gig
+  def create
+    
+    params, setlist_songs = prepare_params()
+
+    @gig = Gig.new(params)
+
+    if @gig.save
+      @gig.gigsets.create(setlist_songs)
+      redirect_to @gig
+    else
+      # This line overrides the default rendering behavior, which
+      # would have been to render the "create" view.
+      render "new"
+    end
+
+  end
+
+  # update existing gig
+  def update 
+    
+    gig = Gig.find(params[:id])
+
+    filtered_params, setlist_songs = prepare_params()
+
+    # update with latest setlist info
+    gig.gigsets.clear()
+    gig.gigsets.build(setlist_songs);
+
+    gig.update(filtered_params)
+    
+    redirect_to gig
+    
+  end
+
+  def destroy
+    gig = Gig.find(params[:id])
+    gig.destroy
+
+    redirect_back fallback_location: gigs_url
+
+  end
+
   def quick_query
     @gigs = Gig.quick_query(params[:query_id], params[:query_attribute])
     render "index"
+  end
+
+  private
+  
+  # Prepare the setlist for save
+  #
+  # 1. Order songs by giving each the appropriate "Chrono" index
+  # 2. Save denormalized song in GigSet table
+  def prepare_setlist(setlist_songs, starting_index, encore)
+    
+    last_index = starting_index
+
+    # loop through every song in the setlist in order (non-encore or encore), normalizing their sequence numbers
+    setlist_songs.values.select{|val| val["Encore"] == encore.to_s}.sort_by{|a| a["Chrono"].to_i }.each_with_index do |b, i|
+
+      last_index = starting_index + i
+
+      # sequence in 10s
+      b["Chrono"] = (last_index * 10).to_s
+
+      # if there's no override song name, add in the real song name
+      b["Song"] = Song.find(b["SONGID"].to_i).Song if b["Song"].empty?
+
+    end
+
+    last_index + 1
+
+  end
+
+  # Massage incoming params for saving. 
+  #
+  # 1. Orders the songs in the setlists and encores
+  # 2. Save denormalized vendor name in Gig table
+  # 3. Save denormalized gig year in Gig table
+  def prepare_params
+
+    new_params = gig_params()
+            
+    # loop through all the non-encore songs
+    setlist_songs = new_params["gigsets_attributes"]
+
+    # renumber the setlists chronologically (both non-encore and encore)
+    if setlist_songs.present?      
+      start_encore_index = prepare_setlist(setlist_songs, 1, false)
+      prepare_setlist(setlist_songs, start_encore_index, true)
+    end
+
+    # get rid of now-extraneous setlist params
+    new_params.delete("gigsets_attributes")
+
+    # save the name of the venue
+    new_params["Venue"] = Venue.find(new_params["VENUEID"].to_i).Name
+
+    # extract the year from the date
+    new_params["GigYear"] = Time.new(params["gig"]["GigDate"]).year
+
+    return [new_params, setlist_songs.present? ? setlist_songs.values : nil]
+
+  end
+
+  def gig_params
+    
+    # permit attributes we're saving
+    params
+      .require(:gig)
+      .permit(:VENUEID, :GigDate, :ShortNote, :Reviews, :Guests,
+             gigsets_attributes: [ :Chrono, :SONGID, :Song, :VersionNotes, :Encore]).tap do |params|
+          
+          # every gig needs at least a venue id and a date
+          params.require([:VENUEID, :GigDate])
+
+          # every item in a setlist requires a sequence number and a song id
+          if params["gigsets_attributes"].present? 
+            params["gigsets_attributes"].each do |key, params|
+              params.require([:Chrono, :SONGID])
+            end
+          end
+
+      end
+              
+          
   end
 
 end

@@ -11,7 +11,7 @@ class Song < ApplicationRecord
   has_many :tracks, foreign_key: "SONGID"
   has_many :compositions, through: :tracks, foreign_key: "SONGID"
  
-  belongs_to :album, foreign_key: "MAJRID"
+  belongs_to :album, foreign_key: "MAJRID", optional: true
   
   # set up the many-many relationship with the performance table
   has_many :song_performances
@@ -64,10 +64,31 @@ class Song < ApplicationRecord
   end
 
   def full_name
-    (self.Prefix.present? ? "#{self.Prefix} " : "") + self.Song
+    if self.new_record?
+      ""
+    else
+      (self.Prefix.present? ? "#{self.Prefix} " : "") + self.Song
+    end
   end
 
 
+  def self.parse_song_name(name)
+    
+    words = name.split(/\s+/)
+    article = nil
+
+    # separate leading articles (a/an/the) from the rest of the song name
+    if words.length > 1 and Articles.include? words.first.upcase
+      article = words.shift
+      song_name = words.join(' ')
+    else
+      song_name = name
+    end
+    
+    return [article, song_name]
+    
+  end
+  
   def self.find_full_name(name)
 
     words = name.split(/\s+/)

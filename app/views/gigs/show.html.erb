@@ -91,7 +91,7 @@
 
     <% for gig_song in @gig.get_set  %>
       <% if gig_song.song.present? %>
-        <li> <%= link_to gig_song.Song, song_path(gig_song.song) %> <%= gig_song_details(gig_song) %> </li>
+        <li> <%= link_to(gig_song.Song.nil? ? gig_song.song.full_name : gig_song.Song, song_path(gig_song.song)) %> <%= gig_song_details(gig_song) %> </li>
       <% else %>
         <li> <%= gig_song.Song %> <%= gig_song_details(gig_song) %> </li>
       <% end %>
