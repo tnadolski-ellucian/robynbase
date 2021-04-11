@@ -23,6 +23,7 @@ $(window).on("load", (e) ->
 
 songIndex = 100
 
+# Adds a song selection dropdown, containing all available songs
 addSongSelector = (parent, index) ->
 
   # grab another song selector from elsewhere on the page and make a copy

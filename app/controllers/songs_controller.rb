@@ -22,19 +22,21 @@ class SongsController < ApplicationController
   # Prepare song create page
   def new
     @song = Song.new
+    save_referrer
   end
 
   # Prepare song update page
   def edit 
     @song = Song.find(params[:id])
+    save_referrer
   end
     
-  # Update exisiting song
+  # Update existing song
   def update 
     
     song = Song.find(params[:id])
     
-    filtered_params = song_params()
+    filtered_params = prepare_params
     
     # extract the article prefix (if any) from song name
     (prefix, song_name) = Song.parse_song_name(filtered_params[:full_name])
@@ -44,19 +46,16 @@ class SongsController < ApplicationController
     filtered_params[:Prefix] = prefix
     filtered_params.delete(:full_name)
     
-    # if no author specified, store a null
-    filtered_params[:Author] = nil if filtered_params[:Author].strip.empty?
-
     song.update!(filtered_params)
     
-    redirect_to song
+    return_to_previous_page(song)
     
   end
 
   # Create a new song
   def create
 
-    filtered_params = song_params()
+    filtered_params = prepare_params
         
     # extract the article prefix (if any) from song name
     (prefix, song_name) = Song.parse_song_name(filtered_params[:full_name])
@@ -66,13 +65,10 @@ class SongsController < ApplicationController
     filtered_params[:Prefix] = prefix
     filtered_params.delete(:full_name)
 
-    # if no author specified, store a null
-    filtered_params[:Author] = nil if filtered_params[:Author].strip.empty?
-
     @song = Song.new(filtered_params)
 
     if @song.save
-      redirect_to @song
+      return_to_previous_page(@song)
     else
       # This line overrides the default rendering behavior, which
       # would have been to render the "create" view.
@@ -101,7 +97,33 @@ class SongsController < ApplicationController
   
   
   private
-  
+    
+    def return_to_previous_page(song)
+      previous_page = session.delete(:return_to_song)
+      if previous_page.present?
+        redirect_to previous_page
+      else
+        redirect_to song
+      end
+    end
+
+    def save_referrer
+      session[:return_to_song] = request.referer
+    end
+    
+    # Massage incoming params for saving
+    def prepare_params
+
+      filtered_params = song_params
+
+      # if no author specified, store a null
+      filtered_params[:OrigBand] = nil if filtered_params[:OrigBand].strip.empty?
+      filtered_params[:Author] = nil   if filtered_params[:Author].strip.empty?
+
+      filtered_params
+
+    end
+
     def song_params
       params.require(:song).permit(:full_name, :Author, :OrigBand, :Improvised, :Lyrics, :Comments).tap do |params|
         params.require(:full_name)

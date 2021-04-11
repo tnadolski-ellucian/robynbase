@@ -1,19 +1,36 @@
 
 <!-- <%= link_to "Back", controller: 'robyn' %> -->
 
-<h2 class="main-header"><%= @song.full_name %> 
+<div class="row" style="margin-bottom: 0px">
+  <div class="col-sm-10">
 
-  <small>
-    <span class="inpage-navigation">
-      <% if @albums_present %> <span><a href="#albums">Albums</a></span> <% end %>
-      <% if @gigs_present %> <span><a href="#gigs">Gigs</a></span> <% end %>
-      <% if @song.Lyrics %> <span><a href="#lyrics">Lyrics</a></span> <% end %>
-      <% if @song.performances.present? %> <span><a href="#performances">Media</a></span> <% end %>
-      <% if @song.Tab %> <span><a href="#tabs">Tablature</a></span> <% end %>
-    </span>
-  </small>
+    <h2 class="main-header"><%= @song.full_name %> 
 
-</h2>
+      <small>
+        <span class="inpage-navigation">
+          <% if @albums_present %> <span><a href="#albums">Albums</a></span> <% end %>
+          <% if @gigs_present %> <span><a href="#gigs">Gigs</a></span> <% end %>
+          <% if @song.Lyrics %> <span><a href="#lyrics">Lyrics</a></span> <% end %>
+          <% if @song.performances.present? %> <span><a href="#performances">Media</a></span> <% end %>
+          <% if @song.Tab %> <span><a href="#tabs">Tablature</a></span> <% end %>
+        </span>
+      </small>
+
+    </h2>
+
+  </div>
+
+  <% if can? :manage, Song %>
+
+    <div class="col-sm-2">
+      <%= form_tag(edit_song_path, :method => 'GET') do %>
+        <%= submit_tag "Edit Song", :name => nil %>
+      <%end%>
+    </div>
+
+  <% end %>
+
+</div>
 
 <div class="row">
 

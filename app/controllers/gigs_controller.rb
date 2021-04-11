@@ -68,6 +68,8 @@ class GigsController < ApplicationController
     # get a list of all songs (for the songs selection dropddown)
     @song_list = Song.order(:Song).collect{|s| [s.Song, s.SONGID]}
 
+    save_referrer
+
   end
 
 
@@ -78,6 +80,8 @@ class GigsController < ApplicationController
 
     # get a list of all songs (for the songs selection dropddown)
     @song_list = Song.order(:Song).collect{|s| [s.Song, s.SONGID]}
+
+    save_referrer
 
   end
 
@@ -90,7 +94,7 @@ class GigsController < ApplicationController
 
     if @gig.save
       @gig.gigsets.create(setlist_songs)
-      redirect_to @gig
+      return_to_previous_page(@gig)
     else
       # This line overrides the default rendering behavior, which
       # would have been to render the "create" view.
@@ -106,13 +110,16 @@ class GigsController < ApplicationController
 
     filtered_params, setlist_songs = prepare_params()
 
-    # update with latest setlist info
     gig.gigsets.clear()
-    gig.gigsets.build(setlist_songs);
+
+    # update with latest setlist info
+    if setlist_songs.present?
+      gig.gigsets.build(setlist_songs)
+    end
 
     gig.update(filtered_params)
     
-    redirect_to gig
+    return_to_previous_page(gig)
     
   end
 
@@ -131,6 +138,19 @@ class GigsController < ApplicationController
 
   private
   
+  def return_to_previous_page(gig)
+    previous_page = session.delete(:return_to_gig)
+    if previous_page.present?
+      redirect_to previous_page
+    else
+      redirect_to gig
+    end
+  end
+
+  def save_referrer
+    session[:return_to_gig] = request.referer
+  end
+
   # Prepare the setlist for save
   #
   # 1. Order songs by giving each the appropriate "Chrono" index
@@ -192,7 +212,7 @@ class GigsController < ApplicationController
     # permit attributes we're saving
     params
       .require(:gig)
-      .permit(:VENUEID, :GigDate, :ShortNote, :Reviews, :Guests,
+      .permit(:VENUEID, :GigDate, :ShortNote, :Reviews, :Guests, :BilledAs,
              gigsets_attributes: [ :Chrono, :SONGID, :Song, :VersionNotes, :Encore]).tap do |params|
           
           # every gig needs at least a venue id and a date
