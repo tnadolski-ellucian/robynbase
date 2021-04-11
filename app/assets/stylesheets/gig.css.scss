@@ -12,6 +12,30 @@
     }
   }
 
+  table {
+    .actions {
+      white-space: nowrap;
+    }    
+  }
+
+}
+
+.gig-edit-page {
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #999;
+    padding: 0.5rem;
+  }
+
+  .row {
+    margin-bottom: 10px;
+  }
+
 }
 
 .gig-page {

@@ -9,7 +9,10 @@
   <thead>
   <tr>
   <th>Name</th>
-    <th>Author</th>
+  <th>Author</th>
+  <% if can? :manage, Song %>
+    <th>Actions</th>
+  <% end %>
   </tr>
   </thead>
   <% for song in songs %>
@@ -35,6 +38,14 @@
 
       </td>
       <td> <%= song.Author.nil? ? "Robyn Hitchcock" : song.Author %> </td>
+
+      <% if can? :manage, Song %>
+        <td> 
+          <a href="<%=song_path(song)%>/edit">Edit</a> &nbsp; &nbsp;
+          <%= link_to("Delete", song_path(song), method: :delete, data: { confirm: "Are you sure you want to delete #{song.Song}" }) %>
+        </td>
+      <% end %>
+      
     </tr>
   <% end %>
 </table>

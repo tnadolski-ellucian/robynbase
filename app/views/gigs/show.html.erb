@@ -5,19 +5,36 @@
 
 <div class="gig-page">
 
-<h2>
+<div class="row" style="margin-bottom: 0px">
+  <div class="col-sm-10">
 
-  <%= @gig.Venue %>
+    <h2>
 
-  <small>
-    <span class="inpage-navigation">
-      <% if @gig.get_set.present? %> <span><a href="#setlist">Set List</a></span> <% end %>
-      <% if @gig.ShortNote.present? %> <span><a href="#notes">Notes</a></span> <% end %>
-      <% if @gig.get_reviews.present? %> <span><a href="#reviews">Reviews</a></span> <% end %>
-    </span>
-  </small>
+      <%= @gig.Venue %>
 
-</h2>
+      <small>
+        <span class="inpage-navigation">
+          <% if @gig.get_set.present? %> <span><a href="#setlist">Set List</a></span> <% end %>
+          <% if @gig.ShortNote.present? %> <span><a href="#notes">Notes</a></span> <% end %>
+          <% if @gig.get_reviews.present? %> <span><a href="#reviews">Reviews</a></span> <% end %>
+        </span>
+      </small>
+
+    </h2>
+
+  </div>
+
+  <% if can? :manage, Gig %>
+
+    <div class="col-sm-2">
+      <%= form_tag(edit_gig_path, :method => 'GET') do %>
+        <%= submit_tag "Edit Gig", :name => nil %>
+      <%end%>
+    </div>
+
+  <% end %>
+
+</div>
 
 <div class="row">
 
@@ -91,7 +108,7 @@
 
     <% for gig_song in @gig.get_set  %>
       <% if gig_song.song.present? %>
-        <li> <%= link_to gig_song.Song, song_path(gig_song.song) %> <%= gig_song_details(gig_song) %> </li>
+        <li> <%= link_to(gig_song.Song.nil? ? gig_song.song.full_name : gig_song.Song, song_path(gig_song.song)) %> <%= gig_song_details(gig_song) %> </li>
       <% else %>
         <li> <%= gig_song.Song %> <%= gig_song_details(gig_song) %> </li>
       <% end %>

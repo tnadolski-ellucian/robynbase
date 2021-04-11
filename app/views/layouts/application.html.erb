@@ -41,7 +41,7 @@
 
       <ul class="nav navbar-nav navbar-right">
 
-      <% if request.fullpath != "/" and not request.fullpath.starts_with? "/robyn/index" %>
+      <% if URI.parse(request.original_url).path != "/" and not request.fullpath.starts_with? "/robyn/index" %>
 
         <li>
           <%= form_tag('/robyn/index', :method => 'GET', :id => 'main-search') do %>
@@ -57,6 +57,14 @@
           <% end %>
         </li>
 
+      <% elsif current_user.present? or request.query_parameters["login"].present? %>         
+        <li>
+          <% if current_user.nil? %>
+            <a href="/login">Login</a>
+          <% else %>
+            <a href="/logout">Logout</a>
+          <% end %>  
+        </li>  
       <% end %>
 
       </ul>

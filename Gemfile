@@ -2,13 +2,19 @@ source 'https://rubygems.org'
 
 gem 'bundler', '1.17.1'
 
-gem 'rails', '~> 5.2.4.4'
+gem 'rails', '~> 5.2.4.5'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # gem 'sqlite3'
 gem 'mysql2', '~> 0.4.10'
+
+# Use ActiveModel has_secure_password
+gem 'bcrypt', '~> 3.1.7'
+
+# Authorization 
+gem 'cancancan', '~> 3.2.1'
 
 gem 'listen'
 gem 'bootsnap'

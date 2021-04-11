@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_16_153936) do
+ActiveRecord::Schema.define(version: 2021_03_07_144003) do
 
   create_table "COMP", primary_key: "COMPID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "Artist", limit: 64
@@ -245,6 +245,16 @@ ActiveRecord::Schema.define(version: 2021_01_16_153936) do
     t.datetime "updated_at", null: false
     t.index ["performance_id"], name: "index_song_performances_on_performance_id"
     t.index ["song_id"], name: "index_song_performances_on_song_id"
+  end
+
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.string "email"
+    t.string "password_digest"
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end

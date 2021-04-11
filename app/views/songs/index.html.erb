@@ -1,46 +1,57 @@
 <div class="song-list">
 
-<%= form_tag('/songs/index', :method => 'GET') do %>
+  <div class="search-criteria">
 
-<div class="search-criteria">
+  <div class="row">
 
-<div class="row">
+    <div class="<%= (can? :manage, Song) ? 'col-sm-11' : 'col-sm-12' %>">
 
-  <div class="col-sm-12">
+      <%= form_tag('/songs/index', :method => 'GET') do %>
 
-    <%= text_field_tag :song_search_value, params['song_search_value'], :class=> 'search-field', :placeholder => 'Search songs' %>
+        <%= text_field_tag :song_search_value, params['song_search_value'], :class=> 'search-field', :placeholder => 'Search songs' %>
 
-    <%= submit_tag "Search", :name => nil %>
+        <%= submit_tag "Search", :name => nil %>
 
-    <span class="criteria search-type-criteria">
-      <%= radio_button_tag 'search_type[]', 'title', Array(params['search_type']).include?('title')   %> <span class="radio-label">Title</span>
-      <%= radio_button_tag 'search_type[]', 'lyrics', Array(params['search_type']).include?('lyrics') %> <span class="radio-label">Lyrics</span>
-      <%= radio_button_tag 'search_type[]', 'author', Array(params['search_type']).include?('author') %> <span class="radio-label">Author</span>
-    </span>
+        <span class="criteria search-type-criteria">
+          <%= radio_button_tag 'search_type[]', 'title', Array(params['search_type']).include?('title')   %> <span class="radio-label">Title</span>
+          <%= radio_button_tag 'search_type[]', 'lyrics', Array(params['search_type']).include?('lyrics') %> <span class="radio-label">Lyrics</span>
+          <%= radio_button_tag 'search_type[]', 'author', Array(params['search_type']).include?('author') %> <span class="radio-label">Author</span>
+        </span>
+
+      <% end %>
+
+    </div>
+
+    <% if can? :manage, Song %>
+
+      <div class="col-sm-1">
+        <%= form_tag(new_song_path, :method => 'GET') do %>
+          <%= submit_tag "New Song", :name => nil %>
+        <%end%>
+      </div>
+
+    <% end %>
 
   </div>
 
-</div>
 
-<% end %>
+  <div class="search-results">
 
-<div class="search-results">
+    <% if not @songs.nil? %>
+      <% if @songs.empty? %> 
+        <%= render partial: '/robyn/nothing_found' %>
+      <% else %>
+        <%= render partial: '/songs/song_list', locals: {songs: @songs, table_id: "song-main", show_lyrics_snippet: @show_lyrics ? params[:song_search_value] : nil} %>
+      <% end %>
 
-  <% if not @songs.nil? %>
-    <% if @songs.empty? %> 
-      <%= render partial: '/robyn/nothing_found' %>
     <% else %>
-      <%= render partial: '/songs/song_list', locals: {songs: @songs, table_id: "song-main", show_lyrics_snippet: @show_lyrics ? params[:song_search_value] : nil} %>
+    
+      <% quick_queries = get_all_quick_queries(Song) %>
+
+      <%= render partial: '/robyn/quick_queries', locals: {quick_queries: quick_queries} %>
+
     <% end %>
 
-  <% else %>
-  
-    <% quick_queries = get_all_quick_queries(Song) %>
-
-    <%= render partial: '/robyn/quick_queries', locals: {quick_queries: quick_queries} %>
-
-  <% end %>
-
-</div>
+  </div>
 
 </div>

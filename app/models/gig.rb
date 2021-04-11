@@ -13,6 +13,8 @@ class Gig < ApplicationRecord
   has_many :songs, through: :gigsets, foreign_key: "GIGID"
   belongs_to :venue, foreign_key: "VENUEID"
 
+  accepts_nested_attributes_for :gigsets
+
   @@quick_queries = [ 
     QuickQuery.new('gigs', :with_setlists, [:without]),
     QuickQuery.new('gigs', :without_definite_dates),

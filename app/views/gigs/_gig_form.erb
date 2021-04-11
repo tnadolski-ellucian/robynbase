@@ -1,0 +1,97 @@
+<%= form_for(@gig) do |f| %>
+
+<div class="item-form">
+        
+    <div class="row">
+
+        <div class="col-sm-6">
+            <%= f.label :VENUEID, "Venue" %> <span class="required">*</span>
+            <%= f.select(:VENUEID, Venue.order(:Name).collect{|v| [v.Name, v.VENUEID]}, { include_blank: true } , {class: "form-control"}) %>
+        </div>
+    
+        <div class="col-sm-6">
+            <div class="row">
+
+                <div class="col-sm-9">
+                    <%= f.label :GigDate %> <span class="required">*</span>
+                    <%= f.date_field :GigDate, :class => "form-control"  %> 
+                </div>
+            
+                <div class="col-sm-3">
+                    <br>
+                    <%= f.check_box :Circa %>&nbsp;<%= f.label :Circa %>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-6">
+            <%= f.label :GigType, "Gig Type" %>
+            <%= f.select(:GigType, options_for_select(["Concert", "Online", "Radio", "Televison", "In-Store", "Promotional"], @gig.GigType), { }, {class: "form-control"}) %>
+        </div>
+    
+        <div class="col-sm-6">
+            <%= f.label :BilledAs, "Billed As" %>
+            <%= f.text_field :BilledAs, :class => "form-control"  %>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-6">
+            <%= f.label :Guests %>
+            <%= f.text_field :Guests, :class => "form-control"  %>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <%= f.label :ShortNote, "Notes" %>
+            <%= f.text_area :ShortNote, :cols => 60, :rows => 5, :class => "form-control"  %>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <%= f.label :Reviews %>
+            <%= f.text_area :Reviews, :cols => 60, :rows => 5, :class => "form-control"  %>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Set List</h3>
+            <%= render 'gig_setlist_table', {gset: @gig.get_set || @gig.gigsets, f: f, encore: false, id: "setlist"} %>
+        </div>
+    </div>        
+
+    <br>
+
+    <div class="row">
+
+
+        <div class="col-sm-12">
+
+            <h3>Encore</h3>
+            <%= render 'gig_setlist_table', {gset: @gig.get_set_encore || @gig.gigsets, f: f, encore: true, id: "setlist-encore"} %>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <%= f.submit "Save", class: "btn btn-large btn-primary" %>
+    
+</div>
+
+<% end %>

@@ -1,26 +1,38 @@
 <div class="gig-list">
 
-<%= form_tag('/gigs/index', :method => 'GET') do %>
-
 <div class="search-criteria">
 
   <div class="row">
 
-    <div class="col-sm-12">
+    <div class="<%= (can? :manage, Gig) ? 'col-sm-11' : 'col-sm-12' %>">
 
-      <%= text_field_tag :gig_search_value, params['gig_search_value'], :class=> 'search-field', :placeholder => 'Search gigs' %>
+      <%= form_tag('/gigs/index', :method => 'GET') do %>
+      
+        <%= text_field_tag :gig_search_value, params['gig_search_value'], :class=> 'search-field', :placeholder => 'Search gigs' %>
 
-      <%= submit_tag "Search", :name => nil %>
+        <%= submit_tag "Search", :name => nil %>
 
-      <span class="criteria search-type-criteria">
-        <%= radio_button_tag 'search_type[]', 'venue', Array(params['search_type']).include?('venue') %>                 <span class="radio-label">Venue</span>
-        <%= radio_button_tag 'search_type[]', 'venue_city', Array(params['search_type']).include?('venue_city') %>       <span class="radio-label">City</span>
-        <%= radio_button_tag 'search_type[]', 'venue_state', Array(params['search_type']).include?('venue_state') %>     <span class="radio-label">State</span>
-        <%= radio_button_tag 'search_type[]', 'venue_country', Array(params['search_type']).include?('venue_country') %> <span class="radio-label">Country</span>
-        <%= radio_button_tag 'search_type[]', 'gig_year', Array(params['search_type']).include?('gig_year')  %>          <span class="radio-label">Gig Year</span>
-      </span>
+        <span class="criteria search-type-criteria">
+          <%= radio_button_tag 'search_type[]', 'venue', Array(params['search_type']).include?('venue') %>                 <span class="radio-label">Venue</span>
+          <%= radio_button_tag 'search_type[]', 'venue_city', Array(params['search_type']).include?('venue_city') %>       <span class="radio-label">City</span>
+          <%= radio_button_tag 'search_type[]', 'venue_state', Array(params['search_type']).include?('venue_state') %>     <span class="radio-label">State</span>
+          <%= radio_button_tag 'search_type[]', 'venue_country', Array(params['search_type']).include?('venue_country') %> <span class="radio-label">Country</span>
+          <%= radio_button_tag 'search_type[]', 'gig_year', Array(params['search_type']).include?('gig_year')  %>          <span class="radio-label">Gig Year</span>
+        </span>
+
+      <% end %>
 
     </div>
+
+    <% if can? :manage, Gig %>
+
+      <div class="col-sm-1">
+        <%= form_tag(new_gig_path, :method => 'GET') do %>
+          <%= submit_tag "New Gig", :name => nil %>
+        <%end%>
+      </div>
+
+    <% end %>  
 
   </div>
 
@@ -74,8 +86,6 @@
     </div>
 
   </div>
-
-<% end %>
 
 <div class="search-results">
 

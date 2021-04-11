@@ -1,4 +1,6 @@
 Robyn2::Application.routes.draw do
+  
+  resources :sessions, only: [:new, :create, :destroy]
   get "robyn/index"
   get "songs/index"
   get "songs/quick_query"
@@ -13,6 +15,9 @@ Robyn2::Application.routes.draw do
   get "robyn/search_compositions"
   get "robyn/search_performances"
   
+  # get 'signup', to: 'users#new', as: 'signup'
+  get 'login', to: 'sessions#new', as: 'login'
+  get 'logout', to: 'sessions#destroy', as: 'logout'
   
   resources :songs
   resources :gigs
@@ -20,6 +25,9 @@ Robyn2::Application.routes.draw do
   resources :compositions
   resources :performances
   resources :about
+
+  # Uncomment to enable user management
+  # resources :users
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

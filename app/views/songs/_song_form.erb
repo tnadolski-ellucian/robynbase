@@ -1,0 +1,55 @@
+<%= form_for(@song) do |f| %>
+
+<div class="item-form">
+        
+    <div class="row">
+        
+        <div class="col-sm-6">
+            <%= f.label :full_name, "Name" %> <span class="required">*</span>
+            <%= f.text_field :full_name, :size => 60, :class => "form-control" %>
+        </div>
+
+        <div class="col-sm-6">
+            <%= f.label :Author %>
+            <%= f.text_field :Author, :class => "form-control"  %>
+        </div>
+    
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-6">
+            <%= f.label :OrigBand, "Original Band" %>
+            <%= f.text_field :OrigBand, :size => 32, :class => "form-control"  %>
+        </div>
+    
+        <div class="col-sm-6">
+            <br>                    
+            <%= f.check_box :Improvised %> <%= f.label :Improvised %>
+        </div>
+    
+    </div>    
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            <%= f.label :Lyrics %>
+            <%= f.text_area :Lyrics, :cols => 60, :rows => 5, :class => "form-control"  %>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            <%= f.label :Comments %>
+            <%= f.text_area :Comments, :cols => 60, :rows => 5, :class => "form-control"  %>
+        </div>
+
+    </div>
+
+    <%= f.submit "Save", class: "btn btn-large btn-primary" %>
+    
+</div>
+
+<% end %>
