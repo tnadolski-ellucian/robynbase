@@ -40,7 +40,7 @@ module Robyn2
     config.action_dispatch.default_headers['X-Frame-Options'] = "ALLOW-FROM http://glasshotel.net/"
 
     # todo only force this in production mode?
-    config.force_ssl = false
+    # config.force_ssl = false
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
