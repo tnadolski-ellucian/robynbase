@@ -168,7 +168,9 @@ class GigsController < ApplicationController
       b["Chrono"] = (last_index * 10).to_s
 
       # if there's no override song name, add in the real song name
-      b["Song"] = Song.find(b["SONGID"].to_i).full_name if b["Song"].empty?
+      if b["SONGID"].present? 
+        b["Song"] = Song.find(b["SONGID"].to_i).full_name if b["Song"].empty?
+      end
 
     end
 
@@ -212,7 +214,7 @@ class GigsController < ApplicationController
     # permit attributes we're saving
     params
       .require(:gig)
-      .permit(:VENUEID, :GigDate, :ShortNote, :Reviews, :Guests, :BilledAs,
+      .permit(:VENUEID, :GigDate, :ShortNote, :Reviews, :Guests, :BilledAs, :GigType,
              gigsets_attributes: [ :Chrono, :SONGID, :Song, :VersionNotes, :Encore]).tap do |params|
           
           # every gig needs at least a venue id and a date
@@ -221,7 +223,7 @@ class GigsController < ApplicationController
           # every item in a setlist requires a sequence number and a song id
           if params["gigsets_attributes"].present? 
             params["gigsets_attributes"].each do |key, params|
-              params.require([:Chrono, :SONGID])
+              params.require([:Chrono])
             end
           end
 
