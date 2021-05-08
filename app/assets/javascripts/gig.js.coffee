@@ -13,11 +13,6 @@ $(window).on("load", (e) ->
     header.find(".glyphicon").toggleClass("glyphicon-triangle-right glyphicon-triangle-bottom")
   )
 
-  $("#gig_date").datepicker({
-    changeYear: true,
-    yearRange: "1973:2015"
-  });
-  
 )
 
 

@@ -131,7 +131,11 @@ class Gig < ApplicationRecord
   end
 
   def self.quick_query_gigs_with_reviews(no_reviews)
-    where("Reviews IS #{no_reviews.nil? ? 'NOT' : ''} NULL")
+    if (no_reviews.nil?)
+      where("Reviews IS NOT NULL AND Reviews <> ''")
+    else 
+      where("Reviews IS NULL OR Reviews = ''")
+    end
   end
 
 end
