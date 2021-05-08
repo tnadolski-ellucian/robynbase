@@ -217,6 +217,11 @@ table.main-search-list {
               columns: 3;
     }
 
+    // override bootstrap date styles
+    input[type="date"] {
+      line-height: initial;
+    }
+
   }
 
 }

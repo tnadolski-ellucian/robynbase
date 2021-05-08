@@ -20,7 +20,7 @@ class GigsController < ApplicationController
       # that goes along with doing a date query
       if params[:gig_date].present?
 
-        gig_date = DateTime.strptime(params[:gig_date], "%m/%d/%Y")
+        gig_date = DateTime.strptime(params[:gig_date], "%Y-%m-%d")
         range_type = :months
         range = 30
 
@@ -210,7 +210,7 @@ class GigsController < ApplicationController
   end
 
   def gig_params
-    
+
     # permit attributes we're saving
     params
       .require(:gig)
