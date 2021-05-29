@@ -1,0 +1,46 @@
+<%= form_for(@venue) do |f| %>
+
+<div class="item-form">
+        
+    <div class="row">
+        
+        <div class="col-sm-12">
+            <%= f.label :Name, "Name" %> <span class="required">*</span>
+            <%= f.text_field :Name, :size => 48, :class => "form-control" %>
+        </div>
+    
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-6">
+            <%= f.label :City %> <span class="required">*</span>
+            <%= f.text_field :City, :size => 50, :class => "form-control"  %>
+        </div>
+    
+        <div class="col-sm-6">
+            <%= f.label :SubCity %>
+            <%= f.text_field :SubCity, :size => 50, :class => "form-control"  %>
+        </div>
+    
+    </div>    
+
+    <div class="row">
+
+        <div class="col-sm-6">
+            <%= f.label :State %>
+            <%= f.text_field :State, :size => 50, :class => "form-control"  %>
+        </div>
+    
+        <div class="col-sm-6">
+            <%= f.label :Country %> <span class="required">*</span>
+            <%= f.text_field :Country, :size => 50, :class => "form-control"  %>
+        </div>
+    
+    </div>    
+
+    <%= f.submit "Save", class: "btn btn-large btn-primary" %>
+    
+</div>
+
+<% end %>

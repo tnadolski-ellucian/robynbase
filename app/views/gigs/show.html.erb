@@ -52,7 +52,7 @@
     <dt>Venue</dt>
     <dd>
 
-      <%= @gig.Venue %>
+      <%= link_to(@gig.Venue, venue_path(@gig.VENUEID)) %> 
 
       <% if @gig.venue.present? %>
         <span class="subsidiary-info">

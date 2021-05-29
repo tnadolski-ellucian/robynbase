@@ -1,0 +1,52 @@
+<div class="venue-list">
+
+  <div class="search-criteria">
+
+  <div class="row">
+
+    <div class="<%= (can? :manage, Venue) ? 'col-sm-11' : 'col-sm-12' %>">
+
+      <%= form_tag('/venues/index', :method => 'GET') do %>
+
+        <%= text_field_tag :venue_search_value, params['venue_search_value'], :class=> 'search-field', :placeholder => 'Search venues' %>
+
+        <%= submit_tag "Search", :name => nil %>
+
+        <span class="criteria search-type-criteria">
+          <%= radio_button_tag 'search_type[]', 'name', Array(params['search_type']).include?('name')   %> <span class="radio-label">Name</span>
+          <%= radio_button_tag 'search_type[]', 'city', Array(params['search_type']).include?('city') %> <span class="radio-label">City</span>
+          <%= radio_button_tag 'search_type[]', 'state', Array(params['search_type']).include?('city') %> <span class="radio-label">State</span>
+          <%= radio_button_tag 'search_type[]', 'country', Array(params['search_type']).include?('country') %> <span class="radio-label">Country</span>
+        </span>
+
+      <% end %>
+
+    </div>
+
+    <% if can? :manage, Venue %>
+
+      <div class="col-sm-1">
+        <%= form_tag(new_venue_path, :method => 'GET') do %>
+          <%= submit_tag "New Venue", :name => nil %>
+        <%end%>
+      </div>
+
+    <% end %>
+
+  </div>
+
+
+  <div class="search-results">
+
+    <% if not @venues.nil? %>
+      <% if @venues.empty? %> 
+        <%= render partial: '/robyn/nothing_found' %>
+      <% else %>
+        <%= render partial: '/venues/venue_list', locals: {venues: @venues, table_id: "venue-main"} %>
+      <% end %>
+
+    <% end %>
+
+  </div>
+
+</div>

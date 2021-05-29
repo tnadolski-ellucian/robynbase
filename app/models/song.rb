@@ -46,10 +46,17 @@ class Song < ApplicationRecord
 
       "#{column} LIKE ?"
 
+      # used for exact word search
+      # "#{column} regexp ?"   
+
     end
 
     if search
       songs = where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
+
+      # used for exact word search
+      #songs = where(conditions.join(" OR "), *Array.new(conditions.length, "(^|[[:space:]])#{search}([[:space:]]|$)"))
+
     else
       songs = all
     end

@@ -200,7 +200,7 @@ class GigsController < ApplicationController
     new_params.delete("gigsets_attributes")
 
     # save the name of the venue
-    new_params["Venue"] = Venue.find(new_params["VENUEID"].to_i).Name
+    new_params["Venue"] = Venue.find(new_params["VENUEID"].to_i).Name if new_params["Venue"].strip.empty?
 
     # extract the year from the date
     new_params["GigYear"] = Time.new(params["gig"]["GigDate"]).year
@@ -214,7 +214,7 @@ class GigsController < ApplicationController
     # permit attributes we're saving
     params
       .require(:gig)
-      .permit(:VENUEID, :GigDate, :ShortNote, :Reviews, :Guests, :BilledAs, :GigType,
+      .permit(:VENUEID, :GigDate, :ShortNote, :Reviews, :Guests, :BilledAs, :GigType, :Venue,
              gigsets_attributes: [ :Chrono, :SONGID, :Song, :VersionNotes, :Encore]).tap do |params|
           
           # every gig needs at least a venue id and a date
