@@ -10,15 +10,22 @@
     
   <% end %>
 
-  <!-- songs -->
-  <% if [@songs, @compositions, @gigs, @performances].any? { |a| not a.nil? } %>
+  <!-- omnisearch results -->
+  <% if [@songs, @compositions, @gigs, @venues, @performances].any? { |a| not a.nil? } %>
 
-    <% if [@songs, @compositions, @gigs, @performances].all? { |a| a.empty? } %> 
+    <% if [@songs, @compositions, @gigs, @venues, @performances].all? { |a| a.empty? } %> 
 
       <%= render partial: '/robyn/nothing_found' %>
 
     <% else %>
 
+      <!-- gigs -->
+      <% if @gigs.present? %>
+        <h3 class="main-header">Gigs</h3>
+        <%= render partial: '/gigs/gig_list', locals: { gigs: @gigs, table_id: "gig-omni", suppress_header: false, use_paging: true, page_length: 20 } %>
+      <% end %>
+
+      <!-- songs -->
       <% if @songs.present? %>
         <h3 class="main-header">Songs</h3>
         <%= render partial: '/songs/song_list', locals: { songs: @songs, table_id: "song-omni", use_paging: true, page_length: 20 } %>
@@ -27,13 +34,13 @@
       <!-- albums -->
       <% if @compositions.present? %>
         <h3 class="main-header">Albums</h3>
-        <%= render partial: '/compositions/album_list', locals: { albums: @compositions, table_id: "album-omni",suppress_header: false, use_paging: true, page_length: 20 } %>
+        <%= render partial: '/compositions/album_list', locals: { albums: @compositions, table_id: "album-omni", suppress_header: false, use_paging: true, page_length: 20 } %>
       <% end %>
 
-      <!-- gigs -->
-      <% if @gigs.present? %>
-        <h3 class="main-header">Gigs</h3>
-        <%= render partial: '/gigs/gig_list', locals: { gigs: @gigs, table_id: "gig-omni", suppress_header: false, use_paging: true, page_length: 20 } %>
+      <!-- venues -->
+      <% if @venues.present? %>
+        <h3 class="main-header">Venues</h3>
+        <%= render partial: '/venues/venue_list', locals: { venues: @venues, table_id: "venue-omni", suppress_header: false, use_paging: true, page_length: 20 } %>
       <% end %>
 
       <!-- media -->

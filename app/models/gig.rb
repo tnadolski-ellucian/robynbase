@@ -45,13 +45,19 @@ class Gig < ApplicationRecord
     kind = [:venue, :gig_year, :venue_city] if kind.nil? or kind.length == 0
 
     # add conditions for the gig table columns
-    conditions = Array(kind).reject{|x| x == :venue_city || x == :venue_state || x == :venue_country}.map do |term|
+    conditions = Array(kind).map do |term|
 
       case term
         when :venue
           column = "Venue"
         when :gig_year
           column = "GigYear"
+        when :venue_city
+          column = "VENUE.City"
+        when :venue_state
+          column = "VENUE.State"
+        when :venue_country
+          column = "VENUE.Country"
         else
           return false
       end
@@ -62,20 +68,7 @@ class Gig < ApplicationRecord
 
     if search
 
-      gigs = where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
-
-      # venue criteria require joins with the venue table
-      if kind.include? :venue_city
-        gigs = self.joins(:venue).where("City LIKE ?", search)
-      end
-
-      if kind.include? :venue_state
-        gigs = self.joins(:venue).where("State LIKE ?", search)
-      end
-
-      if kind.include? :venue_country
-        gigs = self.joins(:venue).where("Country LIKE ?", search)
-      end
+      gigs = left_outer_joins(:venue).where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
 
       if date_criteria.present?
         date = date_criteria[:date]

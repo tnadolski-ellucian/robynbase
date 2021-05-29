@@ -36,6 +36,7 @@ $(window).on("load", ->
     when currentPage.indexOf("songs") == 0 then "robyn-songs"
     when currentPage.indexOf("compositions") == 0 then "robyn-compositions"
     when currentPage.indexOf("gigs") == 0 then "robyn-gigs"
+    when currentPage.indexOf("venues") == 0 then "robyn-venues"
     when currentPage.indexOf("performances") == 0 then "robyn-performances"
     when currentPage.indexOf("about") == 0 then "robyn-about"
     else "robyn-home"
@@ -57,7 +58,7 @@ $(window).on("load", ->
   )
    
 
-  engine = new Bloodhound({
+  song_engine = new Bloodhound({
     # name: 'all'
     # local: [{ val: 'dog' }, { val: 'pig' }, { val: 'moose' }],
     remote:
@@ -106,6 +107,22 @@ $(window).on("load", ->
     
   });
 
+  venue_engine = new Bloodhound({
+    # name: 'all'
+    # local: [{ val: 'dog' }, { val: 'pig' }, { val: 'moose' }],
+    remote:
+      url: '/robyn/search_venues?utf8=%E2%9C%93&search_value=%QUERY'
+      filter: (results) ->
+        $.map(results, (result, index) ->
+          return {search_value: result.Name, id: result.VENUEID}
+        )
+    datumTokenizer: (d) -> 
+      console.log(d)
+      return Bloodhound.tokenizers.whitespace(d.search_value)
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+    
+  });
+
   performance_engine = new Bloodhound({
     # name: 'all'
     # local: [{ val: 'dog' }, { val: 'pig' }, { val: 'moose' }],
@@ -122,8 +139,9 @@ $(window).on("load", ->
     
   });
 
-  initComplete = engine.initialize()
+  initComplete = song_engine.initialize()
   initComplete = gig_engine.initialize()
+  initComplete = venue_engine.initialize()
   initComplete = composition_engine.initialize()
   initComplete = performance_engine.initialize()
 
@@ -138,7 +156,7 @@ $(window).on("load", ->
     {
       name: 'songs',
       displayKey: 'search_value',
-      source: engine.ttAdapter(),
+      source: song_engine.ttAdapter(),
       templates: {
         header: '<h4 class="">Songs</h4>'
       }
@@ -163,6 +181,15 @@ $(window).on("load", ->
     },
 
     {
+      name: 'venues',
+      displayKey: 'search_value',
+      source: venue_engine.ttAdapter(),
+      templates: {
+        header: '<h4 class="">Venues</h4>'
+      }
+    },
+
+    {
       name: 'performances',
       displayKey: 'search_value',
       source: performance_engine.ttAdapter(),
@@ -178,6 +205,7 @@ $(window).on("load", ->
       switch dataset
         when "songs" then window.location = "/songs/" + suggestion.id
         when "gigs" then window.location = "/gigs/" + suggestion.id
+        when "venues" then window.location = "/venues/" + suggestion.id
         when "compositions" then window.location = "/compositions/" + suggestion.id
         when "performances" then window.location = "/performances/" + suggestion.id
 

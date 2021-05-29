@@ -1,22 +1,78 @@
-<h1>Venues#show</h1>
-<p>Find me in app/views/venues/show.html.erb</p>
+<div class="row" style="margin-bottom: 0px">
+  <div class="col-sm-10">
+    <h2 class="main-header"><%= @venue.Name %></h2>
+  </div>
 
-<%= link_to "Back", controller: 'robyn' %>
+  <% if can? :manage, Venue %>
 
-<h1><%= @venue.Name %></h1>
+    <div class="col-sm-2">
+      <%= form_tag(edit_venue_path, :method => 'GET') do %>
+        <%= submit_tag "Edit Venue", :name => nil %>
+      <%end%>
+    </div>
 
-<ul>
-  <li> City: <%= @venue.City %> </li>
-  <li> State: <%= @venue.State %> </li>
-  <li> Country: <%= @venue.Country %> </li>
-</ul>
+  <% end %>
 
-<h2> Gigs </h2>
+</div>
 
-<ol>
 
-<% for gig in @venue.gigs %>
-  <li> <%= link_to gig.GigDate.to_date.to_formatted_s(:long) , gig_path(gig) %> </li>
+<div class="row">
+
+  <div class="col-sm-12">
+
+    <h4 class="underlined-header">Details</h4>
+
+    <div class="album-description-block">
+
+      <dl class="dl-horizontal">
+        <dt>City</dt>
+        <dd><%= @venue.City %></dd>
+      </dl>
+
+      <% if @venue.SubCity %>
+
+        <dl class="dl-horizontal">
+          <dt>Subcity</dt>
+          <dd><%= @venue.SubCity %></dd>
+        </dl>
+
+      <% end %>
+      
+      <% if @venue.State %>
+
+        <dl class="dl-horizontal">
+          <dt>State</dt>
+          <dd><%= @venue.State %></dd>
+        </dl>
+
+      <% end %>
+
+      <dl class="dl-horizontal">
+        <dt>Country</dt>
+        <dd><%= @venue.Country %></dd>
+      </dl>
+      
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- gigs at this venue -->
+<% if @venue.gigs.present? %>
+
+<div class="row page-section">
+
+  <div class="col-sm-12">
+
+    <a class="anchor" name="gigs"></a>
+    <h4>Gigs</h4>
+    <%= render partial: '/gigs/gig_list', locals: {gigs: @venue.gigs, table_id: "gig-venue", use_paging: true, show_search: false} %>
+
+  </div>
+
+</div>
+
 <% end %>
 
-</ol>

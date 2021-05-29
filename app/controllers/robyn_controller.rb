@@ -7,9 +7,10 @@ class RobynController < ApplicationController
     logger.info "search: #{search}"
 
     if not search.nil? 
-      @songs = Song.search_by [:title, :lyrics, :author], search
+      @songs = Song.search_by [:title], search
       @compositions = Composition.search_by [:title], search
-      @gigs = Gig.search_by [:venue, :venue_city], search
+      @gigs = Gig.search_by [:venue], search
+      @venues = Venue.search_by [:name], search
       @performances = Performance.search_by [:name], search
     end
     
@@ -46,6 +47,22 @@ class RobynController < ApplicationController
     render json: @gigs
 
   end
+
+  def search_venues
+
+    search = params[:search_value] 
+
+    logger.info "venue search: #{search}"
+
+    if not search.nil? 
+      @venues = Venue.search_by [:name], search
+    end
+
+    logger.info "found venues: #{@venues}"
+
+    render json: @venues
+
+  end 
 
   def search_compositions
 

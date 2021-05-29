@@ -44,12 +44,13 @@ class Song < ApplicationRecord
           column = "Song"
       end
 
-      "#{column} LIKE ?"
+      # "#{column} LIKE ?"
+      "#{column} regexp ?"
 
     end
 
     if search
-      songs = where(conditions.join(" OR "), *Array.new(conditions.length, "%#{search}%"))
+      songs = where(conditions.join(" OR "), *Array.new(conditions.length, "(^|[[:space:]])#{search}([[:space:]]|$)"))
     else
       songs = all
     end

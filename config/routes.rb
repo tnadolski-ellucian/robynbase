@@ -6,6 +6,8 @@ Robyn2::Application.routes.draw do
   get "songs/quick_query"
   get "gigs/index"
   get "gigs/quick_query"
+  get "venues/index"
+  get "robyn/search_venues"
   get 'performances/index'
   get 'performances/quick_query'
   get "compositions/index"
