@@ -15,7 +15,7 @@
         <span class="criteria search-type-criteria">
           <%= radio_button_tag 'search_type[]', 'name', Array(params['search_type']).include?('name')   %> <span class="radio-label">Name</span>
           <%= radio_button_tag 'search_type[]', 'city', Array(params['search_type']).include?('city') %> <span class="radio-label">City</span>
-          <%= radio_button_tag 'search_type[]', 'state', Array(params['search_type']).include?('city') %> <span class="radio-label">State</span>
+          <%= radio_button_tag 'search_type[]', 'state', Array(params['search_type']).include?('state') %> <span class="radio-label">State</span>
           <%= radio_button_tag 'search_type[]', 'country', Array(params['search_type']).include?('country') %> <span class="radio-label">Country</span>
         </span>
 

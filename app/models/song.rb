@@ -40,6 +40,8 @@ class Song < ApplicationRecord
           column = "Lyrics"
         when :author
           column = "Author"
+        when :originalband
+          column = "OrigBand"
         else
           column = "Song"
       end
@@ -68,6 +70,12 @@ class Song < ApplicationRecord
   def get_albums
     compositions = self.compositions.order('Year')
     compositions.to_a.uniq { |f| [f.Title ] }    
+  end
+
+  def get_comments
+    if self.Comments.present?
+      self.Comments.gsub(/\r\n/, '<br>')
+    end
   end
 
   def full_name
