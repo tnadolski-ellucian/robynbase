@@ -3,10 +3,18 @@ module GigHelper
   def gig_song_details(gig_song)
 
     out = ""
+    
+    if gig_song.song.present?
 
-    # author (if not robyn)
-    if gig_song.song.present? and gig_song.song.Author.present? 
-      out += "<span class='subsidiary-info'> <small>#{gig_song.song.Author}</small> </span>"
+      # original band
+      if gig_song.song.OrigBand.present? 
+        out += "<span class='subsidiary-info'> <small>#{gig_song.song.OrigBand}</small> </span>"
+
+      # author (if not robyn)  
+      elsif gig_song.song.Author.present? 
+        out += "<span class='subsidiary-info'> <small>#{gig_song.song.Author}</small> </span>"
+      end
+      
     end
 
     # includes segue marker

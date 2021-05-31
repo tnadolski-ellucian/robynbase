@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_07_144003) do
+ActiveRecord::Schema.define(version: 2021_05_30_190826) do
 
   create_table "COMP", primary_key: "COMPID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "Artist", limit: 64
@@ -171,7 +171,7 @@ ActiveRecord::Schema.define(version: 2021_03_07_144003) do
     t.integer "MUSOID", default: 0
     t.integer "GIGID", default: 0
     t.string "Author"
-    t.string "OrigBand", limit: 32
+    t.string "OrigBand", limit: 128
     t.string "AltTitles", limit: 64
     t.boolean "Improvised", default: false
     t.integer "MAJRID", default: 0

@@ -9,6 +9,7 @@
   <thead>
   <tr>
   <th>Name</th>
+  <th>Original Band</th>
   <th>Author</th>
   <% if can? :manage, Song %>
     <th>Actions</th>
@@ -37,6 +38,9 @@
         <% end %>
 
       </td>
+
+      <td> <%= song.OrigBand %> </td>
+
       <td> <%= song.Author.nil? ? "Robyn Hitchcock" : song.Author %> </td>
 
       <% if can? :manage, Song %>
