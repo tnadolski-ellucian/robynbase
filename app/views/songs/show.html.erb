@@ -100,7 +100,7 @@
 
     <a class="anchor" name="gigs"></a>
     <h4>Gigs</h4>
-    <%= render partial: '/gigs/gig_list', locals: {gigs: @song.gigs, table_id: "gig-song", use_paging: true, show_search: false} %>
+    <%= render partial: '/gigs/gig_list', locals: {gigs: @song.gigs.distinct, table_id: "gig-song", use_paging: true, show_search: false} %>
 
   </div>
 

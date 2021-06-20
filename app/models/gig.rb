@@ -112,6 +112,24 @@ class Gig < ApplicationRecord
 
   end
 
+  # get the number of venues gigs have been performed at
+  def self.get_distinct_venue_count
+    Gig.select(:venueid).distinct.count
+  end
+
+  # get the total number of gigs
+  def self.get_gig_count
+    Gig.count
+  end
+
+  def self.get_gigset_count
+    Gigset.count
+  end
+
+  # get the number of songs that have been performed at gigs
+  def self.get_distinct_song_performances
+    return Gigset.select(:songid).where("SONGID is NOT NULL and SONGID > 0").distinct.count
+  end
 
   ## quick queries
 
