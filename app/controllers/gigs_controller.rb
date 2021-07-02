@@ -93,7 +93,11 @@ class GigsController < ApplicationController
     @gig = Gig.new(params)
 
     if @gig.save
-      @gig.gigsets.create(setlist_songs)
+
+      if setlist_songs.present?
+        @gig.gigsets.create(setlist_songs)
+      end
+      
       return_to_previous_page(@gig)
     else
       # This line overrides the default rendering behavior, which
