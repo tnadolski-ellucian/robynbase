@@ -176,6 +176,10 @@ class GigsController < ApplicationController
         b["Song"] = Song.find(b["SONGID"].to_i).full_name if b["Song"].empty?
       end
 
+      # empty text fields should be null in the database
+      b[:MediaLink] = nil if b[:MediaLink].strip.empty?
+      b[:VersionNotes] = nil if b[:VersionNotes].strip.empty?
+
     end
 
     last_index + 1
