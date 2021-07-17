@@ -104,34 +104,15 @@
     <a class="anchor" name="setlist"></a>
     <h4 class="underlined-header"> Set List </h4>
 
-    <ol class="set-list">
+    <%= render :partial => 'gig_setlist_song', :locals => {:gig_set => @gig.get_set} %>
 
-    <% for gig_song in @gig.get_set  %>
-      <% if gig_song.song.present? %>
-        <li> <%= link_to(gig_song.Song.nil? ? gig_song.song.full_name : gig_song.Song, song_path(gig_song.song)) %> <%= gig_song_details(gig_song) %> </li>
-      <% else %>
-        <li> <%= gig_song.Song %> <%= gig_song_details(gig_song) %> </li>
-      <% end %>
-    <% end %>
-
-    </ol>
 
     <% if @gig.get_set_encore.present? %>
 
       <!-- songs in the encore -->
       <div class="set-list-encore"> Encore </div>
+      <%= render :partial => 'gig_setlist_song', :locals => {:gig_set => @gig.get_set_encore} %>
 
-      <ol class="set-list">
-
-        <% for gig_song in @gig.get_set_encore  %>
-          <% if gig_song.song.present? %>
-            <li> <%= link_to gig_song.Song, song_path(gig_song.song) %> <%= gig_song_details(gig_song) %> </li>
-          <% else %>
-            <li> <%= gig_song.Song %> </li>
-          <% end %> 
-        <% end %>
-
-      </ol>
 
     <% end %>
 

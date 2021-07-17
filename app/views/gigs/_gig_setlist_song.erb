@@ -1,0 +1,25 @@
+<ol class="set-list <%= (gig_set_has_media(gig_set) ? "action-item" : "") %>">
+
+<% for gig_song in gig_set  %>
+
+    <li >
+
+        <% if gig_song.song.present? %>
+            <%= link_to(gig_song.Song.nil? ? gig_song.song.full_name : gig_song.Song, song_path(gig_song.song)) %> 
+        <% else %>
+            <%= gig_song.Song %>
+        <% end %>
+
+        <%= gig_song_details(gig_song) %>
+
+        <% if gig_song.MediaLink.present? %>
+            <a target="_blank" title="Play <%=gig_song.Song%>" class="media" href="<%= gig_song.MediaLink%>">
+                <img src="<%=asset_url("images/play-button.png")%>">
+            </a>
+        <% end %>
+
+    </li>
+
+<% end %>
+
+</ol>

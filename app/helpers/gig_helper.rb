@@ -26,4 +26,8 @@ module GigHelper
 
   end 
 
+  def gig_set_has_media(gig_set) 
+    gig_set.any? { |gig_song| gig_song.MediaLink.present? }
+  end
+
 end

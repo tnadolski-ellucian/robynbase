@@ -18,7 +18,8 @@ class Gig < ApplicationRecord
   @@quick_queries = [ 
     QuickQuery.new('gigs', :with_setlists, [:without]),
     QuickQuery.new('gigs', :without_definite_dates),
-    QuickQuery.new('gigs', :with_reviews, [:without])
+    QuickQuery.new('gigs', :with_reviews, [:without]),
+    QuickQuery.new('gigs', :with_media)
   ]
 
   # returns the songs played in the gig (non-encore)
@@ -106,6 +107,8 @@ class Gig < ApplicationRecord
         gigs = quick_query_gigs_without_definite_dates
       when :with_reviews.to_s
         gigs = quick_query_gigs_with_reviews(secondary_attribute)
+      when :with_media.to_s
+        gigs = quick_query_gigs_with_media
     end
 
     gigs.where.not(:venue => nil)
@@ -147,6 +150,10 @@ class Gig < ApplicationRecord
     else 
       where("Reviews IS NULL OR Reviews = ''")
     end
+  end
+
+  def self.quick_query_gigs_with_media
+    joins("LEFT JOIN GSET on GIG.gigid = GSET.gigid").where("GSET.MediaLink IS NOT NULL").distinct
   end
 
 end

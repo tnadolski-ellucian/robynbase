@@ -54,6 +54,24 @@
         margin-left: 5px;
       }
 
+      &.action-item {
+
+        padding-left: 40px;
+
+        li {
+
+          position: relative;
+
+          img {
+            height: 2rem;
+            position: absolute;
+            padding-left: 10px;
+            left: -58px;
+          }
+    
+        }
+      }
+
     }
 
     .set-list-encore {
