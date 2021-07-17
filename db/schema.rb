@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_30_190826) do
+ActiveRecord::Schema.define(version: 2021_07_10_203343) do
 
   create_table "COMP", primary_key: "COMPID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "Artist", limit: 64
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 2021_05_30_190826) do
     t.string "Flaw", limit: 32
     t.string "MP3Site", limit: 4
     t.string "MP3File", limit: 64
+    t.string "MediaLink"
     t.index ["GIGID"], name: "GIGID"
     t.index ["SETID"], name: "SETID"
     t.index ["SONGID"], name: "SONGID"

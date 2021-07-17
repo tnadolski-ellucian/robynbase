@@ -6,6 +6,7 @@
             <th>Song</th>
             <th>Song Name Override</th>
             <th>Version Notes</th>
+            <th>Media Link</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -33,6 +34,7 @@
                 <%= gigset_fields.text_field :VersionNotes, :class => "form-control" %> 
                 <%= gigset_fields.hidden_field :Encore %> 
             </td>            
+            <td> <%= gigset_fields.text_field :MediaLink, :class => "form-control" %></td>
             <td> 
                 <Button type="button" onClick="removeTableRow('<%=id%>', <%=sequenceIndex%>)">
                     Remove

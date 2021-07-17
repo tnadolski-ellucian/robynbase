@@ -75,6 +75,12 @@ window.addTableRow = (tableId, encore) ->
                    name="gig[gigsets_attributes][#{songIndex}][Encore]" 
                    id="gig_gigsets_attributes_#{songIndex}_Encore">
         </td>
+        <td>
+            <input class="form-control" type="text" value="" 
+                   name="gig[gigsets_attributes][#{songIndex}][MediaLink]" 
+                   id="gig_gigsets_attributes_#{songIndex}_MediaLink">
+        </td>
+
         <td> 
             <button type="button" onclick="removeTableRow('#{tableId}', #{songIndex})">
                 Remove

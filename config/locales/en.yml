@@ -48,6 +48,7 @@ en:
       with_setlists: "Gigs with setlists"
       with_setlists_without: "Without"
       with_reviews: "Gigs with reviews"
+      with_media: "Gigs with media"
       with_reviews_without: "Without"
     compositions:
       major_cd_releases: "Somewhat chronological list of major releases on CD"
