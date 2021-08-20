@@ -222,7 +222,7 @@ class GigsController < ApplicationController
     # permit attributes we're saving
     params
       .require(:gig)
-      .permit(:VENUEID, :GigDate, :ShortNote, :Reviews, :Guests, :BilledAs, :GigType, :Venue,
+      .permit(:VENUEID, :GigDate, :ShortNote, :Reviews, :Guests, :BilledAs, :GigType, :Venue, :Circa,
              gigsets_attributes: [ :Chrono, :SONGID, :Song, :VersionNotes, :Encore, :MediaLink]).tap do |params|
           
           # every gig needs at least a venue id and a date
