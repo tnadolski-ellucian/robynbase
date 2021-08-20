@@ -45,7 +45,14 @@
 
   <dl class="dl-horizontal">
     <dt>Date</dt>
-    <dd><%= @gig.GigDate.to_date.to_formatted_s(:long) %></dd>
+    <dd><%= @gig.GigDate.to_date.to_formatted_s(:long) %> 
+    
+      <% if @gig.Circa %> 
+        <i>(uncertain)</i>
+      <% end %>
+    
+    </dd>
+
   </dl>
 
   <dl class="dl-horizontal">
@@ -112,7 +119,6 @@
       <!-- songs in the encore -->
       <div class="set-list-encore"> Encore </div>
       <%= render :partial => 'gig_setlist_song', :locals => {:gig_set => @gig.get_set_encore} %>
-
 
     <% end %>
 
