@@ -29,11 +29,7 @@
       <td> <%= gig.venue.nil? ? nil : gig.venue.City %> </td>
       <td> <%= gig.venue.nil? || gig.venue.State.nil? ? nil : gig.venue.State %> </td>
       <td> <%= gig.venue.nil? ? nil : gig.venue.Country %> </td>
-      <td> <%= gig.GigDate.to_date.to_formatted_s(:long) %>       
-        <% if gig.Circa %> 
-           <i>(uncertain)</i>
-        <% end %>
-      </td>
+      <td> <%= gig.GigDate.to_date.to_formatted_s(:long) %> </td>      
 
       <% if can? :manage, Gig %>
         <td class="actions"> 
