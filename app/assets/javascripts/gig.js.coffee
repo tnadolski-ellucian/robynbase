@@ -131,9 +131,10 @@ window.addMediaTableRow = (tableId) ->
         </td>
 
         <td>
-            <input class="form-control form-control-checkbox" type="checkbox" 
+            <input name="gig[gigmedia_attributes][#{mediaIndex}][showplaylist]" type="hidden" value="0">
+            <input class="form-control form-control-checkbox" value="1" type="checkbox" 
                    name="gig[gigmedia_attributes][#{mediaIndex}][showplaylist]" 
-                   id="gig_gigmedia_attributes_#{mediaIndex}_show_playlist">
+                   id="gig_gigmedia_attributes_#{mediaIndex}_showplaylist">
         </td>
 
         <td>
