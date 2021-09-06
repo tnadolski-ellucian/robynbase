@@ -95,6 +95,20 @@
 
     <br>
 
+    <div class="row">
+
+
+        <div class="col-sm-12">
+
+            <h3>Gig Media</h3>
+            <%= render 'gig_media_table', {gigmedia: @gig.gigmedia, f: f, id: "gig-media"} %>
+
+        </div>
+
+    </div>
+
+    <br>
+
     <%= f.submit "Save", class: "btn btn-large btn-primary" %>
     
 </div>

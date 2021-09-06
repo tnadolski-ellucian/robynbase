@@ -16,8 +16,6 @@ $(window).on("load", (e) ->
 )
 
 
-songIndex = 100
-
 # Adds a song selection dropdown, containing all available songs
 addSongSelector = (parent, index) ->
 
@@ -40,6 +38,8 @@ window.removeTableRow = (tableId, rowId) ->
   row.remove()
   identifier.remove()
 
+
+songIndex = 100
 
 window.addTableRow = (tableId, encore) ->
 
@@ -96,3 +96,63 @@ window.addTableRow = (tableId, encore) ->
   addSongSelector(songSelectorCell, songIndex)
 
   songIndex++
+
+
+mediaIndex = 100
+
+window.addMediaTableRow = (tableId) ->
+
+  maxSequence = 0;
+
+  # find largest order index
+  $("##{tableId} tr").each((index, row) ->
+    sequence = $(row).find("td:first input").val();
+    maxSequence = Math.max(maxSequence, sequence) if sequence
+  )
+      
+
+  newRow = $("""
+    <tr data-row="#{mediaIndex}">
+        <td>
+            <input class="form-control" size="3" type="text" 
+                   value="#{maxSequence + 1}" 
+                   name="gig[gigmedia_attributes][#{mediaIndex}][Chrono]" 
+                   id="gig_gigmedia_attributes_#{mediaIndex}_Chrono">
+        </td>
+        <td>
+            <input class="form-control" type="text" 
+                   name="gig[gigmedia_attributes][#{mediaIndex}][title]" 
+                   id="gig_gigmedia_attributes_#{mediaIndex}_title">
+        </td>
+        <td>
+            <input class="form-control" type="text" 
+                   name="gig[gigmedia_attributes][#{mediaIndex}][mediaid]" 
+                   id="gig_gigmedia_attributes_#{mediaIndex}_mediaid">
+        </td>
+
+        <td>
+            <input class="form-control form-control-checkbox" type="checkbox" 
+                   name="gig[gigmedia_attributes][#{mediaIndex}][showplaylist]" 
+                   id="gig_gigmedia_attributes_#{mediaIndex}_show_playlist">
+        </td>
+
+        <td>
+          <select class="form-control song-selector"
+                  id="gig_gigmedia_attributes_#{mediaIndex}_mediatype" 
+                  name="gig[gigmedia_attributes][#{mediaIndex}][mediatype]">              
+              <option value="1">YouTube</option>
+              <option value="2">Archive.org</option>
+          </select>
+        </td>
+
+        <td> 
+            <button type="button" onclick="removeTableRow('#{tableId}', #{mediaIndex})">
+                Remove
+            </button>
+        </td>
+    </tr>
+  """)
+
+  $("##{tableId}").append(newRow)
+
+  mediaIndex++

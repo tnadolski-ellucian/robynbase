@@ -84,3 +84,27 @@
   }
 }
 
+.gig-media {
+
+  // border: 3px solid;
+  // border-color: #CE1515;
+  width: 640px;
+  margin-bottom: 20px;
+
+  .gig-media-title {
+    background-color: #CE1515;
+    color: white;
+    padding: 8px;
+
+    h5 {
+      margin-top: 2px;
+      margin-bottom: 2px;
+
+    }
+  }
+
+}
+
+.form-control-checkbox {
+  height: 17px;
+}

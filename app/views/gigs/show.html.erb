@@ -17,6 +17,7 @@
           <% if @gig.get_set.present? %> <span><a href="#setlist">Set List</a></span> <% end %>
           <% if @gig.ShortNote.present? %> <span><a href="#notes">Notes</a></span> <% end %>
           <% if @gig.get_reviews.present? %> <span><a href="#reviews">Reviews</a></span> <% end %>
+          <% if @gig.gigmedia.present? %> <span><a href="#media">Media</a></span> <% end %>
         </span>
       </small>
 
@@ -127,6 +128,40 @@
 </div>
 
 <% end %>
+
+<% if @gig.gigmedia.present? %>
+
+  <div style="margin-top: 30px">
+    
+    <a class="anchor" name="media"></a>
+    <h4 class="underlined-header"> Media </h4>
+
+  <% for gig_medium in @gig.gigmedia  %>
+
+    <div class="gig-media">
+
+      <div class="gig-media-title">
+        <h5> <%= gig_medium.title %> </h4>
+      </div>
+
+      <div class="gig-media-content">
+        <% case gig_medium.mediatype
+        
+          when Gigmedium::MEDIA_TYPE['YouTube'] %>
+            <iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/<%=gig_medium.mediaid%>" frameborder="0"></iframe>
+
+          <% when Gigmedium::MEDIA_TYPE['ArchiveOrg'] %>
+            <iframe src="https://archive.org/embed/<%=gig_medium.mediaid%><%=gig_medium.showplaylist === 1 ? "?playlist=1&list_height=450"  : ""%>" width="640" height="480" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe>
+
+        <% end %>  
+      </div>
+
+    </div>
+
+  <% end %>
+
+<% end %>
+
 
 <% if @gig.get_reviews.present? %>
 

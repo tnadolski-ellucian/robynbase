@@ -10,10 +10,12 @@ class Gig < ApplicationRecord
   self.table_name = "GIG"
 
   has_many :gigsets, -> {order 'Chrono'}, foreign_key: "GIGID", dependent: :delete_all
+  has_many :gigmedia, -> {order 'Chrono'}, foreign_key: "GIGID", dependent: :delete_all
+
   has_many :songs, through: :gigsets, foreign_key: "GIGID"
   belongs_to :venue, foreign_key: "VENUEID"
 
-  accepts_nested_attributes_for :gigsets
+  accepts_nested_attributes_for :gigsets, :gigmedia
 
   @@quick_queries = [ 
     QuickQuery.new('gigs', :with_setlists, [:without]),
@@ -27,16 +29,16 @@ class Gig < ApplicationRecord
     self.gigsets.includes(:song).where(encore: false)
   end
 
+  # returns the songs played in the encore
+  def get_set_encore
+    self.gigsets.includes(:song).where(encore: true)
+  end
+
   # returns the reviews for this gig (if any), formatted to display correctly in html
   def get_reviews
     if self.Reviews.present?
       self.Reviews.gsub(/\r\n/, '<br>')
     end
-  end
-
-  # returns the songs played in the encore
-  def get_set_encore
-    self.gigsets.includes(:song).where(encore: true)
   end
 
   def self.search_by(kind, search, date_criteria = nil)
