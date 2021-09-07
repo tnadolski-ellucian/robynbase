@@ -88,8 +88,9 @@
 
   // border: 3px solid;
   // border-color: #CE1515;
-  width: 640px;
+  width: 642px;
   margin-bottom: 20px;
+  border: 1px solid;
 
   .gig-media-title {
     background-color: #CE1515;
@@ -101,6 +102,10 @@
       margin-bottom: 2px;
 
     }
+  }
+
+  .gig-media-content {
+    line-height: 0;
   }
 
 }
