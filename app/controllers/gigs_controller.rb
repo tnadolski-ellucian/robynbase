@@ -268,7 +268,7 @@ class GigsController < ApplicationController
       .require(:gig)
       .permit(:VENUEID, :GigDate, :ShortNote, :Reviews, :Guests, :BilledAs, :GigType, :Venue, :Circa,
              gigsets_attributes: [ :Chrono, :SONGID, :Song, :VersionNotes, :Encore, :MediaLink],
-             gigmedia_attributes: [ :Chrono, :title, :mediaid, :mediatype, :showplaylist ]).tap do |params|
+             gigmedia_attributes: [ :Chrono, :title, :mediaid, :mediatype ]).tap do |params|
           
           # every gig needs at least a venue id and a date
           params.require([:VENUEID, :GigDate])

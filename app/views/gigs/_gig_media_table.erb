@@ -5,7 +5,6 @@
             <th>Order</th>
             <th>Title</th>
             <th>Media ID</th>
-            <th>Playlist</th>
             <th>Type</th>
             <th>Action</th>
         </tr>
@@ -21,8 +20,15 @@
             <td> <%= gigmedium_fields.text_field :Chrono, { class: "form-control", size: 3, value: sequenceIndex }%></td>
             <td> <%= gigmedium_fields.text_field :title, { class: "form-control" }%></td>
             <td> <%= gigmedium_fields.text_field :mediaid, { class: "form-control" }%></td>
-            <td> <%= gigmedium_fields.check_box :showplaylist, { class: "form-control form-control-checkbox" }%></td>
-            <td> <%= gigmedium_fields.select(:mediatype, [["YouTube", "1"], ["Archive.org", "2"] ], {}, { class: "form-control song-selector" })%> </td>
+            <td> <%= gigmedium_fields.select(
+                :mediatype, [
+                    ["YouTube", Gigmedium::MEDIA_TYPE['YouTube'].to_s], 
+                    ["Archive.org", Gigmedium::MEDIA_TYPE['ArchiveOrg'].to_s],
+                    ["Archive.org Playlist", Gigmedium::MEDIA_TYPE['ArchiveOrgPlaylist'].to_s] 
+                ], 
+                {}, 
+                { class: "form-control song-selector" })%> 
+            </td>
             <td> 
                 <Button type="button" onClick="removeTableRow('<%=id%>', <%=sequenceIndex%>)">
                     Remove

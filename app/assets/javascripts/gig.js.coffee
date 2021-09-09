@@ -131,18 +131,12 @@ window.addMediaTableRow = (tableId) ->
         </td>
 
         <td>
-            <input name="gig[gigmedia_attributes][#{mediaIndex}][showplaylist]" type="hidden" value="0">
-            <input class="form-control form-control-checkbox" value="1" type="checkbox" 
-                   name="gig[gigmedia_attributes][#{mediaIndex}][showplaylist]" 
-                   id="gig_gigmedia_attributes_#{mediaIndex}_showplaylist">
-        </td>
-
-        <td>
           <select class="form-control song-selector"
                   id="gig_gigmedia_attributes_#{mediaIndex}_mediatype" 
                   name="gig[gigmedia_attributes][#{mediaIndex}][mediatype]">              
               <option value="1">YouTube</option>
               <option value="2">Archive.org</option>
+              <option value="3">Archive.org Playlist</option>
           </select>
         </td>
 
