@@ -213,8 +213,12 @@ class GigsController < ApplicationController
       end
         
       # if a full archive.org "details" link was provided, extract the id
-      if b[:mediatype].to_i === Gigmedium::MEDIA_TYPE["ArchiveOrg"] and b[:mediaid][/\/details\/.*/].present?
+      if b[:mediatype].to_i === Gigmedium::MEDIA_TYPE["ArchiveOrg"] or 
+         b[:mediatype].to_i === Gigmedium::MEDIA_TYPE["ArchiveOrgPlaylist"] and 
+         b[:mediaid][/\/details\/.*/].present?
+
         b[:mediaid] = b[:mediaid][/\/details\/(.*)$/, 1]
+
       end
 
     end
