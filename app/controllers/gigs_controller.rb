@@ -281,7 +281,6 @@ class GigsController < ApplicationController
           if params["gigsets_attributes"].present? 
             params["gigsets_attributes"].each do |key, params|
               params.require([:Chrono])
-              params.require([:SONGID])
             end
           end
 
