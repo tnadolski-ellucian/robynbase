@@ -207,9 +207,14 @@ class GigsController < ApplicationController
       # empty text fields should be null in the database
       b[:title] = nil if b[:title].strip.empty?
 
-      # if a full youtube "watch" link was provided, extract the id
-      if b[:mediatype].to_i === Gigmedium::MEDIA_TYPE["YouTube"] and b[:mediaid][/watch\?/].present?
-        b[:mediaid] = b[:mediaid][/v=([^&]*)/, 1]
+      # if a full youtube link was provided, extract the id
+      if b[:mediatype].to_i === Gigmedium::MEDIA_TYPE["YouTube"]
+        if b[:mediaid][/watch\?/].present?
+          b[:mediaid] = b[:mediaid][/v=([^&]*)/, 1]
+        elsif b[:mediaid][/youtu\.be/].present?
+          b[:mediaid] = b[:mediaid][/youtu\.be\/([^&]*)/, 1]
+        end
+
       end
         
       # if a full archive.org "details" link was provided, extract the id
