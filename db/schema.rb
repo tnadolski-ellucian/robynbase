@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_10_203343) do
+ActiveRecord::Schema.define(version: 2021_08_20_174712) do
 
   create_table "COMP", primary_key: "COMPID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "Artist", limit: 64
@@ -224,6 +224,17 @@ ActiveRecord::Schema.define(version: 2021_07_10_203343) do
     t.string "XLINK", limit: 32
     t.string "XTEXT"
     t.index ["XREFID"], name: "XREFID"
+  end
+
+  create_table "gigmedia", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.integer "GIGID"
+    t.string "title"
+    t.string "mediaid"
+    t.integer "mediatype", limit: 2
+    t.integer "showplaylist", limit: 1, default: 0
+    t.integer "Chrono", default: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "performances", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|

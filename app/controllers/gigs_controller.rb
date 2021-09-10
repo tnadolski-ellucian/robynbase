@@ -88,7 +88,7 @@ class GigsController < ApplicationController
   # create a new gig
   def create
     
-    params, setlist_songs = prepare_params()
+    params, setlist_songs, media = prepare_params()
 
     @gig = Gig.new(params)
 
@@ -97,8 +97,13 @@ class GigsController < ApplicationController
       if setlist_songs.present?
         @gig.gigsets.create(setlist_songs)
       end
+
+      if media.present?
+        @gig.gigmedia.create(media)
+      end
       
       return_to_previous_page(@gig)
+
     else
       # This line overrides the default rendering behavior, which
       # would have been to render the "create" view.
@@ -112,13 +117,18 @@ class GigsController < ApplicationController
     
     gig = Gig.find(params[:id])
 
-    filtered_params, setlist_songs = prepare_params()
+    filtered_params, setlist_songs, media = prepare_params()
 
     gig.gigsets.clear()
+    gig.gigmedia.clear()
 
     # update with latest setlist info
     if setlist_songs.present?
       gig.gigsets.build(setlist_songs)
+    end
+
+    if media.present?
+      gig.gigmedia.build(media)
     end
 
     gig.update(filtered_params)
@@ -186,6 +196,35 @@ class GigsController < ApplicationController
 
   end
 
+  def prepare_media(media_links)
+    
+    # loop through every media item in order, normalizing their sequence numbers
+    media_links.values.sort_by{|a| a["Chrono"].to_i }.each_with_index do |b, i|
+
+      # sequence in 10s
+      b["Chrono"] = (i * 10).to_s
+
+      # empty text fields should be null in the database
+      b[:title] = nil if b[:title].strip.empty?
+
+      # if a full youtube "watch" link was provided, extract the id
+      if b[:mediatype].to_i === Gigmedium::MEDIA_TYPE["YouTube"] and b[:mediaid][/watch\?/].present?
+        b[:mediaid] = b[:mediaid][/v=([^&]*)/, 1]
+      end
+        
+      # if a full archive.org "details" link was provided, extract the id
+      if b[:mediatype].to_i === Gigmedium::MEDIA_TYPE["ArchiveOrg"] or 
+         b[:mediatype].to_i === Gigmedium::MEDIA_TYPE["ArchiveOrgPlaylist"] and 
+         b[:mediaid][/\/details\/.*/].present?
+
+        b[:mediaid] = b[:mediaid][/\/details\/(.*)$/, 1]
+
+      end
+
+    end
+
+  end
+
   # Massage incoming params for saving. 
   #
   # 1. Orders the songs in the setlists and encores
@@ -204,8 +243,15 @@ class GigsController < ApplicationController
       prepare_setlist(setlist_songs, start_encore_index, true)
     end
 
+    media = new_params["gigmedia_attributes"]
+
+    if media.present?
+      prepare_media(media)
+    end
+
     # get rid of now-extraneous setlist params
     new_params.delete("gigsets_attributes")
+    new_params.delete("gigmedia_attributes")
 
     # save the name of the venue
     new_params["Venue"] = Venue.find(new_params["VENUEID"].to_i).Name if new_params["Venue"].strip.empty?
@@ -213,7 +259,9 @@ class GigsController < ApplicationController
     # extract the year from the date
     new_params["GigYear"] = Time.new(params["gig"]["GigDate"]).year
 
-    return [new_params, setlist_songs.present? ? setlist_songs.values : nil]
+    return [new_params, 
+            setlist_songs.present? ? setlist_songs.values : nil, 
+            media.present? ? media.values : nil]
 
   end
 
@@ -223,7 +271,8 @@ class GigsController < ApplicationController
     params
       .require(:gig)
       .permit(:VENUEID, :GigDate, :ShortNote, :Reviews, :Guests, :BilledAs, :GigType, :Venue, :Circa,
-             gigsets_attributes: [ :Chrono, :SONGID, :Song, :VersionNotes, :Encore, :MediaLink]).tap do |params|
+             gigsets_attributes: [ :Chrono, :SONGID, :Song, :VersionNotes, :Encore, :MediaLink],
+             gigmedia_attributes: [ :Chrono, :title, :mediaid, :mediatype ]).tap do |params|
           
           # every gig needs at least a venue id and a date
           params.require([:VENUEID, :GigDate])
@@ -232,6 +281,15 @@ class GigsController < ApplicationController
           if params["gigsets_attributes"].present? 
             params["gigsets_attributes"].each do |key, params|
               params.require([:Chrono])
+              params.require([:SONGID])
+            end
+          end
+
+          # every item in a media list requires a sequence number and a media identifier
+          if params["gigmedia_attributes"].present? 
+            params["gigmedia_attributes"].each do |key, params|
+              params.require([:Chrono])
+              params.require([:mediaid])
             end
           end
 

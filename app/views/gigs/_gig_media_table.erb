@@ -1,0 +1,50 @@
+<table id="<%=id%>">
+
+    <thead>
+        <tr>
+            <th>Order</th>
+            <th>Title</th>
+            <th>Media ID</th>
+            <th>Type</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+
+    <% sequenceIndex = 1 %>
+
+    <%= f.fields_for :gigmedia, gigmedia do |gigmedium_fields| %>
+        <tr data-row=<%= sequenceIndex %>>
+            <td> <%= gigmedium_fields.text_field :Chrono, { class: "form-control", size: 3, value: sequenceIndex }%></td>
+            <td> <%= gigmedium_fields.text_field :title, { class: "form-control" }%></td>
+            <td> <%= gigmedium_fields.text_field :mediaid, { class: "form-control" }%></td>
+            <td> <%= gigmedium_fields.select(
+                :mediatype, [
+                    ["YouTube", Gigmedium::MEDIA_TYPE['YouTube'].to_s], 
+                    ["Archive.org", Gigmedium::MEDIA_TYPE['ArchiveOrg'].to_s],
+                    ["Archive.org Playlist", Gigmedium::MEDIA_TYPE['ArchiveOrgPlaylist'].to_s] 
+                ], 
+                {}, 
+                { class: "form-control song-selector" })%> 
+            </td>
+            <td> 
+                <Button type="button" onClick="removeTableRow('<%=id%>', <%=sequenceIndex%>)">
+                    Remove
+                </Button>
+            </td>
+
+        </tr>
+
+        <% sequenceIndex+=1 %>
+
+    <% end %>
+
+    </tbody>
+
+</table>
+
+<br/>
+
+<button type="button" onClick="addMediaTableRow('<%=id%>')">Add Media</button>
