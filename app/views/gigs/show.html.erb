@@ -151,7 +151,14 @@
             <iframe id="ytplayer" type="text/html" width="640" height="480" src="https://www.youtube.com/embed/<%=gig_medium.mediaid%>" frameborder="0"></iframe>
 
           <% when Gigmedium::MEDIA_TYPE["ArchiveOrg"], Gigmedium::MEDIA_TYPE["ArchiveOrgPlaylist"]%>
-            <iframe src="https://archive.org/embed/<%=gig_medium.mediaid%><%=gig_medium.mediatype === Gigmedium::MEDIA_TYPE["ArchiveOrgPlaylist"] ? "?playlist=1&list_height=450"  : ""%>" width="640" height="480" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe>
+            <iframe src="https://archive.org/embed/<%=gig_medium.mediaid%><%=gig_medium.mediatype === Gigmedium::MEDIA_TYPE["ArchiveOrgPlaylist"] ? "?playlist=1&list_height=200"  : ""%>" 
+                    height="<%= gig_media_embed_height(gig_medium) %>""
+                    width="640" 
+                    frameborder="0" 
+                    webkitallowfullscreen="true" 
+                    mozallowfullscreen="true" 
+                    allowfullscreen>
+            </iframe>
 
         <% end %>  
       </div>

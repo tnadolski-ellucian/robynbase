@@ -30,4 +30,21 @@ module GigHelper
     gig_set.any? { |gig_song| gig_song.MediaLink.present? }
   end
 
+  def gig_media_embed_height(gig_medium)
+
+    case gig_medium.mediatype
+      
+      when Gigmedium::MEDIA_TYPE["ArchiveOrgPlaylist"]
+        210
+        
+      when Gigmedium::MEDIA_TYPE["ArchiveOrg"]
+        480
+        
+      else
+        480
+      
+    end
+
+  end
+
 end
