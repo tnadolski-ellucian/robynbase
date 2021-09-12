@@ -86,9 +86,8 @@
 
 .gig-media {
 
-  width: 642px;
+  width: 640px;
   margin-bottom: 20px;
-  border: 1px solid black;
 
   .gig-media-title {
     background-color: #CE1515;
@@ -104,6 +103,7 @@
 
   .gig-media-content {
     line-height: 0;
+    background-color: #363636;
   }
 
 }
