@@ -41,4 +41,11 @@ class Venue < ApplicationRecord
 
   end
 
+  # returns the notes for this venue (if any), formatted to display correctly in html
+  def get_notes
+    if self.Notes.present?
+      self.Notes.gsub(/\r\n/, '<br>')
+    end
+  end
+
 end

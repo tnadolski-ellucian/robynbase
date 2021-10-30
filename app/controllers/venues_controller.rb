@@ -96,7 +96,7 @@ class VenuesController < ApplicationController
     end
 
     def venue_params
-      params.require(:venue).permit(:Name, :City, :SubCity, :State, :Country).tap do |params|
+      params.require(:venue).permit(:Name, :City, :SubCity, :State, :Country, :Notes).tap do |params|
         params.require([:Name, :City, :Country])
       end
     end

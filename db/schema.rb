@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_20_174712) do
+ActiveRecord::Schema.define(version: 2021_10_30_010258) do
 
   create_table "COMP", primary_key: "COMPID", id: :integer, options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "Artist", limit: 64
@@ -216,6 +216,7 @@ ActiveRecord::Schema.define(version: 2021_08_20_174712) do
     t.boolean "Radio", default: false
     t.string "NameSearch", limit: 48
     t.string "SubCity"
+    t.text "Notes"
     t.index ["Name"], name: "Name"
     t.index ["NameSearch"], name: "NameSearch"
   end

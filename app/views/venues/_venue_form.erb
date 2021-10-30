@@ -37,7 +37,16 @@
             <%= f.text_field :Country, :size => 50, :class => "form-control"  %>
         </div>
     
-    </div>    
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            <%= f.label :Notes %>
+            <%= f.text_area :Notes, :cols => 60, :rows => 5, :class => "form-control"  %>
+        </div>
+
+    </div> 
 
     <%= f.submit "Save", class: "btn btn-large btn-primary" %>
     
