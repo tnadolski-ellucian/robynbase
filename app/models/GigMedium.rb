@@ -4,8 +4,11 @@ class Gigmedium < ApplicationRecord
 
     MEDIA_TYPE = {
         "YouTube" => 1,
-        "ArchiveOrg" => 2,
-        "ArchiveOrgPlaylist" => 3
+        "ArchiveOrgVideo" => 2,
+        "ArchiveOrgPlaylist" => 3,
+        "ArchiveOrgAudio" => 4,
+        "Vimeo" => 5,
+        "Soundcloud" => 6
     }
 
 end
