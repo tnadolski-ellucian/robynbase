@@ -23,8 +23,11 @@
             <td> <%= gigmedium_fields.select(
                 :mediatype, [
                     ["YouTube", Gigmedium::MEDIA_TYPE['YouTube'].to_s], 
-                    ["Archive.org", Gigmedium::MEDIA_TYPE['ArchiveOrg'].to_s],
-                    ["Archive.org Playlist", Gigmedium::MEDIA_TYPE['ArchiveOrgPlaylist'].to_s] 
+                    ["Archive.org Video", Gigmedium::MEDIA_TYPE['ArchiveOrgVideo'].to_s],
+                    ["Archive.org Audio", Gigmedium::MEDIA_TYPE['ArchiveOrgAudio'].to_s],
+                    ["Archive.org Playlist", Gigmedium::MEDIA_TYPE['ArchiveOrgPlaylist'].to_s],
+                    ["Vimeo", Gigmedium::MEDIA_TYPE['Vimeo'].to_s] ,
+                    ["Soundcloud", Gigmedium::MEDIA_TYPE['Soundcloud'].to_s] 
                 ], 
                 {}, 
                 { class: "form-control song-selector" })%> 

@@ -37,7 +37,7 @@ module GigHelper
       when Gigmedium::MEDIA_TYPE["ArchiveOrgPlaylist"]
         230
         
-      when Gigmedium::MEDIA_TYPE["ArchiveOrg"]
+      when Gigmedium::MEDIA_TYPE["ArchiveOrgVideo"]
         480
         
       else
