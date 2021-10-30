@@ -1,6 +1,18 @@
 <div class="row" style="margin-bottom: 0px">
   <div class="col-sm-10">
-    <h2 class="main-header"><%= @venue.Name %></h2>
+    <h2 class="main-header">
+    
+      <%= @venue.Name %>
+
+      <small>
+        <span class="inpage-navigation">
+          <% if @venue.get_notes.present? %> <span><a href="#notes">Notes</a></span> <% end %>
+          <% if @venue.gigs.present? %> <span><a href="#gigs">Gigs</a></span> <% end %>
+        </span>
+      </small>      
+      
+    </h2>
+
   </div>
 
   <% if can? :manage, Venue %>
@@ -59,6 +71,27 @@
 </div>
 
 
+<% if @venue.get_notes.present? %>
+
+<div class="row page-section">
+
+  <div class="col-sm-12">
+
+    <!-- notes-->
+    <a class="anchor" name="notes"></a>
+    <h4 class="underlined-header"> Notes </h4>
+
+    <div>
+      <%= @venue.get_notes.html_safe %>
+    </div>
+
+  </div>
+
+</div>
+
+<% end %>
+
+
 <!-- gigs at this venue -->
 <% if @venue.gigs.present? %>
 
@@ -67,7 +100,8 @@
   <div class="col-sm-12">
 
     <a class="anchor" name="gigs"></a>
-    <h4>Gigs</h4>
+    <h4 class="underlined-header"> Gigs </h4>
+
     <%= render partial: '/gigs/gig_list', locals: {gigs: @venue.gigs, table_id: "gig-venue", use_paging: true, show_search: false} %>
 
   </div>
