@@ -63,6 +63,15 @@
         <dt>Country</dt>
         <dd><%= @venue.Country %></dd>
       </dl>
+
+      <% if @venue.gigs.present? %>
+
+        <dl class="dl-horizontal">
+          <dt>Gigs Played</dt>
+          <dd><%= @venue.gigs.length %></dd>
+        </dl>
+
+      <% end %>
       
     </div>
 
