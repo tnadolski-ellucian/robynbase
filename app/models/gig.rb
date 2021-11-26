@@ -139,18 +139,18 @@ class Gig < ApplicationRecord
   ## quick queries
 
   def self.quick_query_gigs_with_setlists(secondary_attribute)
-    joins("LEFT OUTER JOIN GSET on GIG.gigid = GSET.gigid").where("GSET.setid IS #{secondary_attribute.nil? ? 'NOT' : ''} NULL").distinct    
+    joins("LEFT OUTER JOIN GSET on GIG.gigid = GSET.gigid").where("GSET.setid IS #{secondary_attribute.nil? ? 'NOT' : ''} NULL").distinct.order(:GigDate)
   end
 
   def self.quick_query_gigs_without_definite_dates
-    where(:circa => 1)
+    where(:circa => 1).order(:GigDate)
   end
 
   def self.quick_query_gigs_with_reviews(no_reviews)
     if (no_reviews.nil?)
-      where("Reviews IS NOT NULL AND Reviews <> ''")
+      where("Reviews IS NOT NULL AND Reviews <> ''").order(:GigDate)
     else 
-      where("Reviews IS NULL OR Reviews = ''")
+      where("Reviews IS NULL OR Reviews = ''").order(:GigDate)
     end
   end
 
@@ -164,7 +164,7 @@ class Gig < ApplicationRecord
       "((#{sets_with_media.to_sql}) UNION (#{gigs_with_media.to_sql})) AS GIG"
     }
 
-    Gig.from(sql)
+    Gig.from(sql).order(:GigDate)
 
   end
 
