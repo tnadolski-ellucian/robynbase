@@ -6,7 +6,7 @@ class Song < ApplicationRecord
   self.table_name = "SONG"
 
   has_many :gigsets, foreign_key: "SONGID"
-  has_many :gigs, through: :gigsets, foreign_key: "SONGID"
+  has_many :gigs, -> { order('GIG.GigDate ASC') }, through: :gigsets, foreign_key: "SONGID"
 
   has_many :tracks, foreign_key: "SONGID"
   has_many :compositions, through: :tracks, foreign_key: "SONGID"
