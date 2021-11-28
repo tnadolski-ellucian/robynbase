@@ -86,6 +86,10 @@ class Song < ApplicationRecord
     end
   end
 
+  # number of times this song has been played in gigs
+  def gig_count
+    Song.joins("JOIN GSET ON Song.SONGID = GSET.SONGID").where("Song.SONGID =#{self.SONGID}").length
+  end
 
   def self.parse_song_name(name)
     
