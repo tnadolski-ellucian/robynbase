@@ -11,6 +11,7 @@
   <th>Name</th>
   <th>Original Band</th>
   <th>Author</th>
+  <th>Performances</th>
   <% if can? :manage, Song %>
     <th>Actions</th>
   <% end %>
@@ -42,6 +43,8 @@
       <td> <%= song.OrigBand %> </td>
 
       <td> <%= song.Author.nil? ? "Robyn Hitchcock" : song.Author %> </td>
+
+      <td> <%= song.gig_count %> </td>
 
       <% if can? :manage, Song %>
         <td> 

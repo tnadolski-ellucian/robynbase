@@ -6,7 +6,7 @@ class Song < ApplicationRecord
   self.table_name = "SONG"
 
   has_many :gigsets, foreign_key: "SONGID"
-  has_many :gigs, through: :gigsets, foreign_key: "SONGID"
+  has_many :gigs, -> { order('GIG.GigDate ASC') }, through: :gigsets, foreign_key: "SONGID"
 
   has_many :tracks, foreign_key: "SONGID"
   has_many :compositions, through: :tracks, foreign_key: "SONGID"
@@ -35,7 +35,7 @@ class Song < ApplicationRecord
 
       case term
         when :title
-          column = "Song"
+          column = "SONG.Song"
         when :lyrics
           column = "Lyrics"
         when :author
@@ -43,7 +43,7 @@ class Song < ApplicationRecord
         when :originalband
           column = "OrigBand"
         else
-          column = "Song"
+          column = "SONG.Song"
       end
 
       "#{column} LIKE ?"
@@ -63,8 +63,15 @@ class Song < ApplicationRecord
       songs = all
     end
 
-    songs.order(:Song => :asc)
+    self.prepare_query(songs)
 
+  end
+
+  def self.prepare_query(songs)
+    songs.left_outer_joins(:gigsets)
+      .select('SONG.*, COUNT(GSET.SONGID) AS gig_count')
+      .group('SONG.SONGID')
+      .order(:Song => :asc)
   end
 
   def get_albums
@@ -86,6 +93,10 @@ class Song < ApplicationRecord
     end
   end
 
+  # number of times this song has been played in gigs
+  def get_gig_count
+    Song.joins("JOIN GSET ON Song.SONGID = GSET.SONGID").where("Song.SONGID =#{self.SONGID}").length
+  end
 
   def self.parse_song_name(name)
     
@@ -173,7 +184,8 @@ class Song < ApplicationRecord
   ## ------ quick queries
 
   def self.get_songs_not_written_by_robyn 
-    where("Author IS NOT NULL AND Author NOT LIKE '%Hitchcock%'")
+    songs = where("Author IS NOT NULL AND Author NOT LIKE '%Hitchcock%'")
+    self.prepare_query(songs)
   end
 
   def self.quick_query_never_released(secondary_attribute)
@@ -188,21 +200,23 @@ class Song < ApplicationRecord
         songs = songs.where.not(:author => nil)
     end
 
-    songs
+    self.prepare_query(songs)
 
   end
 
   def self.quick_query_guitar_tabs(has_tabs)
-    where("tab IS #{has_tabs.nil? ? 'NOT': ''} NULL")
-
+    songs = where("tab IS #{has_tabs.nil? ? 'NOT': ''} NULL")
+    self.prepare_query(songs)
   end
 
   def self.quick_query_lyrics(has_lyrics)
-    where("lyrics IS #{has_lyrics.nil? ? 'NOT': ''} NULL")
+    songs = where("lyrics IS #{has_lyrics.nil? ? 'NOT': ''} NULL")
+    self.prepare_query(songs)
   end
 
   def self.quick_query_released_no_live_performances
-    joins("INNER JOIN TRAK ON SONG.songid = TRAK.songid").joins("LEFT OUTER JOIN GSET ON SONG.songid = GSET.songid").where("GSET.songid IS NULL").distinct
+    songs = joins("INNER JOIN TRAK ON SONG.songid = TRAK.songid").joins("LEFT OUTER JOIN GSET ON SONG.songid = GSET.songid").where("GSET.songid IS NULL").distinct
+    self.prepare_query(songs)
   end
 
 end   
