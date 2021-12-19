@@ -13,10 +13,10 @@
         <%= submit_tag "Search", :name => nil %>
 
         <span class="criteria search-type-criteria">
-          <%= radio_button_tag 'search_type[]', 'title', Array(params['search_type']).include?('title')   %> <span class="radio-label">Title</span>
-          <%= radio_button_tag 'search_type[]', 'originalband', Array(params['search_type']).include?('originalband') %> <span class="radio-label">Original Band</span>
-          <%= radio_button_tag 'search_type[]', 'lyrics', Array(params['search_type']).include?('lyrics') %> <span class="radio-label">Lyrics</span>
-          <%= radio_button_tag 'search_type[]', 'author', Array(params['search_type']).include?('author') %> <span class="radio-label">Author</span>
+          <%= radio_button_tag 'search_type', 'title', params['search_type'] == 'title'   %> <span class="radio-label">Title</span>
+          <%= radio_button_tag 'search_type', 'originalband', params['search_type'] == 'originalband' %> <span class="radio-label">Original Band</span>
+          <%= radio_button_tag 'search_type', 'lyrics', params['search_type'] == 'lyrics' %> <span class="radio-label">Lyrics</span>
+          <%= radio_button_tag 'search_type', 'author', params['search_type'] == 'author' %> <span class="radio-label">Author</span>
         </span>
 
       <% end %>
