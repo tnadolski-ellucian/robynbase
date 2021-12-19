@@ -12,7 +12,7 @@ class GigsController < ApplicationController
 
     if params[:search_type].present?
 
-      search_type = params[:search_type].map {|type| type.to_sym}
+      search_type = params[:search_type].to_sym
 
       date_criteria = nil
 

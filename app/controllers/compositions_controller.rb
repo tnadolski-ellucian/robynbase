@@ -14,7 +14,7 @@ class CompositionsController < ApplicationController
     if search_type_param.present? || media_type_param.present? || release_type_param.present?
 
       # textual search
-      search_type = search_type_param ? search_type_param.map {|type| type.to_sym} : nil
+      search_type = search_type_param.present? ? search_type_param.to_sym : nil
 
       # media types
       media_types = media_type_param.map {|type| type.to_i} if media_type_param.present?

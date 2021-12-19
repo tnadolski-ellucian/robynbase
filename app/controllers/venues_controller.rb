@@ -4,7 +4,7 @@ class VenuesController < ApplicationController
   
   def index
     if params[:search_type].present?
-      @venues = Venue.search_by(params[:search_type] ? params[:search_type].map {|type| type.to_sym} : nil, params[:venue_search_value])
+      @venues = Venue.search_by(params[:search_type].to_sym, params[:venue_search_value])
     else 
       params[:search_type] = "name"
     end

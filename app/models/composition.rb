@@ -44,14 +44,14 @@ class Composition < ApplicationRecord
 
   def self.search_by(kind, search, media_types = nil, release_types = nil)
 
-    kind = [:title, :release_year, :label] if kind.nil? or kind.length == 0
+    kind = [:title, :year, :label] if kind.nil? or kind.length == 0
 
     conditions = Array(kind).map do |term|
 
       case term 
         when :title
           column = "Title"
-        when :release_year
+        when :year
           column = "Year"
         when :label
           column = "Label"
